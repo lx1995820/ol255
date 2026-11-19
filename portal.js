@@ -4,7 +4,7 @@ import {
   acceptInvite, getUser, handleAuthCallback, hydrateSession,
   login, logout, requestPasswordRecovery, updateUser,
 } from '@netlify/identity';
-import { aggregate, chinaDate, tagsFor, relationships, playerRelationships, rate, statKeys, statLabels, defenseScore, tagTips, aiRatings, aiDimKeys } from './lib/statistics.js';
+import { aggregate, chinaDate, tagsFor, relationships, playerRelationships, rate, statKeys, statLabels, defenseScore, tagTips, aiRatings, aiDimKeys, aiWeights, marginalValue } from './lib/statistics.js';
 import { initializePlayerComments, stars } from './player-comments.js';
 
 const isAdmin = location.pathname.endsWith('admin.html');
@@ -506,7 +506,7 @@ function renderPublic() {
     return `<div class="leader-row-public ${position===0?'gold-winner':''} rank-tier-${Math.min(position + 1, 4)}" data-player="${escapeHtml(player.nickname)}"><span class="rank ${position < 3 ? 'top' : ''}" aria-label="第 ${position + 1} 名">${String(position + 1).padStart(2, '0')}</span>
       <div><strong>${escapeHtml(player.nickname)}</strong>${tagMarkup(player.nickname)}<small>${player.games} 场 · ${player.wins} 胜 ${player.games - player.wins} 负</small>
       <div class="bar"><i style="width:${value / max * 100}%"></i></div></div>
-      <div class="leader-value-col"><strong class="leader-value">${activeMetric === 'winRate' ? value.toFixed(1) + '%' : value.toFixed(2)}</strong><span class="ai-score" title="AI 评分：胜率 60% + 标准化综合 40%，以上榜选手中综合第 1、2 名均值为 100 分基准">AI ${(aiData.scores.get(player.nickname) || 0).toFixed(1)}</span></div>${commentButton(player.nickname)}</div>`;
+      <div class="leader-value-col"><strong class="leader-value">${activeMetric === 'winRate' ? value.toFixed(1) + '%' : value.toFixed(2)}</strong><span class="ai-score" title="AI 评分：胜率 60% + 边际价值 40%（分×1.0 板×0.6 助×1.8 断×1.8 帽×1.2），以上榜选手中综合第 1、2 名均值为 100 分基准">AI ${(aiData.scores.get(player.nickname) || 0).toFixed(1)}</span></div>${commentButton(player.nickname)}</div>`;
   }).join('') || `<p class="empty">暂无参赛满 ${leaderMinimum()} 场的选手；未满 ${leaderMinimum()} 场不参与排名。</p>`;
   select('#publicGames').textContent = roundSummary().assigned;
 }
@@ -607,8 +607,8 @@ function lookup(query) {
     <p class="field-help">${player.games >= leaderMinimum() ? `${player.games} 场 · 已达到参赛门槛；月度评选须当月满 20 场。` : `${player.games} 场 · 距离排名资格还差 ${leaderMinimum() - player.games} 场；单场纪录仍可上榜。`} 无需登录即可评分。</p>
     <div class="ai-panel"><div class="ai-total"><span>AI 评分</span><strong>${aiScore.toFixed(1)}</strong></div><div class="ai-dims">
     ${aiDimKeys.map(key => `<div><strong>${(aiDims[key] || 0).toFixed(1)}</strong><span>${dimLabels[key]} · ${key === 'winRate' ? rate(player).toFixed(1) + '%' : player[key].toFixed(1)}</span></div>`).join('')}
-    </div><p class="ai-breakdown">胜率 ${rate(player).toFixed(1)}% × 60% = <b>${(rate(player) * 0.6).toFixed(1)}</b> ＋ 综合数据 ${(player.pts + player.reb + player.ast).toFixed(1)} ÷ 池内最高 ${aiData.meta?.maxOverall.toFixed(1)} × 40% = <b>${((player.pts + player.reb + player.ast) / (aiData.meta?.maxOverall || 1) * 40).toFixed(1)}</b> → 原始 ${(rate(player) * 0.6 + (player.pts + player.reb + player.ast) / (aiData.meta?.maxOverall || 1) * 40).toFixed(1)} ÷ 基准 ${(aiData.meta?.scoreBase || 1).toFixed(1)} × 100</p>
-    <p class="field-help">MVP 口径：胜率 60% + 标准化综合数据 40%；总分以上榜选手中综合第 1、2 名（${(aiData.meta?.poolLeaders || []).map(escapeHtml).join('、')}）均值为 100 分基准，六维各以该维度上榜选手前 2 名均值为 100 分基准，150 分封顶；与榜单展示一致，数据按当前所选范围统计。</p></div><div class="lookup-kpis">
+    </div><p class="ai-breakdown">胜率 ${rate(player).toFixed(1)}% × 60% = <b>${(rate(player) * 0.6).toFixed(1)}</b> ＋ 边际价值 ${marginalValue(player).toFixed(1)} ÷ 池内最高 ${(aiData.meta?.maxMV || 1).toFixed(1)} × 40% = <b>${(marginalValue(player) / (aiData.meta?.maxMV || 1) * 40).toFixed(1)}</b> → 原始 ${(rate(player) * 0.6 + marginalValue(player) / (aiData.meta?.maxMV || 1) * 40).toFixed(1)} ÷ 基准 ${(aiData.meta?.scoreBase || 1).toFixed(1)} × 100</p>
+    <p class="field-help">MVP 口径：胜率 60% + 边际价值 40%（边际价值 = 得分×1.0 + 篮板×0.6 + 助攻×1.8 + 抢断×1.8 + 盖帽×1.2，参考 NBA 边际价值理论）；总分以上榜选手中综合第 1、2 名（${(aiData.meta?.poolLeaders || []).map(escapeHtml).join('、')}）均值为 100 分基准，六维各以该维度上榜选手前 2 名均值为 100 分基准，150 分封顶；与榜单展示一致，数据按当前所选范围统计。</p></div><div class="lookup-kpis">
     ${metrics.map(key => `<div><strong>${player[key].toFixed(1)}</strong><span>${labels[key]} / 场</span></div>`).join('')}
     <div><strong>${metricValue(player, 'winRate').toFixed(1)}%</strong><span>胜率</span></div></div>
     <p class="personal-records">单场纪录 · ${['pts', 'reb', 'ast', 'stl', 'blk'].map(key => `${labels[key]} ${player.records[key]}`).join(' / ')}</p>
