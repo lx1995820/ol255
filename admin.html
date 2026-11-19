@@ -135,6 +135,31 @@
 <button id="nextRound" class="primary" type="button">录入下一场 →</button>
 </div>
 </section>
+<section class="card" id="renameCard">
+<div class="card-title">
+<div>
+<p class="eyebrow">RENAME PLAYER</p>
+<h2>一键修改ID <small>仅影响所选日期的记录</small></h2>
+</div>
+</div>
+<div class="form-grid four">
+<label>比赛日期<input id="renameDate" type="date" required></label>
+<label>原ID（模糊匹配）<input id="renameFrom" list="nicknameList" maxlength="80" placeholder="如：卡梅隆安东尼" autocomplete="off" required></label>
+<label>目标ID<input id="renameTo" list="nicknameList" maxlength="80" placeholder="如：恩比德，可点选已有选手" autocomplete="off" required></label>
+<label class="rename-action"><span class="field-help">先预览，再确认</span><button id="renamePreview" class="ghost" type="button">预览匹配 →</button></label>
+</div>
+<div id="renamePreviewBox" hidden>
+<p id="renameSummary" class="field-help"></p>
+<div class="table-wrap">
+<table class="batch-table">
+<thead><tr><th>日期 / 场次</th><th>当前绰号</th><th>得分</th><th>篮板</th><th>助攻</th><th>抢断</th><th>盖帽</th><th>胜负</th></tr></thead>
+<tbody id="renameRows"></tbody>
+</table>
+</div>
+<button id="renameConfirm" class="primary" type="button">确认修改以上记录 →</button>
+</div>
+<p id="renameStatus" class="field-help" role="status"></p>
+</section>
 <section class="card table-card">
 <div class="card-title">
 <div>
@@ -173,31 +198,6 @@
 </tbody>
 </table>
 </div>
-</section>
-<section class="card" id="renameCard">
-<div class="card-title">
-<div>
-<p class="eyebrow">RENAME PLAYER</p>
-<h2>一键修改ID <small>仅影响所选日期的记录</small></h2>
-</div>
-</div>
-<div class="form-grid four">
-<label>比赛日期<input id="renameDate" type="date" required></label>
-<label>原ID（模糊匹配）<input id="renameFrom" list="nicknameList" maxlength="80" placeholder="如：卡梅隆安东尼" autocomplete="off" required></label>
-<label>目标ID<input id="renameTo" list="nicknameList" maxlength="80" placeholder="如：恩比德，可点选已有选手" autocomplete="off" required></label>
-<label class="rename-action"><span class="field-help">先预览，再确认</span><button id="renamePreview" class="ghost" type="button">预览匹配 →</button></label>
-</div>
-<div id="renamePreviewBox" hidden>
-<p id="renameSummary" class="field-help"></p>
-<div class="table-wrap">
-<table class="batch-table">
-<thead><tr><th>日期 / 场次</th><th>当前绰号</th><th>得分</th><th>篮板</th><th>助攻</th><th>抢断</th><th>盖帽</th><th>胜负</th></tr></thead>
-<tbody id="renameRows"></tbody>
-</table>
-</div>
-<button id="renameConfirm" class="primary" type="button">确认修改以上记录 →</button>
-</div>
-<p id="renameStatus" class="field-help" role="status"></p>
 </section>
 </main>
 </div>

@@ -161,11 +161,25 @@ async function api(path, options = {}) {
   return data;
 }
 
+let nicknameChoices = [];
+
 function renderNicknameChoices() {
-  const names = [...new Set(allPlayers.map(player => player.nickname).filter(Boolean))]
+  nicknameChoices = [...new Set(allPlayers.map(player => player.nickname).filter(Boolean))]
     .sort((a, b) => a.localeCompare(b, 'zh-CN'));
-  select('#nicknameList').innerHTML = names
-    .map(name => `<option value="${escapeHtml(name)}"></option>`).join('');
+  // 空输入框不展示下拉，仅在输入后按内容匹配（见 bindNicknameAutocomplete）
+  select('#nicknameList').innerHTML = '';
+}
+
+function bindNicknameAutocomplete(input) {
+  if (!input) return;
+  input.addEventListener('input', () => {
+    const query = input.value.trim();
+    const list = select('#nicknameList');
+    if (!query) { list.innerHTML = ''; return; }
+    list.innerHTML = nicknameChoices.filter(name => name.includes(query)).slice(0, 30)
+      .map(name => `<option value="${escapeHtml(name)}"></option>`).join('');
+  });
+  input.addEventListener('blur', () => { setTimeout(() => { select('#nicknameList').innerHTML = ''; }, 150); });
 }
 
 // 一键修改ID：预览 → 确认两段式，仅作用于所选日期
@@ -397,6 +411,7 @@ async function initializeAdmin() {
   select('#renamePreview').onclick = previewRename;
   select('#renameConfirm').onclick = confirmRename;
   ['#renameDate', '#renameFrom', '#renameTo'].forEach(id => { select(id).oninput = resetRenamePreview; });
+  ['#nickname', '#renameFrom', '#renameTo'].forEach(id => bindNicknameAutocomplete(select(id)));
   select('#cancelEdit').onclick = () => resetForm();
   select('#date').onchange = () => {
     select('#roundChoice').value = '';
