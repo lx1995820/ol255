@@ -916,3 +916,20 @@ tbody tr:hover { background: #faf8f1; }
 #renameCard #renameStatus{margin-top:10px;display:block}
 @media(max-width:900px){.form-grid.four{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:560px){.form-grid.four{grid-template-columns:1fr}}
+
+/* 比赛截图：后台上传控件 + 前台缩略图 + 点击预览遮罩 */
+.round-image-row{margin-top:16px}
+.round-image-label{display:grid;gap:7px;color:#888;font-size:10px}
+.round-image-box{margin-top:8px;display:flex;align-items:center;gap:12px;min-height:40px}
+.round-image-pick{border:1px dashed #dfdfdc!important;border-radius:7px;padding:10px 14px;font-size:11px}
+.round-image-pick:hover{border-color:var(--orange)!important;color:var(--orange)}
+#roundImageView{display:flex;align-items:center;gap:12px}
+#roundImageView img{height:64px;border-radius:6px;border:1px solid var(--line)}
+.round-image-actions{display:flex;align-items:center;gap:10px}
+.round-image-actions .ghost{border:1px solid #dfdfdc;border-radius:7px;padding:7px 12px;font-size:11px}
+.round-thumb{height:34px;max-width:60px;object-fit:cover;border-radius:4px;border:1px solid var(--line);cursor:zoom-in;vertical-align:middle}
+td.no-thumb{width:62px}
+#imageOverlay{position:fixed;inset:0;background:rgba(20,20,24,.88);z-index:200;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:zoom-out;padding:20px}
+#imageOverlay[hidden]{display:none}
+#imageOverlay img{max-width:96vw;max-height:88vh;border-radius:8px;box-shadow:0 20px 60px rgba(0,0,0,.5)}
+#imageOverlay p{color:#999;font-size:11px;margin-top:12px}

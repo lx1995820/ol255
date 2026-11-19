@@ -100,10 +100,11 @@ function json(data: unknown, status = 200) {
 export default async (request: Request) => {
   const url = new URL(request.url);
   const path = url.pathname;
-  const publicRead = path === '/api/public' && request.method === 'GET';
+  const imageRead = path === '/api/round-image' && request.method === 'GET';
+  const publicRead = (path === '/api/public' && request.method === 'GET') || imageRead;
   const tournamentCollection = path === '/api/admin/tournaments';
   const tournamentMatch = path.match(/^\/api\/admin\/tournaments\/(\d+)$/);
-  const extra = ['/api/admin/upload', '/api/admin/recognize', '/api/admin/import', '/api/admin/seasons', '/api/admin/rename'].includes(path);
+  const extra = ['/api/admin/upload', '/api/admin/recognize', '/api/admin/import', '/api/admin/seasons', '/api/admin/rename', '/api/admin/round-image'].includes(path);
   const collection = path === '/api/admin/games';
   const match = path.match(/^\/api\/admin\/games\/(\d+)$/);
   if (!publicRead && !collection && !match && !extra && !tournamentCollection && !tournamentMatch) return json({ error: '接口不存在' }, 404);
@@ -118,6 +119,24 @@ export default async (request: Request) => {
       if (!user.roles?.includes('admin')) return json({ error: '账户尚未获授 admin 管理员角色' }, 403);
     }
     const uploads = () => getStore('court-pulse-screenshots');
+    // 公开读：按场次取截图（键为确定性 round-{size}:{date}:{round}，天然去重）；直接返回图片二进制，可走 CDN 缓存
+    if (imageRead) {
+      const date = url.searchParams.get('date') ?? '';
+      const round = Number(url.searchParams.get('round'));
+      const size = url.searchParams.get('size') === 'image' ? 'image' : 'thumb';
+      if (!/^\d{4}-\d{2}-\d{2}$/.test(date) || !Number.isSafeInteger(round) || round < 1 || round > 10000) return json({ error: '参数无效' }, 400);
+      const stored = await uploads().get(`round-${size}:${date}:${round}`);
+      if (typeof stored !== 'string') return json({ error: '暂无截图' }, 404);
+      const matched = /^data:(image\/(?:jpeg|png|webp));base64,(.+)$/.exec(stored);
+      if (!matched) return json({ error: '截图数据异常' }, 500);
+      return new Response(Buffer.from(matched[2], 'base64'), { headers: { 'Content-Type': matched[1], 'Cache-Control': 'public, max-age=300' } });
+    }
+    // 列出已有截图的场次（公开榜与后台共用）
+    const listRoundImages = async () => {
+      const listed = await uploads().list({ prefix: 'round-thumb:' }).catch(() => ({ blobs: [] as { key: string }[] }));
+      return listed.blobs.map(b => /^round-thumb:(\d{4}-\d{2}-\d{2}):(\d+)$/.exec(b.key)).filter((m): m is RegExpExecArray => !!m)
+        .map(m => ({ date: m[1], roundNumber: Number(m[2]) }));
+    };
     if (path === '/api/admin/upload' && request.method === 'GET') {
       const key = url.searchParams.get('key') ?? '';
       if (!/^[a-f0-9]{64}$/.test(key)) return json({ error: '图片编号无效' }, 400);
@@ -152,17 +171,20 @@ export default async (request: Request) => {
         db.select().from(seasons).orderBy(desc(seasons.startsOn)),
         archiveCompletedMonths(records),
       ]);
-      return json({ games: records, players: aggregate(records), seasons: seasonRows, honors, tournaments: await db.select().from(tournaments).orderBy(desc(tournaments.date), desc(tournaments.id)) });
+      const payload = { games: records, players: aggregate(records), seasons: seasonRows, honors, tournaments: await db.select().from(tournaments).orderBy(desc(tournaments.date), desc(tournaments.id)), roundImages: await listRoundImages() };
+      // 公开读加边缘缓存：1 分钟新鲜 + 5 分钟回源宽限，高峰访问不再反复唤醒数据库；后台读保持实时
+      if (publicRead) return new Response(JSON.stringify(payload), { headers: { 'Content-Type': 'application/json; charset=utf-8', 'Cache-Control': 'public, max-age=60, stale-while-revalidate=300' } });
+      return json(payload);
     }
     if (extra && request.method === 'POST') {
-      const limit = (path.endsWith('recognize') || path.endsWith('upload')) ? 4500000 : 150000;
+      const limit = (path.endsWith('recognize') || path.endsWith('upload')) ? 4500000 : path.endsWith('/round-image') ? 2200000 : 150000;
       if (Number(request.headers.get('content-length') ?? 0) > limit) return json({ error: '请求过大' }, 413);
       const raw = await request.text();
-      if (raw.length > ((path.endsWith('recognize') || path.endsWith('upload')) ? 4500000 : 150000)) return json({ error: '请求过大，请减少图片大小或导入行数' }, 413);
+      if (raw.length > limit) return json({ error: '请求过大，请减少图片大小或导入行数' }, 413);
       let body: any;
       try { body = JSON.parse(raw); } catch { return json({ error: '提交格式不正确' }, 400); }
       if (!body || typeof body !== 'object' || Array.isArray(body)) return json({ error: '提交格式不正确' }, 400);
-      const fields = path.endsWith('/recognize') ? ['image', 'resolve'] : path.endsWith('/upload') ? ['image'] : path.endsWith('/seasons') ? ['name', 'confirm'] : path.endsWith('/rename') ? ['date', 'from', 'to', 'confirm'] : ['rows', 'confirm'];
+      const fields = path.endsWith('/recognize') ? ['image', 'resolve'] : path.endsWith('/upload') ? ['image'] : path.endsWith('/seasons') ? ['name', 'confirm'] : path.endsWith('/rename') ? ['date', 'from', 'to', 'confirm'] : path.endsWith('/round-image') ? ['date', 'roundNumber', 'image', 'thumb', 'remove'] : ['rows', 'confirm'];
       if (Object.keys(body).some(key => !fields.includes(key))) return json({ error: '提交包含不支持的字段' }, 400);
       if (path.endsWith('/seasons')) {
         const date = chinaDate();
@@ -171,6 +193,21 @@ export default async (request: Request) => {
         if (latest[0]?.startsOn >= date) return json({ error: '今天已开启新赛季，请勿重复操作' }, 409);
         const [season] = await db.insert(seasons).values({ name: body.name.trim(), startsOn: date }).returning();
         return json({ season }, 201);
+      }
+      // 比赛截图：每场（date+roundNumber）一张，确定性键覆盖写入 = 天然去重；remove 可移除
+      if (path.endsWith('/round-image')) {
+        const date = body?.date, round = Number(body?.roundNumber);
+        if (typeof date !== 'string' || !/^\d{4}-\d{2}-\d{2}$/.test(date) || !Number.isSafeInteger(round) || round < 1 || round > 10000) return json({ error: '日期或场次无效' }, 400);
+        const imgKey = `round-image:${date}:${round}`, thumbKey = `round-thumb:${date}:${round}`;
+        if (body.remove === true) {
+          await Promise.all([uploads().delete(imgKey).catch(() => null), uploads().delete(thumbKey).catch(() => null)]);
+          return json({ removed: true });
+        }
+        const validImage = (v: unknown, max: number) => typeof v === 'string' && v.length <= max && /^data:image\/(jpeg|png|webp);base64,[A-Za-z0-9+/=]+$/.test(v);
+        if (!validImage(body.image, 1_700_000) || !validImage(body.thumb, 500_000)) return json({ error: '截图格式无效，请使用 PNG/JPEG/WebP' }, 400);
+        await uploads().set(imgKey, body.image);
+        await uploads().set(thumbKey, body.thumb);
+        return json({ ok: true, date, roundNumber: round });
       }
       // 一键修改ID：仅作用于所选日期的记录；先预览（confirm 不为 true），确认后才写入
       if (path.endsWith('/rename')) {

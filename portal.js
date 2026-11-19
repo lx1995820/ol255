@@ -60,6 +60,74 @@ function leaderMinimum() {
   return Math.floor(roundSummary().assigned * 0.3) + 1;
 }
 
+// 比赛截图：每场（date+round）仅一张，确定性键覆盖写入，天然去重
+let roundImages = new Set();
+let pendingRoundImage = null; // null=无改动 | {image,thumb}=待上传 | {remove:true}=待移除
+const roundImageKey = (date, round) => `${date}/${round}`;
+const hasRoundImage = (date, round) => round != null && roundImages.has(roundImageKey(date, round));
+
+function syncRoundImages(list) {
+  roundImages = new Set((list || []).map(item => roundImageKey(item.date, item.roundNumber)));
+}
+
+async function makeRoundImages(file) {
+  const bitmap = await createImageBitmap(file);
+  const shrink = (maxSide, quality) => {
+    const scale = Math.min(1, maxSide / Math.max(bitmap.width, bitmap.height));
+    const canvas = document.createElement('canvas');
+    canvas.width = Math.max(1, Math.round(bitmap.width * scale));
+    canvas.height = Math.max(1, Math.round(bitmap.height * scale));
+    canvas.getContext('2d').drawImage(bitmap, 0, 0, canvas.width, canvas.height);
+    return canvas.toDataURL('image/jpeg', quality);
+  };
+  const result = { image: shrink(960, 0.85), thumb: shrink(320, 0.75) };
+  bitmap.close();
+  return result;
+}
+
+function currentFormRound() {
+  const choice = select('#roundChoice')?.value;
+  if (choice === 'pending') return null;
+  return Number(choice === 'new' ? select('#roundNumber')?.value : choice) || null;
+}
+
+function updateRoundImageUI() {
+  const pick = select('#roundImagePick'), view = select('#roundImageView');
+  if (!pick || !view) return;
+  const thumb = select('#roundImageThumb'), hint = select('#roundImageHint');
+  const date = select('#date')?.value, round = currentFormRound();
+  pick.hidden = false; view.hidden = true; thumb.removeAttribute('src');
+  if (pendingRoundImage?.image) {
+    pick.hidden = true; view.hidden = false;
+    thumb.src = pendingRoundImage.thumb;
+    hint.textContent = '新截图待保存，点「保存这局比赛」后生效。';
+  } else if (pendingRoundImage?.remove) {
+    hint.textContent = '';
+    pick.textContent = '已标记移除（保存后生效），点此改为重新上传 →';
+  } else if (date && round && hasRoundImage(date, round)) {
+    pick.hidden = true; view.hidden = false;
+    thumb.src = `/api/round-image?date=${date}&round=${round}&size=thumb`;
+    hint.textContent = '本场已有截图，可更换或移除。';
+  } else {
+    pick.textContent = '上传截图 →';
+    hint.textContent = round == null ? '待分配场次的记录保存后才可关联截图。' : '';
+  }
+}
+
+function showImageOverlay(src, alt) {
+  let overlay = select('#imageOverlay');
+  if (!overlay) {
+    overlay = document.createElement('div');
+    overlay.id = 'imageOverlay';
+    overlay.innerHTML = '<img alt="比赛原图预览"><p>点击任意处关闭</p>';
+    overlay.onclick = () => { overlay.hidden = true; overlay.querySelector('img').removeAttribute('src'); };
+    document.body.appendChild(overlay);
+  }
+  overlay.querySelector('img').src = src;
+  overlay.querySelector('img').alt = alt || '比赛原图预览';
+  overlay.hidden = false;
+}
+
 function sortedGames(records) {
   return [...records].sort((first, second) => second.date.localeCompare(first.date)
     || (second.roundNumber ?? 0) - (first.roundNumber ?? 0) || second.id - first.id);
@@ -131,8 +199,11 @@ function gameCells(game) {
 function renderPublicGames() {
   select('#publicRecordCount').textContent = roundSummary().text;
   const records = filteredGames('public', select('#publicSearch').value.trim());
-  select('#publicGameRows').innerHTML = records.map(game => `<tr>${gameCells(game)}</tr>`).join('')
-    || '<tr><td colspan="8" class="empty">暂无匹配比赛记录</td></tr>';
+  const thumbCell = game => hasRoundImage(game.date, game.roundNumber)
+    ? `<td><img class="round-thumb" loading="lazy" src="/api/round-image?date=${game.date}&round=${game.roundNumber}&size=thumb" data-full="/api/round-image?date=${game.date}&round=${game.roundNumber}&size=image" alt="查看当场截图"></td>`
+    : '<td class="no-thumb"></td>';
+  select('#publicGameRows').innerHTML = records.map(game => `<tr>${gameCells(game)}${thumbCell(game)}</tr>`).join('')
+    || '<tr><td colspan="9" class="empty">暂无匹配比赛记录</td></tr>';
 }
 
 function updateMonth() {
@@ -237,6 +308,7 @@ async function loadAdmin() {
   allGames = data.games;
   allPlayers = data.players;
   seasonRows = data.seasons;
+  syncRoundImages(data.roundImages);
   renderSeasonStatus();
   renderAdmin();
   renderNicknameChoices();
@@ -292,6 +364,8 @@ function editGame(id) {
   select('#formTitle').textContent = '修改这局比赛';
   select('#saveBtn').textContent = '保存修改 →';
   select('#cancelEdit').hidden = false;
+  pendingRoundImage = null;
+  updateRoundImageUI();
   select('#formTitle').closest('.card').scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
@@ -303,7 +377,9 @@ function resetForm(date = today(), roundNumber) {
   select('#saveBtn').textContent = '保存这局比赛 →';
   select('#cancelEdit').hidden = true;
   select('#formStatus').textContent = '';
+  pendingRoundImage = null;
   updateRoundChoices(roundNumber ?? undefined);
+  updateRoundImageUI();
 }
 
 async function handleAdminError(error) {
@@ -417,9 +493,27 @@ async function initializeAdmin() {
     select('#roundChoice').value = '';
     select('#roundNumber').value = '';
     updateRoundChoices();
+    pendingRoundImage = null;
+    updateRoundImageUI();
   };
-  select('#roundChoice').onchange = updateRoundPreview;
-  select('#roundNumber').oninput = updateRoundPreview;
+  select('#roundChoice').onchange = () => { updateRoundPreview(); pendingRoundImage = null; updateRoundImageUI(); };
+  select('#roundNumber').oninput = () => { updateRoundPreview(); pendingRoundImage = null; updateRoundImageUI(); };
+  const roundImageInput = select('#roundImageInput');
+  select('#roundImagePick').onclick = () => roundImageInput.click();
+  select('#roundImageReplace').onclick = () => roundImageInput.click();
+  roundImageInput.onchange = async () => {
+    const file = roundImageInput.files[0];
+    roundImageInput.value = '';
+    if (!file) return;
+    try {
+      pendingRoundImage = await makeRoundImages(file);
+    } catch {
+      select('#formStatus').textContent = '无法读取该图片，请换 PNG/JPEG/WebP 截图重试。';
+      return;
+    }
+    updateRoundImageUI();
+  };
+  select('#roundImageRemove').onclick = () => { pendingRoundImage = { remove: true }; updateRoundImageUI(); };
   select('#nextRound').onclick = () => {
     if (savingGame || !select('#date').reportValidity()) return;
     const date = select('#date').value;
@@ -451,6 +545,22 @@ async function initializeAdmin() {
         method: id ? 'PUT' : 'POST', body: JSON.stringify(body),
       });
       allGames = id ? allGames.map(game => String(game.id) === id ? data.game : game) : [data.game, ...allGames];
+      // 有挂接的截图改动时随记录一起保存（覆盖写，不会重复）
+      if (pendingRoundImage && data.game.roundNumber != null) {
+        try {
+          await api('admin/round-image', {
+            method: 'POST',
+            body: JSON.stringify(pendingRoundImage.remove
+              ? { date: data.game.date, roundNumber: data.game.roundNumber, remove: true }
+              : { date: data.game.date, roundNumber: data.game.roundNumber, image: pendingRoundImage.image, thumb: pendingRoundImage.thumb }),
+          });
+          if (pendingRoundImage.remove) roundImages.delete(roundImageKey(data.game.date, data.game.roundNumber));
+          else roundImages.add(roundImageKey(data.game.date, data.game.roundNumber));
+        } catch {
+          select('#formStatus').textContent = '比赛已保存，但截图上传失败；可重新编辑该场单独上传截图。';
+        }
+      }
+      pendingRoundImage = null;
       resetForm(data.game.date, data.game.roundNumber);
       renderAdmin();
       select('#formStatus').textContent = `已保存：${roundLabel(data.game)}，前台将在 30 秒内同步。`;
@@ -636,6 +746,7 @@ async function refreshPublic() {
     historicGames = data.games;
     historyTags = tagsFor(historicGames);
     seasonRows = data.seasons;
+  syncRoundImages(data.roundImages);
     honorHistory = data.honors;
     renderTournamentSection(data.tournaments || [], escapeHtml, commentButton);
     populateSeasonScope();
@@ -653,7 +764,7 @@ async function refreshPublic() {
     select('#publicStatus').textContent = `${error.message}，可点击刷新重试。`;
     if (!allGames.length) {
       select('#leaderRows').innerHTML = '<p class="empty">暂时无法加载榜单，请点击刷新数据。</p>';
-      select('#publicGameRows').innerHTML = '<tr><td colspan="8" class="empty">暂时无法加载场次，请点击刷新数据。</td></tr>';
+      select('#publicGameRows').innerHTML = '<tr><td colspan="9" class="empty">暂时无法加载场次，请点击刷新数据。</td></tr>';
     }
   } finally {
     refreshing = false;
@@ -663,6 +774,10 @@ async function refreshPublic() {
 
 function initializePublic() {
   select('#seasonScope').onchange = () => { applyScope(); renderPublic(); renderPublicGames(); renderHonors(); renderExtras(); lookup(select('#publicSearch').value); };
+  select('#publicGameRows').addEventListener('click', event => {
+    const img = event.target.closest('.round-thumb');
+    if (img?.dataset.full) showImageOverlay(img.dataset.full, '当场比赛截图');
+  });
   if (/^#(?:access_token|confirmation_token|recovery_token|invite_token|email_change_token|error)=/.test(location.hash)) {
     location.replace(`/admin.html${location.hash}`);
     return;

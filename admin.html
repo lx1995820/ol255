@@ -119,6 +119,21 @@
 <label>盖帽<input id="blk" type="number" min="0" max="10000" step="1" required>
 </label>
 </div>
+<div class="round-image-row">
+<label class="round-image-label">比赛截图 <small>每场一张，随记录保存；重复上传自动覆盖旧图</small></label>
+<div class="round-image-box">
+<input type="file" id="roundImageInput" accept="image/png,image/jpeg,image/webp" hidden>
+<button type="button" class="ghost round-image-pick" id="roundImagePick">上传截图 →</button>
+<div id="roundImageView" hidden>
+<img id="roundImageThumb" alt="本场截图缩略图">
+<div class="round-image-actions">
+<button type="button" class="ghost" id="roundImageReplace">更换</button>
+<button type="button" class="ghost" id="roundImageRemove">移除</button>
+<span id="roundImageHint" class="field-help"></span>
+</div>
+</div>
+</div>
+</div>
 <button class="primary" type="submit" id="saveBtn">保存这局比赛 →</button>
 <span id="formStatus" role="status">
 </span>
