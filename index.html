@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>球场脉搏 · 榜单与选手评分</title>
+<meta name="siteName" content="球场脉搏">
+<meta name="siteDescription" content="球场脉搏记录 NBA2KOL2 5v5 比赛表现，提供公开榜单、选手查询与管理员比赛管理。">
+<meta name="description" content="球场脉搏记录 NBA2KOL2 5v5 比赛表现，提供公开榜单、选手查询与管理员比赛管理。">
+<meta property="og:site_name" content="球场脉搏">
+<meta property="og:title" content="球场脉搏 · NBA2KOL2 5v5">
+<meta property="og:description" content="球场脉搏记录 NBA2KOL2 5v5 比赛表现，提供公开榜单、选手查询与管理员比赛管理。">
+<link rel="stylesheet" href="portal.css">
+<link rel="stylesheet" href="enhancements.css">
+</head>
+<body>
+<header class="topbar">
+<a class="logo" href="/"><svg class="court-ball" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><circle cx="16" cy="16" r="12"/><path d="M4 16h24M16 4v24M8 7c10 5 10 13 0 18M24 7c-10 5-10 13 0 18"/></svg><span>球场脉搏</span></a>
+<span class="public-pill">公开榜单 · 选手评分</span>
+<a class="admin-link" href="admin.html">管理员入口</a>
+</header>
+<main class="portal public">
+<div class="pulse-ticker" aria-label="球场快讯"><span class="ticker-label">球场快讯</span><div class="ticker-window"><div id="milestoneTicker">正在读取真实比赛里程碑…</div></div></div><section class="portal-head public-head">
+<div>
+<p class="eyebrow">NBA2KOL2 / 5V5 · <span data-current-month>
+</span>
+</p>
+<h1>球场上见真章，<br>
+<em>谁是大腿，榜上见。</em>
+</h1>
+<p>得分、喂饼、护框，每一份贡献都有回声。看榜、找队友、留句锐评——这就是我们的球场日常。</p>
+</div>
+<div class="head-number">
+<strong id="publicGames">0</strong>
+<span>已分配场次</span>
+</div>
+</section>
+<div class="sync-status" role="status">
+<span id="publicStatus">正在连接数据服务…</span>
+<button id="refreshPublic" class="ghost" type="button">刷新数据</button>
+</div>
+<div class="scope-control"><label>统计范围<select id="seasonScope"><option value="all">历史总榜</option></select></label><span id="scopeNote" class="field-help"></span></div><section class="public-toolbar">
+<div>
+<p class="eyebrow">PLAYER LOOKUP</p>
+<h2>查找选手</h2>
+</div>
+<input id="publicSearch" class="search" aria-label="查找选手绰号" placeholder="输入选手绰号，例如：风之子">
+</section>
+<section id="playerResult" class="player-result" hidden>
+</section>
+<section class="card">
+<div class="card-title">
+<div>
+<p class="eyebrow">PER GAME LEADERS</p>
+<h2 id="leaderTitle">场均榜单</h2>
+</div>
+<span class="public-note" id="leaderNote">前 7 名 · 累计满 20 场上榜</span>
+</div>
+<details class="ranking-rules"><summary>查看上榜门槛与标签说明</summary><p class="field-help">场数超过当前范围「已分配场次的 30%」即参与场均排名，赛季推进、门槛自然提高；榜单按上方所选范围统计。梗标签最多 5 个，排名类标签满 8 场参与。点击星级可为选手评分；累计评分汇总各月评分，人数按设备去重。</p></details>
+<div class="metric-tabs" id="metricTabs">
+<button class="active" data-key="pts">得分</button>
+<button data-key="reb">篮板</button>
+<button data-key="ast">助攻</button>
+<button data-key="stl">抢断</button>
+<button data-key="blk">盖帽</button>
+<button data-key="winRate">胜率</button>
+</div>
+<div id="leaderRows" class="leader-rows" aria-live="polite">
+<p class="empty">正在读取比赛数据…</p>
+</div>
+</section>
+<section class="card"><div class="card-title"><div><p class="eyebrow">CAREER HIGHS</p><h2>单场封神榜</h2></div><span class="public-note">五项纪录 · 各前五名</span></div><p class="field-help">按所选范围内每位选手的单场最高值排名，不设场次门槛；同值按日期、场次、记录编号排序。</p><div id="singleLeaders" class="honor-grid"></div></section>
+<section class="card tournament-section" id="tournaments"><div class="card-title"><div><p class="eyebrow">ONE DAY / OWN GLORY</p><h2>独立锦标赛</h2></div><span class="public-note">独立赛场 · 专属荣誉</span></div><p class="field-help">与日常榜单完全独立，保留每届赛事的五项场均前三、冠亚季军阵容与 MVP。</p><label>选择锦标赛<select id="tournamentChoice" disabled><option>正在加载赛事…</option></select></label><div id="tournamentContent" aria-live="polite"><p class="empty">正在加载锦标赛数据…</p></div></section>
+<section class="card"><div class="card-title"><div><p class="eyebrow">CHEMISTRY FILES</p><h2>球场关系档案</h2></div></div><details class="ranking-rules"><summary>查看组合统计规则</summary><p class="field-help">每类展示前五，共同参赛至少 10 场；同日期同场次且胜负相同视为队友，胜负相反视为对手。搭子与三巨头按平滑胜率（胜场 + 5）÷（场次 + 10）排序，降低小样本全胜的偶然性，再按场次、人均综合表现排序；卧龙凤雏按平滑胜率升序。一生之敌要求交手及其他对局各满 10 场，按相较其他对局的平滑胜率下降排序。默契老搭档按共同出场次数排序；势均力敌按实际交手胜率接近 50% 排序，同分优先更多场次。待分配场次与异常阵容不参与。25 分俱乐部按单场 ≥25 分认定。</p></details><div id="relationshipRows" class="honor-grid"></div></section>
+<section class="card honors">
+<div class="card-title">
+<div>
+<p class="eyebrow">MONTHLY FORECAST · <span data-current-month>
+</span>
+</p>
+<h2>月度荣誉预测</h2>
+</div>
+<span class="public-note">单人奖项前 5 位候选</span>
+</div>
+<details class="ranking-rules"><summary>查看月度评选与评分规则</summary><p class="field-help">每个周期为当月 11 日至次月 10 日，参赛场数达到该周期总场数 30% 才参与所有奖项与最佳阵容评选，单人奖项展示前 5 名。</p></details>
+<div id="honorRows" class="honor-grid" aria-live="polite">
+</div>
+</section>
+<section class="card"><div class="card-title"><div><p class="eyebrow">HALL OF HONOR</p><h2>月度荣誉墙</h2></div><span class="public-note">11 日至 10 日归档 · 永久留存</span></div><p class="field-help">每个周期按总场数 30% 门槛评奖，次月 10 日结束后自动归档；赛季切换不清空荣誉。</p><div id="honorWall"></div></section><section class="card table-card">
+<div class="card-title">
+<div><p class="eyebrow">GAME LOG</p><h2>比赛场次 <small id="publicRecordCount"></small></h2></div>
+<span class="public-note">同场选手共用编号</span>
+</div>
+<p class="field-help">按日期、场次查看比赛明细；上方绰号查询也可筛选记录。待分配记录仍计入选手场均，不计入已分配场次总数。</p>
+<div class="round-filters">
+<label>比赛日期<select id="publicDateFilter"></select></label>
+<label>比赛场次<select id="publicRoundFilter"></select></label>
+</div>
+<div class="table-wrap">
+<table>
+<thead><tr><th>日期 / 场次</th><th>绰号</th><th>得分</th><th>篮板</th><th>助攻</th><th>抢断</th><th>盖帽</th><th>胜负</th></tr></thead>
+<tbody id="publicGameRows"><tr><td colspan="8" class="empty">正在读取比赛场次…</td></tr></tbody>
+</table>
+</div>
+</section>
+<footer>球场脉搏 · 数据实时同步 · 锐评表现，尊重球员</footer>
+</main>
+<aside id="playerCommentsPanel" class="player-comments-panel" role="dialog" aria-modal="false" aria-labelledby="commentsPlayerName" hidden>
+<div class="comments-heading">
+<div><p class="eyebrow">PLAYER RATINGS / 选手评分</p><h3 id="commentsPlayerName"></h3></div>
+<button id="closeComments" class="ghost" type="button" aria-label="关闭选手评分">✕</button>
+</div>
+<div class="comments-toolbar"><span id="commentCount">正在读取评分…</span><button id="reloadComments" class="ghost" type="button">刷新</button></div>
+<p id="commentsStatus" class="comments-status" role="status"></p>
+<form id="playerCommentForm" class="player-comment-form">
+<label>本月评分<select name="score" required><option value="">请选择星级</option><option value="1">0.5 星</option><option value="2">1 星</option><option value="3">1.5 星</option><option value="4">2 星</option><option value="5">2.5 星</option><option value="6">3 星</option><option value="7">3.5 星</option><option value="8">4 星</option><option value="9">4.5 星</option><option value="10">5 星</option></select></label>
+<label>一句话评语（可选）<textarea name="content" maxlength="120" rows="2" placeholder="说说这位选手的表现"></textarea></label>
+<div class="comment-form-footer"><small>同一设备每月可评分一次，再次提交会修改本月评分。更换设备或清除浏览器数据可能重复评分。</small><button class="primary" type="submit">保存评分</button></div>
+</form>
+<h4>评分记录</h4><ol id="commentsList" class="comments-list" aria-label="评分记录"></ol>
+<details><summary>历史游客留言（不计入评分）</summary><ol id="legacyComments" class="comments-list"></ol><button id="moreLegacyComments" class="ghost" type="button" hidden>查看更多留言</button></details>
+</aside>
+<script type="module" src="/portal.js">
+</script>
+</body>
+</html>

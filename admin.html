@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>后台录入 · 球场脉搏</title>
+<meta name="siteName" content="球场脉搏">
+<meta name="siteDescription" content="球场脉搏记录 NBA2KOL2 5v5 比赛表现，提供公开榜单、选手查询与管理员比赛管理。">
+<meta name="description" content="球场脉搏记录 NBA2KOL2 5v5 比赛表现，提供公开榜单、选手查询与管理员比赛管理。">
+<meta property="og:site_name" content="球场脉搏">
+<meta property="og:title" content="球场脉搏 · NBA2KOL2 5v5">
+<meta property="og:description" content="球场脉搏记录 NBA2KOL2 5v5 比赛表现，提供公开榜单、选手查询与管理员比赛管理。">
+<link rel="stylesheet" href="portal.css">
+<link rel="stylesheet" href="enhancements.css">
+</head>
+<body>
+<div id="login" class="login">
+<div class="login-mark"><svg class="court-ball" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><circle cx="16" cy="16" r="12"/><path d="M4 16h24M16 4v24M8 7c10 5 10 13 0 18M24 7c-10 5-10 13 0 18"/></svg></div>
+<p class="eyebrow">PRIVATE ADMIN CONSOLE</p>
+<h1>只给你使用的<br>
+<em>比赛后台。</em>
+</h1>
+<p>录入、修改和管理每一局比赛数据。</p>
+<form id="loginForm">
+<label id="emailLabel">管理员邮箱<input id="email" type="email" placeholder="输入受邀管理员邮箱" autocomplete="username" required>
+</label>
+<label>账户密码<input id="password" type="password" placeholder="输入账户密码" autocomplete="current-password" required>
+</label>
+<button id="loginSubmit" class="primary" type="submit">进入后台 →</button>
+<span id="loginStatus" role="status">
+</span>
+</form>
+<div class="login-actions">
+<button id="forgotPassword" class="ghost" type="button">忘记密码</button>
+<button id="loginLogout" class="ghost" type="button" hidden>退出当前账户</button>
+</div>
+<small id="loginHelp">请使用 Netlify Identity 中已受邀并获授 admin 角色的账户登录。首次使用需由网站所有者配置管理员账户。</small>
+</div>
+<div id="adminApp" hidden>
+<header class="topbar">
+<a class="logo" href="/"><svg class="court-ball" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><circle cx="16" cy="16" r="12"/><path d="M4 16h24M16 4v24M8 7c10 5 10 13 0 18M24 7c-10 5-10 13 0 18"/></svg><span>球场脉搏</span></a>
+<span class="private-pill">管理员后台</span>
+<a class="view-link" href="/" target="_blank">打开朋友只读页面 ↗</a>
+<button id="logout" class="ghost">退出</button>
+</header>
+<main class="portal">
+<section class="portal-head">
+<div>
+<p class="eyebrow">PRIVATE CONSOLE · <span data-current-month>
+</span>
+</p>
+<h1>今晚打了几局？<br>
+<em>每场都有编号。</em>
+</h1>
+<p>保存后，朋友的只读榜单在 30 秒内自动同步。</p>
+</div>
+<div class="head-number">
+<strong id="gameCount">0</strong>
+<span>已分配场次</span>
+</div>
+</section>
+<section class="card batch-card">
+<div class="card-title"><div><p class="eyebrow">SCREENSHOT DESK</p><h2>批量截图录入</h2></div><span class="public-note">先上传 · 自动纠错 · 入库</span></div>
+<p class="field-help">支持 PNG / JPG / WebP，每张最多 25MB，每批最多 20 张，自动压缩后上传。支持新昵称；已有选手请保持昵称一致，避免拆分统计；每张图片对应一场比赛。请设置日期与起始场次。截图先留存，首次异常仅提醒一次，随后自动重识别并匹配数据库、补全缺项后逐图入库。无法恢复的数据按历史均值估算，无历史暂记 0；胜负无法恢复时按历史多数结果或负场暂填，说明保留在处理结果中，可稍后修改。</p>
+<div class="form-grid two"><label>比赛日期<input id="batchDate" type="date" required></label><label>起始场次<input id="batchRound" type="number" min="1" max="10000" value="1" required></label></div>
+<ol class="upload-steps" aria-label="截图录入流程"><li>01 选择截图</li><li>02 智能识别</li><li>03 自动入库</li></ol>
+<div id="batchDrop" class="upload-drop" tabindex="0" role="button" aria-label="选择或拖入比赛截图" aria-describedby="batchUploadHelp">
+<strong>拖入比赛截图，或点击选择</strong><span id="batchUploadHelp">也可在此区域粘贴截图 · 支持追加选择 · 自动压缩大图</span>
+</div>
+<label class="upload-file-label">从设备选择截图<input id="batchFiles" type="file" accept="image/png,image/jpeg,image/webp,.png,.jpg,.jpeg,.webp" multiple></label>
+<div class="upload-actions"><button id="recognizeImages" class="primary" type="button" disabled>开始识别 →</button><button id="retryImages" class="ghost" type="button" hidden>仅重试失败图片</button><button id="stopImages" class="ghost" type="button" hidden>处理完当前图片后暂停</button><button id="clearImages" class="ghost" type="button" hidden>清空未入库草稿</button></div>
+<p id="batchStatus" role="status" aria-live="polite">选择截图后开始处理；自动保存截图并逐张识别入库，无需勾选核对。</p>
+<progress id="batchProgress" max="1" value="0" aria-label="图片处理进度" hidden></progress>
+<div id="batchQueue" class="upload-queue" aria-label="截图处理队列"></div><div id="batchReview"></div>
+</section>
+<section class="card">
+<div class="card-title"><div><p class="eyebrow">SEASON CONTROL</p><h2>赛季管理</h2></div></div>
+<p class="field-help">赛季按北京时间每月 11 日自动切换，周期为当月 11 日至次月 10 日；当天比赛计入新周期。历史数据、历史总榜及周期荣誉保留，周期结束后自动归档奖项。</p>
+<p id="seasonStatus"></p><form id="seasonForm"><label>新赛季名称<input id="seasonName" maxlength="60" required placeholder="例如：十一月赛季"></label><label class="inline-check"><input id="seasonConfirm" type="checkbox" required>我已确认，保留历史并从今天开启新赛季</label><button class="primary" type="submit">开启新赛季 →</button></form><p id="seasonMessage" role="status"></p>
+</section>
+<section id="tournamentAdmin" class="card"></section>
+<section class="admin-grid">
+<div class="card">
+<div class="card-title">
+<div>
+<p class="eyebrow">GAME ENTRY</p>
+<h2 id="formTitle">录入一局比赛</h2>
+</div>
+<button id="cancelEdit" class="ghost" hidden>取消编辑</button>
+</div>
+<form id="gameForm">
+<input type="hidden" id="gameId">
+<div class="form-grid two">
+<label>比赛日期<input id="date" type="date" min="2000-01-01" max="2100-12-31" required>
+</label>
+<label>比赛结果<select id="result">
+<option value="W">胜利 · W</option>
+<option value="L">失利 · L</option>
+</select>
+</label>
+</div>
+<div class="form-grid two">
+<label>比赛场次<select id="roundChoice" aria-describedby="roundHelp" required></select></label>
+<label id="roundNumberLabel">新增第几场<input id="roundNumber" type="number" min="1" max="10000" step="1" required></label>
+</div>
+<p id="roundHelp" class="field-help">同场选手选择同一场次；旧记录可编辑后分配场次。</p>
+<p id="roundPreview" class="round-preview" role="status"></p>
+<label>选手绰号<input id="nickname" placeholder="输入即匹配已有选手，可直接点选" maxlength="80" required list="nicknameList" autocomplete="off">
+<datalist id="nicknameList"></datalist>
+</label>
+<div class="form-grid six"> <label>得分<input id="pts" type="number" min="0" max="10000" step="1" required>
+</label>
+<label>篮板<input id="reb" type="number" min="0" max="10000" step="1" required>
+</label>
+<label>助攻<input id="ast" type="number" min="0" max="10000" step="1" required>
+</label>
+<label>抢断<input id="stl" type="number" min="0" max="10000" step="1" required>
+</label>
+<label>盖帽<input id="blk" type="number" min="0" max="10000" step="1" required>
+</label>
+</div>
+<button class="primary" type="submit" id="saveBtn">保存这局比赛 →</button>
+<span id="formStatus" role="status">
+</span>
+</form>
+</div>
+<div class="card quick-card">
+<p class="eyebrow">WORKFLOW</p>
+<h2>今晚多局比赛</h2>
+<p>先选日期和场次，再录入选手数据。<br>同场不同选手共用一个场次编号，保存后保留当前场次，方便连续录入。旧记录显示“场次待分配”，不自动猜测编号。</p>
+<div class="workflow">
+<span>01</span>选择日期和第几场<br>
+<span>02</span>逐个保存同场选手<br>
+<span>03</span>切换到下一场</div>
+<button id="nextRound" class="primary" type="button">录入下一场 →</button>
+</div>
+</section>
+<section class="card table-card">
+<div class="card-title">
+<div>
+<p class="eyebrow">ALL GAMES</p>
+<h2>比赛记录 <small id="recordCount">
+</small>
+</h2>
+</div>
+<input id="filter" class="filter" aria-label="按选手绰号筛选比赛" placeholder="按绰号筛选">
+</div>
+<div class="round-filters">
+<label>比赛日期<select id="adminDateFilter"></select></label>
+<label>比赛场次<select id="adminRoundFilter"></select></label>
+</div>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>日期 / 场次</th>
+<th>绰号</th>
+<th>得分</th>
+<th>篮板</th>
+<th>助攻</th>
+<th>抢断</th>
+<th>盖帽</th>
+
+<th>胜负</th>
+<th>
+</th>
+</tr>
+</thead>
+<tbody id="gameRows">
+<tr>
+<td colspan="9" class="empty">正在读取比赛记录…</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section class="card" id="renameCard">
+<div class="card-title">
+<div>
+<p class="eyebrow">RENAME PLAYER</p>
+<h2>一键修改ID <small>仅影响所选日期的记录</small></h2>
+</div>
+</div>
+<div class="form-grid four">
+<label>比赛日期<input id="renameDate" type="date" required></label>
+<label>原ID（模糊匹配）<input id="renameFrom" list="nicknameList" maxlength="80" placeholder="如：卡梅隆安东尼" autocomplete="off" required></label>
+<label>目标ID<input id="renameTo" list="nicknameList" maxlength="80" placeholder="如：恩比德，可点选已有选手" autocomplete="off" required></label>
+<label class="rename-action"><span class="field-help">先预览，再确认</span><button id="renamePreview" class="ghost" type="button">预览匹配 →</button></label>
+</div>
+<div id="renamePreviewBox" hidden>
+<p id="renameSummary" class="field-help"></p>
+<div class="table-wrap">
+<table class="batch-table">
+<thead><tr><th>日期 / 场次</th><th>当前绰号</th><th>得分</th><th>篮板</th><th>助攻</th><th>抢断</th><th>盖帽</th><th>胜负</th></tr></thead>
+<tbody id="renameRows"></tbody>
+</table>
+</div>
+<button id="renameConfirm" class="primary" type="button">确认修改以上记录 →</button>
+</div>
+<p id="renameStatus" class="field-help" role="status"></p>
+</section>
+</main>
+</div>
+<script type="module" src="/portal.js">
+</script>
+</body>
+</html>

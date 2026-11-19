@@ -1,0 +1,2 @@
+-- The bracket column is created by 20261030014539_lucky_lyja.
+-- This migration remains as a no-op compatibility entry for branches that already recorded it.

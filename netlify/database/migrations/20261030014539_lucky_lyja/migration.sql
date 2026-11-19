@@ -1,0 +1,1 @@
+ALTER TABLE "tournaments" ADD COLUMN "bracket" jsonb DEFAULT '{"rounds":[]}' NOT NULL;
