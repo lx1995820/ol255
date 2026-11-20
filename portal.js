@@ -802,7 +802,7 @@ function initializePublic() {
   select('#refreshPublic').onclick = refreshPublic;
   initializePlayerComments(api, escapeHtml, refreshPublic);
   refreshPublic();
-  setInterval(() => { if (!document.hidden) refreshPublic(); }, 30000);
+  setInterval(() => { if (!document.hidden) refreshPublic(); }, 120000); // 2 分钟轮询（原 30 秒），配合边缘缓存让数据库可休眠
   document.addEventListener('visibilitychange', () => { if (!document.hidden) refreshPublic(); });
 }
 

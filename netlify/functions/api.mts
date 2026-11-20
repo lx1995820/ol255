@@ -255,8 +255,8 @@ export default async (request: Request) => {
         archiveCompletedMonths(records),
       ]);
       const payload = { games: records, players: aggregate(records), seasons: seasonRows, honors, tournaments: await db.select().from(tournaments).orderBy(desc(tournaments.date), desc(tournaments.id)), roundImages: await listRoundImages() };
-      // 公开读加边缘缓存：1 分钟新鲜 + 5 分钟回源宽限，高峰访问不再反复唤醒数据库；后台读保持实时
-      if (publicRead) return new Response(JSON.stringify(payload), { headers: { 'Content-Type': 'application/json; charset=utf-8', 'Cache-Control': 'public, max-age=60, stale-while-revalidate=300' } });
+      // 公开读加边缘缓存：2 分钟新鲜 + 10 分钟回源宽限，高峰访问不再反复唤醒数据库；后台读保持实时
+      if (publicRead) return new Response(JSON.stringify(payload), { headers: { 'Content-Type': 'application/json; charset=utf-8', 'Cache-Control': 'public, max-age=120, stale-while-revalidate=600' } });
       return json(payload);
     }
     if (extra && request.method === 'POST') {

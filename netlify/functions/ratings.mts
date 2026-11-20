@@ -10,6 +10,8 @@ const currentMonth = () => {
   return `${parts.find(part => part.type === 'year')?.value}-${parts.find(part => part.type === 'month')?.value}`;
 };
 const respond = (data: unknown, status = 200) => Response.json(data, { status, headers: { 'Cache-Control': 'no-store' } });
+// 汇总接口走边缘缓存：前端每 2 分钟轮询，若不缓存会让数据库无法休眠（烧 Database compute 积分）
+const respondCached = (data: unknown, status = 200) => Response.json(data, { status, headers: { 'Cache-Control': 'public, max-age=120, stale-while-revalidate=600' } });
 const validDevice = (value: string) => /^[a-f0-9]{64}$/.test(value);
 const deviceHash = (value: string) => createHash('sha256').update(value).digest('hex');
 
@@ -29,7 +31,7 @@ export default async (request: Request) => {
           total: sql<number>`sum(${playerRatings.score})::int`, count: sql<number>`count(*)::int`,
           participants: sql<number>`count(distinct ${playerRatings.deviceHash})::int`,
         }).from(playerRatings).groupBy(playerRatings.nickname);
-        return respond({ summaries, cumulative, month });
+        return respondCached({ summaries, cumulative, month });
       }
       if (nickname.trim() !== nickname || nickname.length > 80) return respond({ error: '选手名称无效' }, 400);
       const device = request.headers.get('x-rating-device') ?? '';
