@@ -16,6 +16,7 @@ function cycleMinimum(records) { return Math.max(1, Math.ceil(records.length / 1
 let allGames = [];
 let allPlayers = [];
 let historicGames = [];
+let allTournaments = [];
 let seasonRows = [];
 let honorHistory = [];
 let scopeInitialized = false;
@@ -698,12 +699,71 @@ function playerRelationshipCard(title, subtitle, items) {
   return `<article class="player-relation-card"><div class="player-relation-title"><h4>${title}</h4><span>${subtitle}</span></div><ol>${items.map((item, index) => `<li><span class="player-relation-rank">0${index + 1}</span><div><strong>${item.names.map(escapeHtml).join(' ＋ ')}</strong><small>${item.games} 场 · ${item.wins} 胜</small></div><b>${rate(item).toFixed(1)}%</b></li>`).join('') || '<li class="player-relation-empty">暂无满 10 场的记录</li>'}</ol></article>`;
 }
 
+// ===== 锦标赛个人档案（选手卡翻面）=====
+const PLACE_MEDALS = ['🏆', '🥈', '🥉', '🏅'];
+const PLACE_NAMES = ['冠军', '亚军', '季军', '殿军'];
+function placeName(index) { return PLACE_NAMES[index] ?? `第${index + 1}名`; }
+
+function playerTournamentHistory(nickname) {
+  const out = [];
+  for (const t of allTournaments) {
+    const podium = Array.isArray(t.podium) ? t.podium : [];
+    const placement = podium.findIndex(team => Array.isArray(team) && team.includes(nickname));
+    if (placement < 0) continue;
+    const recs = (Array.isArray(t.records) ? t.records : []).filter(r => r.nickname === nickname);
+    const games = recs.length;
+    const wins = recs.filter(r => r.result === 'W').length;
+    const avg = key => games ? recs.reduce((sum, r) => sum + (Number(r[key]) || 0), 0) / games : 0;
+    out.push({ tournament: t, placement, teammates: (podium[placement] || []).filter(n => n !== nickname), isMvp: t.mvp === nickname, games, wins, avg });
+  }
+  return out;
+}
+
+function badgeStrip(nickname) {
+  const hist = playerTournamentHistory(nickname);
+  if (!hist.length) return '';
+  const counts = new Map();
+  let mvps = 0;
+  hist.forEach(h => { counts.set(h.placement, (counts.get(h.placement) || 0) + 1); if (h.isMvp) mvps++; });
+  const parts = [...counts.entries()].sort((a, b) => a[0] - b[0]).map(([p, n]) => `${PLACE_MEDALS[p] ?? '🏅'}×${n}`);
+  if (mvps) parts.push(`⭐MVP×${mvps}`);
+  return `<span class="badge-strip" title="锦标赛徽章">${parts.join(' ')}</span>`;
+}
+
+function tournamentBackHTML(nickname) {
+  const hist = playerTournamentHistory(nickname);
+  const head = `<div class="lookup-heading"><h3>${escapeHtml(nickname)}</h3>${badgeStrip(nickname)}<button type="button" class="flip-btn" data-flip>← 返回数据卡</button></div>`;
+  if (!hist.length) return `${head}<p class="field-help">还没有锦标赛记录。</p>`;
+  return `${head}<p class="eyebrow">TOURNAMENT BOOK</p><h3 class="tournament-back-title">锦标赛荣誉簿</h3><div class="tournament-history">${hist.map(h => `
+    <article class="tournament-entry place-${h.placement}">
+      <div class="tournament-entry-head"><span class="place-chip place-chip-${h.placement}">${PLACE_MEDALS[h.placement] ?? '🏅'} ${placeName(h.placement)}</span><strong>${escapeHtml(h.tournament.name)}</strong><small>${escapeHtml(h.tournament.date)}</small>${h.isMvp ? '<span class="mvp-chip">⭐ 赛事MVP</span>' : ''}</div>
+      <p class="tournament-team">队友：${h.teammates.map(escapeHtml).join('、') || '—'}</p>
+      <p class="tournament-stats">${h.games ? `出场 ${h.games} · ${h.wins} 胜 · 场均 ${h.avg('pts').toFixed(1)} 分 / ${h.avg('reb').toFixed(1)} 板 / ${h.avg('ast').toFixed(1)} 助 / ${h.avg('stl').toFixed(1)} 断 / ${h.avg('blk').toFixed(1)} 帽` : '个人数据未录入'}</p>
+    </article>`).join('')}</div>`;
+}
+
+function bindFlip(box) {
+  const inner = box.querySelector('.flip-inner');
+  const front = box.querySelector('.flip-front');
+  if (!inner || !front) return;
+  requestAnimationFrame(() => { inner.style.minHeight = front.scrollHeight + 'px'; });
+  box.querySelectorAll('[data-flip]').forEach(btn => { btn.onclick = () => inner.classList.toggle('flipped'); });
+}
+
 function lookup(query) {
   const box = select('#playerResult');
   if (!query.trim()) { box.hidden = true; return; }
   const player = allPlayers.find(candidate => candidate.nickname === query.trim());
   box.hidden = false;
   if (!player) {
+    // 常规赛无数据但锦标赛有记录的选手（如老胡/小铭/阿sir）：给一张以荣誉簿为主的卡
+    if (playerTournamentHistory(query.trim()).length) {
+      box.innerHTML = `<div class="flip-card"><div class="flip-inner"><div class="flip-face flip-front"><div class="lookup-card"><div class="lookup-heading"><h3>${escapeHtml(query.trim())}</h3>${badgeStrip(query.trim())}</div>
+        <p class="field-help">常规赛暂无数据，锦标赛已有记录。</p><button type="button" class="flip-btn flip-cta" data-flip>翻到锦标赛荣誉簿 →</button></div></div>
+        <div class="flip-face flip-back"><div class="lookup-card tournament-back">${tournamentBackHTML(query.trim())}</div></div></div></div>`;
+      bindFlip(box);
+      return;
+    }
     box.innerHTML = '<div class="lookup-card">暂无此选手的记录，请输入完整绰号。</div>';
     return;
   }
@@ -713,7 +773,7 @@ function lookup(query) {
   const dimLabels = { ...labels, winRate: '胜率' };
   const relation = playerRelationships(historicGames, player.nickname);
   const recent = allGames.filter(game => game.nickname === player.nickname).sort((first, second) => second.date.localeCompare(first.date) || (second.roundNumber ?? 0) - (first.roundNumber ?? 0) || second.id - first.id).slice(0, 10);
-  box.innerHTML = `<div class="lookup-card" data-player="${escapeHtml(player.nickname)}"><div class="lookup-heading"><h3>${escapeHtml(player.nickname)}</h3>${tagMarkup(player.nickname)}${commentButton(player.nickname)}</div>
+  box.innerHTML = `<div class="flip-card"><div class="flip-inner"><div class="flip-face flip-front"><div class="lookup-card" data-player="${escapeHtml(player.nickname)}"><div class="lookup-heading"><h3>${escapeHtml(player.nickname)}</h3>${tagMarkup(player.nickname)}${badgeStrip(player.nickname)}${commentButton(player.nickname)}<button type="button" class="flip-btn flip-cta" data-flip>锦标赛荣誉簿 →</button></div>
     <p class="field-help">${player.games >= leaderMinimum() ? `${player.games} 场 · 已达到参赛门槛；月度评选须当月满 20 场。` : `${player.games} 场 · 距离排名资格还差 ${leaderMinimum() - player.games} 场；单场纪录仍可上榜。`} 无需登录即可评分。</p>
     <div class="ai-panel"><div class="ai-total"><span>AI 评分</span><strong>${aiScore.toFixed(1)}</strong></div><div class="ai-dims">
     ${aiDimKeys.map(key => `<div><strong>${(aiDims[key] || 0).toFixed(1)}</strong><span>${dimLabels[key]} · ${key === 'winRate' ? rate(player).toFixed(1) + '%' : player[key].toFixed(1)}</span></div>`).join('')}
@@ -730,7 +790,8 @@ function lookup(query) {
     ${playerRelationshipCard('对位胜率最高', '交手对手', relation.bestOpponents)}
     ${playerRelationshipCard('对位胜率最低', '交手对手', relation.worstOpponents)}
     ${playerRelationshipCard('搭档劣势', '双人同队', relation.worstTeammates)}
-    </div></section></div></div>`;
+    </div></section></div></div></div><div class="flip-face flip-back"><div class="lookup-card tournament-back">${tournamentBackHTML(player.nickname)}</div></div></div></div>`;
+  bindFlip(box);
 }
 
 async function refreshPublic() {
@@ -748,7 +809,8 @@ async function refreshPublic() {
     seasonRows = data.seasons;
   syncRoundImages(data.roundImages);
     honorHistory = data.honors;
-    renderTournamentSection(data.tournaments || [], escapeHtml, commentButton);
+    allTournaments = data.tournaments || [];
+    renderTournamentSection(allTournaments, escapeHtml, commentButton);
     populateSeasonScope();
     applyScope();
     updateMonth();

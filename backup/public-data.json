@@ -1,10 +1,370 @@
 {
  "games": [
   {
+   "id": 1791527915196,
+   "date": "2026-11-24",
+   "roundNumber": 3,
+   "nickname": "乔老板",
+   "pts": 5,
+   "reb": 3,
+   "ast": 3,
+   "stl": 0,
+   "blk": 0,
+   "result": "L"
+  },
+  {
+   "id": 1791527915195,
+   "date": "2026-11-24",
+   "roundNumber": 3,
+   "nickname": "收徒",
+   "pts": 4,
+   "reb": 2,
+   "ast": 1,
+   "stl": 0,
+   "blk": 0,
+   "result": "L"
+  },
+  {
+   "id": 1791527915194,
+   "date": "2026-11-24",
+   "roundNumber": 3,
+   "nickname": "山王",
+   "pts": 11,
+   "reb": 1,
+   "ast": 1,
+   "stl": 0,
+   "blk": 0,
+   "result": "L"
+  },
+  {
+   "id": 1791527915193,
+   "date": "2026-11-24",
+   "roundNumber": 3,
+   "nickname": "小凯",
+   "pts": 12,
+   "reb": 0,
+   "ast": 2,
+   "stl": 3,
+   "blk": 0,
+   "result": "L"
+  },
+  {
+   "id": 1791527915192,
+   "date": "2026-11-24",
+   "roundNumber": 3,
+   "nickname": "骚九",
+   "pts": 2,
+   "reb": 1,
+   "ast": 1,
+   "stl": 0,
+   "blk": 1,
+   "result": "L"
+  },
+  {
+   "id": 1791527915191,
+   "date": "2026-11-24",
+   "roundNumber": 3,
+   "nickname": "仙人掌",
+   "pts": 0,
+   "reb": 3,
+   "ast": 2,
+   "stl": 1,
+   "blk": 1,
+   "result": "W"
+  },
+  {
+   "id": 1791527915190,
+   "date": "2026-11-24",
+   "roundNumber": 3,
+   "nickname": "蛋面",
+   "pts": 9,
+   "reb": 0,
+   "ast": 0,
+   "stl": 0,
+   "blk": 0,
+   "result": "W"
+  },
+  {
+   "id": 1791527915189,
+   "date": "2026-11-24",
+   "roundNumber": 3,
+   "nickname": "白云",
+   "pts": 7,
+   "reb": 1,
+   "ast": 0,
+   "stl": 1,
+   "blk": 0,
+   "result": "W"
+  },
+  {
+   "id": 1791527915188,
+   "date": "2026-11-24",
+   "roundNumber": 3,
+   "nickname": "老戴",
+   "pts": 14,
+   "reb": 0,
+   "ast": 6,
+   "stl": 1,
+   "blk": 0,
+   "result": "W"
+  },
+  {
+   "id": 1791527915187,
+   "date": "2026-11-24",
+   "roundNumber": 3,
+   "nickname": "轩少",
+   "pts": 9,
+   "reb": 5,
+   "ast": 0,
+   "stl": 0,
+   "blk": 0,
+   "result": "W"
+  },
+  {
+   "id": 1791527915186,
+   "date": "2026-11-24",
+   "roundNumber": 2,
+   "nickname": "骚九",
+   "pts": 2,
+   "reb": 2,
+   "ast": 0,
+   "stl": 1,
+   "blk": 0,
+   "result": "L"
+  },
+  {
+   "id": 1791527915185,
+   "date": "2026-11-24",
+   "roundNumber": 2,
+   "nickname": "乔老板",
+   "pts": 2,
+   "reb": 0,
+   "ast": 0,
+   "stl": 0,
+   "blk": 0,
+   "result": "L"
+  },
+  {
+   "id": 1791527915184,
+   "date": "2026-11-24",
+   "roundNumber": 2,
+   "nickname": "收徒",
+   "pts": 5,
+   "reb": 1,
+   "ast": 2,
+   "stl": 0,
+   "blk": 0,
+   "result": "L"
+  },
+  {
+   "id": 1791527915183,
+   "date": "2026-11-24",
+   "roundNumber": 2,
+   "nickname": "小凯",
+   "pts": 14,
+   "reb": 2,
+   "ast": 2,
+   "stl": 1,
+   "blk": 0,
+   "result": "L"
+  },
+  {
+   "id": 1791527915182,
+   "date": "2026-11-24",
+   "roundNumber": 2,
+   "nickname": "山王",
+   "pts": 3,
+   "reb": 3,
+   "ast": 1,
+   "stl": 2,
+   "blk": 0,
+   "result": "L"
+  },
+  {
+   "id": 1791527915181,
+   "date": "2026-11-24",
+   "roundNumber": 2,
+   "nickname": "仙人掌",
+   "pts": 2,
+   "reb": 2,
+   "ast": 2,
+   "stl": 0,
+   "blk": 1,
+   "result": "W"
+  },
+  {
+   "id": 1791527915180,
+   "date": "2026-11-24",
+   "roundNumber": 2,
+   "nickname": "蛋面",
+   "pts": 5,
+   "reb": 1,
+   "ast": 1,
+   "stl": 0,
+   "blk": 0,
+   "result": "W"
+  },
+  {
+   "id": 1791527915179,
+   "date": "2026-11-24",
+   "roundNumber": 2,
+   "nickname": "白云",
+   "pts": 4,
+   "reb": 3,
+   "ast": 2,
+   "stl": 1,
+   "blk": 0,
+   "result": "W"
+  },
+  {
+   "id": 1791527915178,
+   "date": "2026-11-24",
+   "roundNumber": 2,
+   "nickname": "老戴",
+   "pts": 18,
+   "reb": 0,
+   "ast": 4,
+   "stl": 0,
+   "blk": 0,
+   "result": "W"
+  },
+  {
+   "id": 1791527915177,
+   "date": "2026-11-24",
+   "roundNumber": 2,
+   "nickname": "轩少",
+   "pts": 10,
+   "reb": 8,
+   "ast": 1,
+   "stl": 4,
+   "blk": 0,
+   "result": "W"
+  },
+  {
+   "id": 1791527915176,
+   "date": "2026-11-24",
+   "roundNumber": 1,
+   "nickname": "山王",
+   "pts": 3,
+   "reb": 1,
+   "ast": 1,
+   "stl": 1,
+   "blk": 0,
+   "result": "W"
+  },
+  {
+   "id": 1791527915175,
+   "date": "2026-11-24",
+   "roundNumber": 1,
+   "nickname": "收徒",
+   "pts": 7,
+   "reb": 3,
+   "ast": 2,
+   "stl": 0,
+   "blk": 0,
+   "result": "W"
+  },
+  {
+   "id": 1791527915174,
+   "date": "2026-11-24",
+   "roundNumber": 1,
+   "nickname": "乔老板",
+   "pts": 4,
+   "reb": 1,
+   "ast": 0,
+   "stl": 0,
+   "blk": 0,
+   "result": "W"
+  },
+  {
+   "id": 1791527915173,
+   "date": "2026-11-24",
+   "roundNumber": 1,
+   "nickname": "小凯",
+   "pts": 8,
+   "reb": 4,
+   "ast": 10,
+   "stl": 3,
+   "blk": 0,
+   "result": "W"
+  },
+  {
+   "id": 1791527915172,
+   "date": "2026-11-24",
+   "roundNumber": 1,
+   "nickname": "骚九",
+   "pts": 15,
+   "reb": 5,
+   "ast": 1,
+   "stl": 2,
+   "blk": 1,
+   "result": "W"
+  },
+  {
+   "id": 1791527915171,
+   "date": "2026-11-24",
+   "roundNumber": 1,
+   "nickname": "仙人掌",
+   "pts": 0,
+   "reb": 2,
+   "ast": 0,
+   "stl": 0,
+   "blk": 0,
+   "result": "L"
+  },
+  {
+   "id": 1791527915170,
+   "date": "2026-11-24",
+   "roundNumber": 1,
+   "nickname": "蛋面",
+   "pts": 8,
+   "reb": 1,
+   "ast": 0,
+   "stl": 1,
+   "blk": 0,
+   "result": "L"
+  },
+  {
+   "id": 1791527915169,
+   "date": "2026-11-24",
+   "roundNumber": 1,
+   "nickname": "白云",
+   "pts": 6,
+   "reb": 2,
+   "ast": 1,
+   "stl": 2,
+   "blk": 2,
+   "result": "L"
+  },
+  {
+   "id": 1791527915168,
+   "date": "2026-11-24",
+   "roundNumber": 1,
+   "nickname": "老戴",
+   "pts": 5,
+   "reb": 0,
+   "ast": 6,
+   "stl": 0,
+   "blk": 0,
+   "result": "L"
+  },
+  {
+   "id": 1791527915167,
+   "date": "2026-11-24",
+   "roundNumber": 1,
+   "nickname": "轩少",
+   "pts": 6,
+   "reb": 8,
+   "ast": 1,
+   "stl": 0,
+   "blk": 0,
+   "result": "L"
+  },
+  {
    "id": 1791527915166,
    "date": "2026-11-21",
    "roundNumber": 2,
-   "nickname": "韦德",
+   "nickname": "东东",
    "pts": 8,
    "reb": 6,
    "ast": 3,
@@ -28,7 +388,7 @@
    "id": 1791527915164,
    "date": "2026-11-21",
    "roundNumber": 2,
-   "nickname": "恩比德",
+   "nickname": "淡然",
    "pts": 5,
    "reb": 0,
    "ast": 2,
@@ -40,7 +400,7 @@
    "id": 1791527915163,
    "date": "2026-11-21",
    "roundNumber": 2,
-   "nickname": "一点綺一点薫",
+   "nickname": "板王",
    "pts": 11,
    "reb": 0,
    "ast": 7,
@@ -136,7 +496,7 @@
    "id": 1791527915155,
    "date": "2026-11-21",
    "roundNumber": 1,
-   "nickname": "皮大爷丨",
+   "nickname": "乔老板",
    "pts": 4,
    "reb": 1,
    "ast": 1,
@@ -172,7 +532,7 @@
    "id": 1791527915152,
    "date": "2026-11-21",
    "roundNumber": 1,
-   "nickname": "晚安Stone",
+   "nickname": "骚九",
    "pts": 0,
    "reb": 10,
    "ast": 2,
@@ -184,7 +544,7 @@
    "id": 1791527915151,
    "date": "2026-11-21",
    "roundNumber": 1,
-   "nickname": "韦德",
+   "nickname": "东东",
    "pts": 14,
    "reb": 11,
    "ast": 1,
@@ -196,7 +556,7 @@
    "id": 1791527915150,
    "date": "2026-11-21",
    "roundNumber": 1,
-   "nickname": "轩少",
+   "nickname": "一马",
    "pts": 7,
    "reb": 4,
    "ast": 2,
@@ -2212,7 +2572,7 @@
    "id": 1791527913262,
    "date": "2026-11-15",
    "roundNumber": 1,
-   "nickname": "AB丶君子雷",
+   "nickname": "底角",
    "pts": 4,
    "reb": 4,
    "ast": 2,
@@ -9493,6 +9853,18 @@
    "result": "W"
   },
   {
+   "id": 1791527913949,
+   "date": "2026-10-28",
+   "roundNumber": 9,
+   "nickname": "底角",
+   "pts": 5,
+   "reb": 2,
+   "ast": 3,
+   "stl": 0,
+   "blk": 1,
+   "result": "L"
+  },
+  {
    "id": 1791527913869,
    "date": "2026-10-28",
    "roundNumber": 8,
@@ -10331,18 +10703,6 @@
    "stl": 0,
    "blk": 0,
    "result": "W"
-  },
-  {
-   "id": 1791527913949,
-   "date": "2026-10-28",
-   "roundNumber": 1,
-   "nickname": "AB丶君子雷",
-   "pts": 5,
-   "reb": 2,
-   "ast": 3,
-   "stl": 0,
-   "blk": 1,
-   "result": "L"
   },
   {
    "id": 1791527913948,
@@ -23691,19 +24051,189 @@
  ],
  "players": [
   {
-   "nickname": "韦德",
-   "games": 2,
-   "wins": 2,
-   "pts": 11,
-   "reb": 8.5,
-   "ast": 2,
-   "stl": 1.5,
-   "blk": 2,
+   "nickname": "乔老板",
+   "games": 8,
+   "wins": 3,
+   "pts": 3.875,
+   "reb": 1.25,
+   "ast": 1.5,
+   "stl": 1,
+   "blk": 0,
+   "records": {
+    "pts": 9,
+    "reb": 4,
+    "ast": 4,
+    "stl": 3,
+    "blk": 0
+   }
+  },
+  {
+   "nickname": "收徒",
+   "games": 88,
+   "wins": 37,
+   "pts": 6.284090909090909,
+   "reb": 1.3636363636363635,
+   "ast": 0.7954545454545454,
+   "stl": 0.48863636363636365,
+   "blk": 0.13636363636363635,
+   "records": {
+    "pts": 20,
+    "reb": 8,
+    "ast": 7,
+    "stl": 3,
+    "blk": 3
+   }
+  },
+  {
+   "nickname": "山王",
+   "games": 82,
+   "wins": 43,
+   "pts": 5.304878048780488,
+   "reb": 1.9634146341463414,
+   "ast": 1.2560975609756098,
+   "stl": 1.146341463414634,
+   "blk": 0.08536585365853659,
+   "records": {
+    "pts": 16,
+    "reb": 7,
+    "ast": 5,
+    "stl": 6,
+    "blk": 2
+   }
+  },
+  {
+   "nickname": "小凯",
+   "games": 156,
+   "wins": 94,
+   "pts": 12.346153846153847,
+   "reb": 1.9807692307692308,
+   "ast": 4.064102564102564,
+   "stl": 2.0384615384615383,
+   "blk": 0.21153846153846154,
+   "records": {
+    "pts": 30,
+    "reb": 11,
+    "ast": 10,
+    "stl": 8,
+    "blk": 3
+   }
+  },
+  {
+   "nickname": "骚九",
+   "games": 94,
+   "wins": 47,
+   "pts": 5.8936170212765955,
+   "reb": 2.872340425531915,
+   "ast": 2.0851063829787235,
+   "stl": 1.1170212765957446,
+   "blk": 0.39361702127659576,
+   "records": {
+    "pts": 22,
+    "reb": 13,
+    "ast": 9,
+    "stl": 4,
+    "blk": 3
+   }
+  },
+  {
+   "nickname": "仙人掌",
+   "games": 65,
+   "wins": 31,
+   "pts": 4.7384615384615385,
+   "reb": 4.415384615384616,
+   "ast": 2.1384615384615384,
+   "stl": 0.8461538461538461,
+   "blk": 0.5384615384615384,
    "records": {
     "pts": 14,
-    "reb": 11,
+    "reb": 14,
+    "ast": 7,
+    "stl": 4,
+    "blk": 3
+   }
+  },
+  {
+   "nickname": "蛋面",
+   "games": 10,
+   "wins": 4,
+   "pts": 7,
+   "reb": 1.2,
+   "ast": 0.9,
+   "stl": 0.3,
+   "blk": 0.1,
+   "records": {
+    "pts": 12,
+    "reb": 6,
+    "ast": 2,
+    "stl": 1,
+    "blk": 1
+   }
+  },
+  {
+   "nickname": "白云",
+   "games": 80,
+   "wins": 50,
+   "pts": 4.5875,
+   "reb": 1.775,
+   "ast": 0.6875,
+   "stl": 0.6125,
+   "blk": 0.0875,
+   "records": {
+    "pts": 15,
+    "reb": 6,
     "ast": 3,
     "stl": 2,
+    "blk": 2
+   }
+  },
+  {
+   "nickname": "老戴",
+   "games": 99,
+   "wins": 54,
+   "pts": 8.676767676767676,
+   "reb": 1.5757575757575757,
+   "ast": 2.696969696969697,
+   "stl": 0.6262626262626263,
+   "blk": 0.1414141414141414,
+   "records": {
+    "pts": 31,
+    "reb": 11,
+    "ast": 11,
+    "stl": 4,
+    "blk": 2
+   }
+  },
+  {
+   "nickname": "轩少",
+   "games": 121,
+   "wins": 68,
+   "pts": 9.363636363636363,
+   "reb": 2.5867768595041323,
+   "ast": 2,
+   "stl": 1.0661157024793388,
+   "blk": 0.30578512396694213,
+   "records": {
+    "pts": 28,
+    "reb": 11,
+    "ast": 7,
+    "stl": 7,
+    "blk": 3
+   }
+  },
+  {
+   "nickname": "东东",
+   "games": 38,
+   "wins": 23,
+   "pts": 8.263157894736842,
+   "reb": 5.552631578947368,
+   "ast": 2.3421052631578947,
+   "stl": 1.5263157894736843,
+   "blk": 1,
+   "records": {
+    "pts": 19,
+    "reb": 11,
+    "ast": 8,
+    "stl": 5,
     "blk": 3
    }
   },
@@ -23725,37 +24255,37 @@
    }
   },
   {
-   "nickname": "恩比德",
-   "games": 15,
-   "wins": 3,
-   "pts": 5.933333333333334,
-   "reb": 4.6,
-   "ast": 1.7333333333333334,
-   "stl": 0.2,
-   "blk": 0.8666666666666667,
+   "nickname": "淡然",
+   "games": 65,
+   "wins": 36,
+   "pts": 7.1692307692307695,
+   "reb": 1.9692307692307693,
+   "ast": 1.0307692307692307,
+   "stl": 0.5692307692307692,
+   "blk": 0.3076923076923077,
    "records": {
-    "pts": 11,
-    "reb": 10,
-    "ast": 5,
-    "stl": 1,
-    "blk": 3
+    "pts": 18,
+    "reb": 8,
+    "ast": 3,
+    "stl": 3,
+    "blk": 2
    }
   },
   {
-   "nickname": "一点綺一点薫",
-   "games": 1,
-   "wins": 1,
-   "pts": 11,
-   "reb": 0,
-   "ast": 7,
-   "stl": 1,
-   "blk": 0,
+   "nickname": "板王",
+   "games": 86,
+   "wins": 48,
+   "pts": 7.116279069767442,
+   "reb": 2.5232558139534884,
+   "ast": 2.953488372093023,
+   "stl": 1.2325581395348837,
+   "blk": 0.3372093023255814,
    "records": {
-    "pts": 11,
-    "reb": 0,
-    "ast": 7,
-    "stl": 1,
-    "blk": 0
+    "pts": 22,
+    "reb": 16,
+    "ast": 8,
+    "stl": 6,
+    "blk": 3
    }
   },
   {
@@ -23878,48 +24408,14 @@
    }
   },
   {
-   "nickname": "皮大爷丨",
-   "games": 1,
-   "wins": 0,
-   "pts": 4,
-   "reb": 1,
-   "ast": 1,
-   "stl": 1,
-   "blk": 0,
-   "records": {
-    "pts": 4,
-    "reb": 1,
-    "ast": 1,
-    "stl": 1,
-    "blk": 0
-   }
-  },
-  {
-   "nickname": "小凯",
-   "games": 153,
-   "wins": 93,
-   "pts": 12.366013071895425,
-   "reb": 1.9803921568627452,
-   "ast": 4.052287581699346,
-   "stl": 2.0326797385620914,
-   "blk": 0.21568627450980393,
-   "records": {
-    "pts": 30,
-    "reb": 11,
-    "ast": 10,
-    "stl": 8,
-    "blk": 3
-   }
-  },
-  {
    "nickname": "底角",
-   "games": 77,
-   "wins": 37,
-   "pts": 9.753246753246753,
-   "reb": 2.168831168831169,
-   "ast": 2.7012987012987013,
-   "stl": 1.051948051948052,
-   "blk": 0.11688311688311688,
+   "games": 79,
+   "wins": 38,
+   "pts": 9.620253164556962,
+   "reb": 2.189873417721519,
+   "ast": 2.6962025316455698,
+   "stl": 1.0379746835443038,
+   "blk": 0.12658227848101267,
    "records": {
     "pts": 25,
     "reb": 9,
@@ -23929,37 +24425,20 @@
    }
   },
   {
-   "nickname": "晚安Stone",
-   "games": 2,
-   "wins": 1,
-   "pts": 1,
-   "reb": 6,
-   "ast": 1.5,
-   "stl": 1.5,
-   "blk": 0.5,
+   "nickname": "一马",
+   "games": 4,
+   "wins": 3,
+   "pts": 3.75,
+   "reb": 2.75,
+   "ast": 1,
+   "stl": 0.25,
+   "blk": 0,
    "records": {
-    "pts": 2,
-    "reb": 10,
+    "pts": 7,
+    "reb": 5,
     "ast": 2,
-    "stl": 2,
-    "blk": 1
-   }
-  },
-  {
-   "nickname": "轩少",
-   "games": 119,
-   "wins": 67,
-   "pts": 9.369747899159664,
-   "reb": 2.4873949579831933,
-   "ast": 2.033613445378151,
-   "stl": 1.050420168067227,
-   "blk": 0.31092436974789917,
-   "records": {
-    "pts": 28,
-    "reb": 11,
-    "ast": 7,
-    "stl": 7,
-    "blk": 3
+    "stl": 1,
+    "blk": 0
    }
   },
   {
@@ -23997,57 +24476,6 @@
    }
   },
   {
-   "nickname": "收徒",
-   "games": 85,
-   "wins": 36,
-   "pts": 6.317647058823529,
-   "reb": 1.3411764705882352,
-   "ast": 0.7647058823529411,
-   "stl": 0.5058823529411764,
-   "blk": 0.1411764705882353,
-   "records": {
-    "pts": 20,
-    "reb": 8,
-    "ast": 7,
-    "stl": 3,
-    "blk": 3
-   }
-  },
-  {
-   "nickname": "骚九",
-   "games": 90,
-   "wins": 46,
-   "pts": 5.944444444444445,
-   "reb": 2.8,
-   "ast": 2.1333333333333333,
-   "stl": 1.1222222222222222,
-   "blk": 0.3888888888888889,
-   "records": {
-    "pts": 22,
-    "reb": 13,
-    "ast": 9,
-    "stl": 4,
-    "blk": 3
-   }
-  },
-  {
-   "nickname": "板王",
-   "games": 85,
-   "wins": 47,
-   "pts": 7.070588235294117,
-   "reb": 2.552941176470588,
-   "ast": 2.9058823529411764,
-   "stl": 1.2352941176470589,
-   "blk": 0.3411764705882353,
-   "records": {
-    "pts": 22,
-    "reb": 16,
-    "ast": 8,
-    "stl": 6,
-    "blk": 3
-   }
-  },
-  {
    "nickname": "13",
    "games": 65,
    "wins": 34,
@@ -24079,40 +24507,6 @@
     "ast": 3,
     "stl": 5,
     "blk": 3
-   }
-  },
-  {
-   "nickname": "仙人掌",
-   "games": 62,
-   "wins": 29,
-   "pts": 4.935483870967742,
-   "reb": 4.516129032258065,
-   "ast": 2.1774193548387095,
-   "stl": 0.8709677419354839,
-   "blk": 0.532258064516129,
-   "records": {
-    "pts": 14,
-    "reb": 14,
-    "ast": 7,
-    "stl": 4,
-    "blk": 3
-   }
-  },
-  {
-   "nickname": "蛋面",
-   "games": 7,
-   "wins": 2,
-   "pts": 6.857142857142857,
-   "reb": 1.4285714285714286,
-   "ast": 1.1428571428571428,
-   "stl": 0.2857142857142857,
-   "blk": 0.14285714285714285,
-   "records": {
-    "pts": 12,
-    "reb": 6,
-    "ast": 2,
-    "stl": 1,
-    "blk": 1
    }
   },
   {
@@ -24218,40 +24612,6 @@
    }
   },
   {
-   "nickname": "白云",
-   "games": 77,
-   "wins": 48,
-   "pts": 4.545454545454546,
-   "reb": 1.7662337662337662,
-   "ast": 0.6753246753246753,
-   "stl": 0.5844155844155844,
-   "blk": 0.06493506493506493,
-   "records": {
-    "pts": 15,
-    "reb": 6,
-    "ast": 3,
-    "stl": 2,
-    "blk": 1
-   }
-  },
-  {
-   "nickname": "老戴",
-   "games": 96,
-   "wins": 52,
-   "pts": 8.5625,
-   "reb": 1.625,
-   "ast": 2.6145833333333335,
-   "stl": 0.6354166666666666,
-   "blk": 0.14583333333333334,
-   "records": {
-    "pts": 31,
-    "reb": 11,
-    "ast": 11,
-    "stl": 4,
-    "blk": 2
-   }
-  },
-  {
    "nickname": "牛子",
    "games": 74,
    "wins": 35,
@@ -24286,6 +24646,23 @@
    }
   },
   {
+   "nickname": "晚安Stone",
+   "games": 1,
+   "wins": 1,
+   "pts": 2,
+   "reb": 2,
+   "ast": 1,
+   "stl": 2,
+   "blk": 1,
+   "records": {
+    "pts": 2,
+    "reb": 2,
+    "ast": 1,
+    "stl": 2,
+    "blk": 1
+   }
+  },
+  {
    "nickname": "JB丶默",
    "games": 11,
    "wins": 4,
@@ -24299,23 +24676,6 @@
     "reb": 5,
     "ast": 2,
     "stl": 3,
-    "blk": 2
-   }
-  },
-  {
-   "nickname": "山王",
-   "games": 79,
-   "wins": 42,
-   "pts": 5.291139240506329,
-   "reb": 1.9746835443037976,
-   "ast": 1.2658227848101267,
-   "stl": 1.1518987341772151,
-   "blk": 0.08860759493670886,
-   "records": {
-    "pts": 16,
-    "reb": 7,
-    "ast": 5,
-    "stl": 6,
     "blk": 2
    }
   },
@@ -24337,20 +24697,20 @@
    }
   },
   {
-   "nickname": "淡然",
-   "games": 64,
-   "wins": 35,
-   "pts": 7.203125,
-   "reb": 2,
-   "ast": 1.015625,
-   "stl": 0.578125,
-   "blk": 0.3125,
+   "nickname": "恩比德",
+   "games": 14,
+   "wins": 2,
+   "pts": 6,
+   "reb": 4.928571428571429,
+   "ast": 1.7142857142857142,
+   "stl": 0.21428571428571427,
+   "blk": 0.9285714285714286,
    "records": {
-    "pts": 18,
-    "reb": 8,
-    "ast": 3,
-    "stl": 3,
-    "blk": 2
+    "pts": 11,
+    "reb": 10,
+    "ast": 5,
+    "stl": 1,
+    "blk": 3
    }
   },
   {
@@ -24401,23 +24761,6 @@
     "reb": 4,
     "ast": 3,
     "stl": 0,
-    "blk": 1
-   }
-  },
-  {
-   "nickname": "AB丶君子雷",
-   "games": 2,
-   "wins": 1,
-   "pts": 4.5,
-   "reb": 3,
-   "ast": 2.5,
-   "stl": 0.5,
-   "blk": 0.5,
-   "records": {
-    "pts": 5,
-    "reb": 4,
-    "ast": 3,
-    "stl": 1,
     "blk": 1
    }
   },
@@ -24503,40 +24846,6 @@
     "reb": 4,
     "ast": 2,
     "stl": 1,
-    "blk": 0
-   }
-  },
-  {
-   "nickname": "东东",
-   "games": 36,
-   "wins": 21,
-   "pts": 8.11111111111111,
-   "reb": 5.388888888888889,
-   "ast": 2.361111111111111,
-   "stl": 1.5277777777777777,
-   "blk": 0.9444444444444444,
-   "records": {
-    "pts": 19,
-    "reb": 11,
-    "ast": 8,
-    "stl": 5,
-    "blk": 3
-   }
-  },
-  {
-   "nickname": "乔老板",
-   "games": 4,
-   "wins": 2,
-   "pts": 4,
-   "reb": 1.25,
-   "ast": 2,
-   "stl": 1.75,
-   "blk": 0,
-   "records": {
-    "pts": 9,
-    "reb": 4,
-    "ast": 4,
-    "stl": 3,
     "blk": 0
    }
   },
@@ -24657,23 +24966,6 @@
     "ast": 4,
     "stl": 2,
     "blk": 2
-   }
-  },
-  {
-   "nickname": "一马",
-   "games": 3,
-   "wins": 2,
-   "pts": 2.6666666666666665,
-   "reb": 2.3333333333333335,
-   "ast": 0.6666666666666666,
-   "stl": 0.3333333333333333,
-   "blk": 0,
-   "records": {
-    "pts": 5,
-    "reb": 5,
-    "ast": 2,
-    "stl": 1,
-    "blk": 0
    }
   },
   {
@@ -25588,6 +25880,750 @@
   }
  ],
  "tournaments": [
+  {
+   "id": 2,
+   "name": "第一届牛子杯",
+   "date": "2026-11-23",
+   "status": "completed",
+   "podium": [
+    [
+     "底角",
+     "老胡",
+     "乔老板",
+     "小铭",
+     "轩少"
+    ],
+    [
+     "小凯",
+     "白云",
+     "仙人掌",
+     "山王",
+     "蛋面"
+    ],
+    [
+     "板王",
+     "13",
+     "梅西",
+     "牛子",
+     "雨落"
+    ],
+    [
+     "东东",
+     "泉英俊",
+     "阿sir",
+     "淡然",
+     "大黑"
+    ]
+   ],
+   "mvp": "小铭",
+   "records": [
+    {
+     "ast": 4,
+     "blk": 0,
+     "pts": 16,
+     "reb": 0,
+     "stl": 0,
+     "result": "W",
+     "nickname": "底角",
+     "roundNumber": 1
+    },
+    {
+     "ast": 4,
+     "blk": 0,
+     "pts": 0,
+     "reb": 2,
+     "stl": 4,
+     "result": "W",
+     "nickname": "乔老板",
+     "roundNumber": 1
+    },
+    {
+     "ast": 3,
+     "blk": 0,
+     "pts": 19,
+     "reb": 0,
+     "stl": 1,
+     "result": "W",
+     "nickname": "小铭",
+     "roundNumber": 1
+    },
+    {
+     "ast": 2,
+     "blk": 0,
+     "pts": 5,
+     "reb": 1,
+     "stl": 0,
+     "result": "W",
+     "nickname": "轩少",
+     "roundNumber": 1
+    },
+    {
+     "ast": 0,
+     "blk": 0,
+     "pts": 0,
+     "reb": 8,
+     "stl": 1,
+     "result": "W",
+     "nickname": "老胡",
+     "roundNumber": 1
+    },
+    {
+     "ast": 3,
+     "blk": 0,
+     "pts": 19,
+     "reb": 1,
+     "stl": 1,
+     "result": "L",
+     "nickname": "小凯",
+     "roundNumber": 1
+    },
+    {
+     "ast": 0,
+     "blk": 0,
+     "pts": 8,
+     "reb": 0,
+     "stl": 0,
+     "result": "L",
+     "nickname": "山王",
+     "roundNumber": 1
+    },
+    {
+     "ast": 0,
+     "blk": 0,
+     "pts": 5,
+     "reb": 0,
+     "stl": 0,
+     "result": "L",
+     "nickname": "白云",
+     "roundNumber": 1
+    },
+    {
+     "ast": 6,
+     "blk": 2,
+     "pts": 6,
+     "reb": 8,
+     "stl": 0,
+     "result": "L",
+     "nickname": "仙人掌",
+     "roundNumber": 1
+    },
+    {
+     "ast": 1,
+     "blk": 0,
+     "pts": 0,
+     "reb": 2,
+     "stl": 1,
+     "result": "L",
+     "nickname": "蛋面",
+     "roundNumber": 1
+    },
+    {
+     "ast": 6,
+     "blk": 0,
+     "pts": 11,
+     "reb": 3,
+     "stl": 2,
+     "result": "W",
+     "nickname": "底角",
+     "roundNumber": 2
+    },
+    {
+     "ast": 2,
+     "blk": 0,
+     "pts": 5,
+     "reb": 0,
+     "stl": 1,
+     "result": "W",
+     "nickname": "乔老板",
+     "roundNumber": 2
+    },
+    {
+     "ast": 2,
+     "blk": 0,
+     "pts": 16,
+     "reb": 1,
+     "stl": 0,
+     "result": "W",
+     "nickname": "小铭",
+     "roundNumber": 2
+    },
+    {
+     "ast": 2,
+     "blk": 0,
+     "pts": 0,
+     "reb": 3,
+     "stl": 0,
+     "result": "W",
+     "nickname": "轩少",
+     "roundNumber": 2
+    },
+    {
+     "ast": 0,
+     "blk": 3,
+     "pts": 2,
+     "reb": 6,
+     "stl": 0,
+     "result": "W",
+     "nickname": "老胡",
+     "roundNumber": 2
+    },
+    {
+     "ast": 4,
+     "blk": 0,
+     "pts": 12,
+     "reb": 1,
+     "stl": 0,
+     "result": "L",
+     "nickname": "小凯",
+     "roundNumber": 2
+    },
+    {
+     "ast": 0,
+     "blk": 0,
+     "pts": 13,
+     "reb": 0,
+     "stl": 1,
+     "result": "L",
+     "nickname": "山王",
+     "roundNumber": 2
+    },
+    {
+     "ast": 2,
+     "blk": 0,
+     "pts": 2,
+     "reb": 0,
+     "stl": 1,
+     "result": "L",
+     "nickname": "白云",
+     "roundNumber": 2
+    },
+    {
+     "ast": 1,
+     "blk": 1,
+     "pts": 3,
+     "reb": 8,
+     "stl": 0,
+     "result": "L",
+     "nickname": "仙人掌",
+     "roundNumber": 2
+    },
+    {
+     "ast": 3,
+     "blk": 0,
+     "pts": 3,
+     "reb": 4,
+     "stl": 0,
+     "result": "L",
+     "nickname": "蛋面",
+     "roundNumber": 2
+    },
+    {
+     "ast": 5,
+     "blk": 0,
+     "pts": 6,
+     "reb": 1,
+     "stl": 0,
+     "result": "W",
+     "nickname": "底角",
+     "roundNumber": 3
+    },
+    {
+     "ast": 1,
+     "blk": 0,
+     "pts": 6,
+     "reb": 0,
+     "stl": 1,
+     "result": "W",
+     "nickname": "乔老板",
+     "roundNumber": 3
+    },
+    {
+     "ast": 2,
+     "blk": 0,
+     "pts": 12,
+     "reb": 1,
+     "stl": 2,
+     "result": "W",
+     "nickname": "小铭",
+     "roundNumber": 3
+    },
+    {
+     "ast": 1,
+     "blk": 0,
+     "pts": 7,
+     "reb": 2,
+     "stl": 1,
+     "result": "W",
+     "nickname": "轩少",
+     "roundNumber": 3
+    },
+    {
+     "ast": 3,
+     "blk": 1,
+     "pts": 4,
+     "reb": 9,
+     "stl": 0,
+     "result": "W",
+     "nickname": "老胡",
+     "roundNumber": 3
+    },
+    {
+     "ast": 1,
+     "blk": 0,
+     "pts": 8,
+     "reb": 2,
+     "stl": 0,
+     "result": "L",
+     "nickname": "淡然",
+     "roundNumber": 3
+    },
+    {
+     "ast": 3,
+     "blk": 0,
+     "pts": 6,
+     "reb": 0,
+     "stl": 0,
+     "result": "L",
+     "nickname": "Stephen丿乄Curry",
+     "roundNumber": 3
+    },
+    {
+     "ast": 0,
+     "blk": 1,
+     "pts": 0,
+     "reb": 1,
+     "stl": 0,
+     "result": "L",
+     "nickname": "大黑",
+     "roundNumber": 3
+    },
+    {
+     "ast": 2,
+     "blk": 1,
+     "pts": 6,
+     "reb": 7,
+     "stl": 0,
+     "result": "L",
+     "nickname": "I Jimmy丶Butler",
+     "roundNumber": 3
+    },
+    {
+     "ast": 0,
+     "blk": 0,
+     "pts": 4,
+     "reb": 0,
+     "stl": 0,
+     "result": "L",
+     "nickname": "王建国",
+     "roundNumber": 3
+    },
+    {
+     "ast": 3,
+     "blk": 0,
+     "pts": 14,
+     "reb": 1,
+     "stl": 4,
+     "result": "L",
+     "nickname": "底角",
+     "roundNumber": 4
+    },
+    {
+     "ast": 3,
+     "blk": 1,
+     "pts": 5,
+     "reb": 1,
+     "stl": 1,
+     "result": "L",
+     "nickname": "乔老板",
+     "roundNumber": 4
+    },
+    {
+     "ast": 2,
+     "blk": 0,
+     "pts": 10,
+     "reb": 0,
+     "stl": 0,
+     "result": "L",
+     "nickname": "小铭",
+     "roundNumber": 4
+    },
+    {
+     "ast": 1,
+     "blk": 0,
+     "pts": 0,
+     "reb": 1,
+     "stl": 0,
+     "result": "L",
+     "nickname": "轩少",
+     "roundNumber": 4
+    },
+    {
+     "ast": 1,
+     "blk": 0,
+     "pts": 0,
+     "reb": 8,
+     "stl": 1,
+     "result": "L",
+     "nickname": "老胡",
+     "roundNumber": 4
+    },
+    {
+     "ast": 0,
+     "blk": 0,
+     "pts": 9,
+     "reb": 1,
+     "stl": 0,
+     "result": "W",
+     "nickname": "淡然",
+     "roundNumber": 4
+    },
+    {
+     "ast": 4,
+     "blk": 0,
+     "pts": 14,
+     "reb": 0,
+     "stl": 1,
+     "result": "W",
+     "nickname": "Stephen丿乄Curry",
+     "roundNumber": 4
+    },
+    {
+     "ast": 1,
+     "blk": 0,
+     "pts": 0,
+     "reb": 0,
+     "stl": 1,
+     "result": "W",
+     "nickname": "大黑",
+     "roundNumber": 4
+    },
+    {
+     "ast": 4,
+     "blk": 0,
+     "pts": 6,
+     "reb": 12,
+     "stl": 0,
+     "result": "W",
+     "nickname": "I Jimmy丶Butler",
+     "roundNumber": 4
+    },
+    {
+     "ast": 0,
+     "blk": 1,
+     "pts": 6,
+     "reb": 2,
+     "stl": 0,
+     "result": "W",
+     "nickname": "王建国",
+     "roundNumber": 4
+    },
+    {
+     "ast": 4,
+     "blk": 0,
+     "pts": 8,
+     "reb": 3,
+     "stl": 1,
+     "result": "W",
+     "nickname": "底角",
+     "roundNumber": 5
+    },
+    {
+     "ast": 4,
+     "blk": 0,
+     "pts": 9,
+     "reb": 1,
+     "stl": 0,
+     "result": "W",
+     "nickname": "乔老板",
+     "roundNumber": 5
+    },
+    {
+     "ast": 2,
+     "blk": 0,
+     "pts": 4,
+     "reb": 1,
+     "stl": 0,
+     "result": "W",
+     "nickname": "小铭",
+     "roundNumber": 5
+    },
+    {
+     "ast": 1,
+     "blk": 0,
+     "pts": 10,
+     "reb": 2,
+     "stl": 1,
+     "result": "W",
+     "nickname": "轩少",
+     "roundNumber": 5
+    },
+    {
+     "ast": 4,
+     "blk": 0,
+     "pts": 6,
+     "reb": 9,
+     "stl": 0,
+     "result": "W",
+     "nickname": "老胡",
+     "roundNumber": 5
+    },
+    {
+     "ast": 0,
+     "blk": 0,
+     "pts": 2,
+     "reb": 0,
+     "stl": 0,
+     "result": "L",
+     "nickname": "岛屿无回信",
+     "roundNumber": 5
+    },
+    {
+     "ast": 3,
+     "blk": 0,
+     "pts": 18,
+     "reb": 1,
+     "stl": 1,
+     "result": "L",
+     "nickname": "MacFans琥狸",
+     "roundNumber": 5
+    },
+    {
+     "ast": 2,
+     "blk": 0,
+     "pts": 2,
+     "reb": 3,
+     "stl": 1,
+     "result": "L",
+     "nickname": "贫僧涅槃重生",
+     "roundNumber": 5
+    },
+    {
+     "ast": 2,
+     "blk": 1,
+     "pts": 6,
+     "reb": 2,
+     "stl": 0,
+     "result": "L",
+     "nickname": "EVG无敌锁",
+     "roundNumber": 5
+    },
+    {
+     "ast": 0,
+     "blk": 1,
+     "pts": 4,
+     "reb": 3,
+     "stl": 0,
+     "result": "L",
+     "nickname": "你好啊你好你好",
+     "roundNumber": 5
+    },
+    {
+     "ast": 3,
+     "blk": 0,
+     "pts": 14,
+     "reb": 0,
+     "stl": 0,
+     "result": "W",
+     "nickname": "底角",
+     "roundNumber": 6
+    },
+    {
+     "ast": 3,
+     "blk": 0,
+     "pts": 7,
+     "reb": 1,
+     "stl": 1,
+     "result": "W",
+     "nickname": "乔老板",
+     "roundNumber": 6
+    },
+    {
+     "ast": 3,
+     "blk": 0,
+     "pts": 9,
+     "reb": 0,
+     "stl": 0,
+     "result": "W",
+     "nickname": "小铭",
+     "roundNumber": 6
+    },
+    {
+     "ast": 0,
+     "blk": 0,
+     "pts": 3,
+     "reb": 4,
+     "stl": 0,
+     "result": "W",
+     "nickname": "轩少",
+     "roundNumber": 6
+    },
+    {
+     "ast": 4,
+     "blk": 2,
+     "pts": 6,
+     "reb": 12,
+     "stl": 1,
+     "result": "W",
+     "nickname": "老胡",
+     "roundNumber": 6
+    },
+    {
+     "ast": 2,
+     "blk": 0,
+     "pts": 11,
+     "reb": 0,
+     "stl": 0,
+     "result": "L",
+     "nickname": "AB丶迪克牛仔",
+     "roundNumber": 6
+    },
+    {
+     "ast": 6,
+     "blk": 0,
+     "pts": 10,
+     "reb": 0,
+     "stl": 1,
+     "result": "L",
+     "nickname": "lang风行",
+     "roundNumber": 6
+    },
+    {
+     "ast": 0,
+     "blk": 0,
+     "pts": 5,
+     "reb": 0,
+     "stl": 1,
+     "result": "L",
+     "nickname": "13",
+     "roundNumber": 6
+    },
+    {
+     "ast": 4,
+     "blk": 0,
+     "pts": 2,
+     "reb": 16,
+     "stl": 1,
+     "result": "L",
+     "nickname": "上官影永",
+     "roundNumber": 6
+    },
+    {
+     "ast": 2,
+     "blk": 0,
+     "pts": 8,
+     "reb": 2,
+     "stl": 0,
+     "result": "L",
+     "nickname": "就是D丶本分",
+     "roundNumber": 6
+    },
+    {
+     "ast": 4,
+     "blk": 0,
+     "pts": 12,
+     "reb": 0,
+     "stl": 0,
+     "result": "W",
+     "nickname": "底角",
+     "roundNumber": 7
+    },
+    {
+     "ast": 3,
+     "blk": 0,
+     "pts": 6,
+     "reb": 0,
+     "stl": 1,
+     "result": "W",
+     "nickname": "乔老板",
+     "roundNumber": 7
+    },
+    {
+     "ast": 1,
+     "blk": 0,
+     "pts": 18,
+     "reb": 0,
+     "stl": 1,
+     "result": "W",
+     "nickname": "小铭",
+     "roundNumber": 7
+    },
+    {
+     "ast": 2,
+     "blk": 0,
+     "pts": 8,
+     "reb": 4,
+     "stl": 2,
+     "result": "W",
+     "nickname": "轩少",
+     "roundNumber": 7
+    },
+    {
+     "ast": 2,
+     "blk": 0,
+     "pts": 6,
+     "reb": 8,
+     "stl": 0,
+     "result": "W",
+     "nickname": "老胡",
+     "roundNumber": 7
+    },
+    {
+     "ast": 4,
+     "blk": 0,
+     "pts": 15,
+     "reb": 1,
+     "stl": 0,
+     "result": "L",
+     "nickname": "范佩西pcy",
+     "roundNumber": 7
+    },
+    {
+     "ast": 2,
+     "blk": 0,
+     "pts": 13,
+     "reb": 1,
+     "stl": 0,
+     "result": "L",
+     "nickname": "突击小能手",
+     "roundNumber": 7
+    },
+    {
+     "ast": 3,
+     "blk": 0,
+     "pts": 4,
+     "reb": 5,
+     "stl": 1,
+     "result": "L",
+     "nickname": "乄星空丶摩羯",
+     "roundNumber": 7
+    },
+    {
+     "ast": 3,
+     "blk": 0,
+     "pts": 0,
+     "reb": 0,
+     "stl": 2,
+     "result": "L",
+     "nickname": "TONGKING",
+     "roundNumber": 7
+    },
+    {
+     "ast": 1,
+     "blk": 0,
+     "pts": 14,
+     "reb": 6,
+     "stl": 0,
+     "result": "L",
+     "nickname": "AB丶瞬息",
+     "roundNumber": 7
+    }
+   ],
+   "bracket": {
+    "rounds": []
+   },
+   "revision": 1,
+   "createdAt": "2026-11-23T18:29:31.505Z"
+  },
   {
    "id": 1,
    "name": "第一届收徒杯",
