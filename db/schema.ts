@@ -1,6 +1,17 @@
 import { sql } from 'drizzle-orm';
 import { bigint, check, date, index, integer, jsonb, pgTable, text, timestamp, uniqueIndex } from 'drizzle-orm/pg-core';
 
+export const nickAliases = pgTable('nick_aliases', {
+  id: bigint('id', { mode: 'number' }).primaryKey().generatedByDefaultAsIdentity(),
+  alias: text('alias').notNull(),
+  nickname: text('nickname').notNull(),
+  createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+}, table => [
+  uniqueIndex('nick_aliases_alias_idx').on(table.alias),
+  check('nick_aliases_alias_check', sql`char_length(btrim(${table.alias})) BETWEEN 1 AND 80`),
+  check('nick_aliases_nickname_check', sql`char_length(btrim(${table.nickname})) BETWEEN 1 AND 80`),
+]);
+
 export const games = pgTable('games', {
   id: bigint('id', { mode: 'number' }).primaryKey().generatedByDefaultAsIdentity(),
   date: date('date', { mode: 'string' }).notNull(),

@@ -2,7 +2,7 @@ import type { Config } from '@netlify/functions';
 import { getUser, verifyRequestOrigin } from '@netlify/identity';
 import { and, desc, eq, inArray, sql } from 'drizzle-orm';
 import { getDb } from '../../db/index.js';
-import { games, seasons, tournaments } from '../../db/schema.js';
+import { games, seasons, tournaments, nickAliases } from '../../db/schema.js';
 
 import { aggregate, chinaDate } from '../../lib/statistics.js';
 import { getStore } from '@netlify/blobs';
@@ -12,6 +12,19 @@ import { ensureCurrentSeason } from '../../lib/seasons.js';
 
 type Game = typeof games.$inferSelect;
 type GameInput = Omit<Game, 'id'>;
+
+// 昵称映射表：游戏ID → 联盟昵称（nick_aliases 表，全部为管理员确认过的认领关系）
+// 匹配时忽略大小写与装饰字符（丿丶丨等），识别与导入两条路径都会自动套用
+const aliasNorm = (v: string) => v.normalize('NFKC').toLowerCase().replace(/[\s丿丶丨㇏亻彳·\-_]+/g, '');
+async function loadAliasMap(db: any): Promise<Map<string, string>> {
+  try {
+    const rows = await db.select().from(nickAliases);
+    return new Map(rows.map((r: any) => [aliasNorm(r.alias as string), r.nickname as string]));
+  } catch { return new Map(); } // 迁移未应用时静默降级，不影响主流程
+}
+function applyAlias(map: Map<string, string>, nickname: string): string {
+  return map.get(aliasNorm(nickname)) ?? nickname;
+}
 
 function parseGame(body: unknown): GameInput | null {
   if (!body || typeof body !== 'object' || Array.isArray(body)) return null;
@@ -374,10 +387,18 @@ export default async (request: Request) => {
           const nickname = typeof r?.nickname === 'string' ? r.nickname.trim().slice(0,80) : '';
           return { nickname, ...Object.fromEntries(['pts','reb','ast','stl','blk'].map(k => [k, Number.isSafeInteger(r?.[k]) && r[k]>=0 && r[k]<=10000 ? r[k] : null])), result: ['W','L'].includes(r?.result) ? r.result : '', known: known.some(p=>p.nickname===nickname) };
         });
-        // 自动认领：识别名包含已知昵称时直接归入（如「Lastdance轩少」→「轩少」）；同长歧义则留人工核对
+        // 自动认领：先查映射表（用户确认过的游戏ID→昵称关系），再做包含匹配；同长歧义留人工核对
         const autoClaims: string[] = [];
+        const aliasMap = await loadAliasMap(db);
         for (const r of rows) {
           if (!r.nickname || r.known) continue;
+          const hit = aliasMap.get(aliasNorm(r.nickname));
+          if (hit) {
+            autoClaims.push(`已按映射表认领「${r.nickname}」→「${hit}」`);
+            r.nickname = hit;
+            r.known = known.some(p => p.nickname === hit);
+            continue;
+          }
           const candidates = known.map(p => p.nickname).filter(k => k.length >= 2 && r.nickname.includes(k));
           candidates.sort((a, b) => b.length - a.length);
           if (candidates.length && !(candidates.length > 1 && candidates[0].length === candidates[1].length)) {
@@ -422,7 +443,8 @@ export default async (request: Request) => {
         return json({ rows, warnings });
       }
       if (!Array.isArray(body?.rows) || body.rows.length<1 || body.rows.length>200 || body.confirm !== true) return json({ error: '请核对并确认 1–200 条比赛记录' }, 400);
-      const values = body.rows.map(parseGame);
+      const aliasMap = await loadAliasMap(db);
+      const values = body.rows.map(parseGame).map((v: GameInput | null) => v && typeof v.nickname === 'string' ? { ...v, nickname: applyAlias(aliasMap, v.nickname) } : v);
       if (values.some((v: GameInput | null)=> !v || v.roundNumber===null)) return json({ error: '存在无效行，请检查日期、场次、昵称、胜负和五项整数数据' }, 400);
       const changed = await db.insert(games).values(values as GameInput[]).onConflictDoNothing({ target: [games.date, games.roundNumber, games.nickname] }).returning({ id: games.id });
       return json({ count: changed.length, skipped: values.length - changed.length },201);
