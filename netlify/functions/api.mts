@@ -197,10 +197,11 @@ export default async (request: Request) => {
   const url = new URL(request.url);
   const path = url.pathname;
   const imageRead = path === '/api/round-image' && request.method === 'GET';
-  const publicRead = (path === '/api/public' && request.method === 'GET') || imageRead;
+  const tournamentImageRead = path === '/api/tournament-image' && request.method === 'GET';
+  const publicRead = (path === '/api/public' && request.method === 'GET') || imageRead || tournamentImageRead;
   const tournamentCollection = path === '/api/admin/tournaments';
   const tournamentMatch = path.match(/^\/api\/admin\/tournaments\/(\d+)$/);
-  const extra = ['/api/admin/upload', '/api/admin/recognize', '/api/admin/import', '/api/admin/seasons', '/api/admin/rename', '/api/admin/round-image'].includes(path);
+  const extra = ['/api/admin/upload', '/api/admin/recognize', '/api/admin/import', '/api/admin/seasons', '/api/admin/rename', '/api/admin/round-image', '/api/admin/tournament-image'].includes(path);
   const collection = path === '/api/admin/games';
   const match = path.match(/^\/api\/admin\/games\/(\d+)$/);
   if (!publicRead && !collection && !match && !extra && !tournamentCollection && !tournamentMatch) return json({ error: '接口不存在' }, 404);
@@ -227,11 +228,29 @@ export default async (request: Request) => {
       if (!matched) return json({ error: '截图数据异常' }, 500);
       return new Response(Buffer.from(matched[2], 'base64'), { headers: { 'Content-Type': matched[1], 'Cache-Control': 'public, max-age=300' } });
     }
+    // 公开读：按届取锦标赛战绩图（键 tournament-{size}:{id}:{index}）
+    if (tournamentImageRead) {
+      const id = Number(url.searchParams.get('id'));
+      const index = Number(url.searchParams.get('index'));
+      const size = url.searchParams.get('size') === 'image' ? 'image' : 'thumb';
+      if (!Number.isSafeInteger(id) || id < 1 || !Number.isSafeInteger(index) || index < 1 || index > 50) return json({ error: '参数无效' }, 400);
+      const stored = await uploads().get(`tournament-${size}:${id}:${index}`);
+      if (typeof stored !== 'string') return json({ error: '暂无图片' }, 404);
+      const matched = /^data:(image\/(?:jpeg|png|webp));base64,(.+)$/.exec(stored);
+      if (!matched) return json({ error: '图片数据异常' }, 500);
+      return new Response(Buffer.from(matched[2], 'base64'), { headers: { 'Content-Type': matched[1], 'Cache-Control': 'public, max-age=300' } });
+    }
     // 列出已有截图的场次（公开榜与后台共用）
     const listRoundImages = async () => {
       const listed = await uploads().list({ prefix: 'round-thumb:' }).catch(() => ({ blobs: [] as { key: string }[] }));
       return listed.blobs.map(b => /^round-thumb:(\d{4}-\d{2}-\d{2}):(\d+)$/.exec(b.key)).filter((m): m is RegExpExecArray => !!m)
         .map(m => ({ date: m[1], roundNumber: Number(m[2]) }));
+    };
+    // 列出已有战绩图的锦标赛（公开页缩略图条用）
+    const listTournamentImages = async () => {
+      const listed = await uploads().list({ prefix: 'tournament-thumb:' }).catch(() => ({ blobs: [] as { key: string }[] }));
+      return listed.blobs.map(b => /^tournament-thumb:(\d+):(\d+)$/.exec(b.key)).filter((m): m is RegExpExecArray => !!m)
+        .map(m => ({ tournamentId: Number(m[1]), index: Number(m[2]) }));
     };
     if (path === '/api/admin/upload' && request.method === 'GET') {
       const key = url.searchParams.get('key') ?? '';
@@ -267,7 +286,7 @@ export default async (request: Request) => {
         db.select().from(seasons).orderBy(desc(seasons.startsOn)),
         archiveCompletedMonths(records),
       ]);
-      const payload = { games: records, players: aggregate(records), seasons: seasonRows, honors, tournaments: await db.select().from(tournaments).orderBy(desc(tournaments.date), desc(tournaments.id)), roundImages: await listRoundImages() };
+      const payload = { games: records, players: aggregate(records), seasons: seasonRows, honors, tournaments: await db.select().from(tournaments).orderBy(desc(tournaments.date), desc(tournaments.id)), roundImages: await listRoundImages(), tournamentImages: await listTournamentImages() };
       // 公开读加边缘缓存：2 分钟新鲜 + 10 分钟回源宽限，高峰访问不再反复唤醒数据库；后台读保持实时
       if (publicRead) return new Response(JSON.stringify(payload), { headers: { 'Content-Type': 'application/json; charset=utf-8', 'Cache-Control': 'public, max-age=120, stale-while-revalidate=600' } });
       return json(payload);
@@ -280,7 +299,7 @@ export default async (request: Request) => {
       let body: any;
       try { body = JSON.parse(raw); } catch { return json({ error: '提交格式不正确' }, 400); }
       if (!body || typeof body !== 'object' || Array.isArray(body)) return json({ error: '提交格式不正确' }, 400);
-      const fields = path.endsWith('/recognize') ? ['image', 'resolve'] : path.endsWith('/upload') ? ['image'] : path.endsWith('/seasons') ? ['name', 'confirm'] : path.endsWith('/rename') ? ['date', 'from', 'to', 'confirm', 'scope', 'tournamentId'] : path.endsWith('/round-image') ? ['date', 'roundNumber', 'image', 'thumb', 'remove'] : ['rows', 'confirm'];
+      const fields = path.endsWith('/recognize') ? ['image', 'resolve'] : path.endsWith('/upload') ? ['image'] : path.endsWith('/seasons') ? ['name', 'confirm'] : path.endsWith('/rename') ? ['date', 'from', 'to', 'confirm', 'scope', 'tournamentId'] : path.endsWith('/round-image') ? ['date', 'roundNumber', 'image', 'thumb', 'remove'] : path.endsWith('/tournament-image') ? ['tournamentId', 'index', 'image', 'thumb', 'remove'] : ['rows', 'confirm'];
       if (Object.keys(body).some(key => !fields.includes(key))) return json({ error: '提交包含不支持的字段' }, 400);
       if (path.endsWith('/seasons')) {
         const date = chinaDate();
@@ -380,6 +399,21 @@ export default async (request: Request) => {
           .returning({ id: games.id });
         const alias = await maybeUpsertAlias();
         return json({ updated: updated.length, nicknames: names, to, alias });
+      }
+      // 锦标赛战绩图：每届按序号存（tournament-{size}:{id}:{index}），覆盖写天然去重；remove 可移除
+      if (path.endsWith('/tournament-image')) {
+        const tid = Number(body?.tournamentId), idx = Number(body?.index);
+        if (!Number.isSafeInteger(tid) || tid < 1 || !Number.isSafeInteger(idx) || idx < 1 || idx > 50) return json({ error: '锦标赛或图片序号无效' }, 400);
+        const imgKey = `tournament-image:${tid}:${idx}`, thumbKey = `tournament-thumb:${tid}:${idx}`;
+        if (body.remove === true) {
+          await Promise.all([uploads().delete(imgKey).catch(() => null), uploads().delete(thumbKey).catch(() => null)]);
+          return json({ removed: true });
+        }
+        const validImage = (v: unknown, max: number) => typeof v === 'string' && v.length <= max && /^data:image\/(jpeg|png|webp);base64,[A-Za-z0-9+/=]+$/.test(v);
+        if (!validImage(body.image, 1_700_000) || !validImage(body.thumb, 500_000)) return json({ error: '图片格式无效，请使用 PNG/JPEG/WebP' }, 400);
+        await uploads().set(imgKey, body.image);
+        await uploads().set(thumbKey, body.thumb);
+        return json({ ok: true, tournamentId: tid, index: idx });
       }
       if (path.endsWith('/upload')) {
         if (typeof body.image !== 'string' || !/^data:image\/(png|jpeg|webp);base64,[A-Za-z0-9+/=]+$/.test(body.image)) return json({ error: '图片格式无效' }, 400);

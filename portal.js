@@ -18,6 +18,7 @@ let allGames = [];
 let allPlayers = [];
 let historicGames = [];
 let allTournaments = [];
+let allTournamentImages = [];
 let seasonRows = [];
 let honorHistory = [];
 let scopeInitialized = false;
@@ -905,7 +906,8 @@ async function refreshPublic() {
   syncRoundImages(data.roundImages);
     honorHistory = data.honors;
     allTournaments = data.tournaments || [];
-    renderTournamentSection(allTournaments, escapeHtml, commentButton);
+    allTournamentImages = data.tournamentImages || [];
+    renderTournamentSection(allTournaments, escapeHtml, commentButton, allTournamentImages);
     populateSeasonScope();
     applyScope();
     updateMonth();
@@ -934,6 +936,10 @@ function initializePublic() {
   select('#publicGameRows').addEventListener('click', event => {
     const img = event.target.closest('.round-thumb');
     if (img?.dataset.full) showImageOverlay(img.dataset.full, '当场比赛截图');
+  });
+  document.addEventListener('click', event => {
+    const img = event.target.closest('.tournament-thumb');
+    if (img?.dataset.full) showImageOverlay(img.dataset.full, '锦标赛战绩图');
   });
   if (/^#(?:access_token|confirmation_token|recovery_token|invite_token|email_change_token|error)=/.test(location.hash)) {
     location.replace(`/admin.html${location.hash}`);
