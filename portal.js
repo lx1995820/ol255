@@ -779,12 +779,12 @@ function playerTournamentHistory(nickname) {
   for (const t of allTournaments) {
     const podium = Array.isArray(t.podium) ? t.podium : [];
     const placement = podium.findIndex(team => Array.isArray(team) && team.includes(nickname));
-    if (placement < 0) continue;
     const recs = (Array.isArray(t.records) ? t.records : []).filter(r => r.nickname === nickname);
+    if (placement < 0 && !recs.length) continue; // 既不在领奖台也没打过该届比赛 → 无关
     const games = recs.length;
     const wins = recs.filter(r => r.result === 'W').length;
     const avg = key => games ? recs.reduce((sum, r) => sum + (Number(r[key]) || 0), 0) / games : 0;
-    out.push({ tournament: t, placement, teammates: (podium[placement] || []).filter(n => n !== nickname), isMvp: t.mvp === nickname, games, wins, avg });
+    out.push({ tournament: t, placement: placement < 0 ? null : placement, teammates: placement >= 0 ? podium[placement].filter(n => n !== nickname) : [], isMvp: t.mvp === nickname, games, wins, avg });
   }
   return out;
 }
@@ -794,20 +794,23 @@ function badgeStrip(nickname) {
   if (!hist.length) return '';
   const counts = new Map();
   let mvps = 0;
-  hist.forEach(h => { counts.set(h.placement, (counts.get(h.placement) || 0) + 1); if (h.isMvp) mvps++; });
+  hist.forEach(h => { if (h.placement === null) return; counts.set(h.placement, (counts.get(h.placement) || 0) + 1); if (h.isMvp) mvps++; });
   const parts = [...counts.entries()].sort((a, b) => a[0] - b[0]).map(([p, n]) => `${PLACE_MEDALS[p] ?? '🏅'}×${n}`);
   if (mvps) parts.push(`⭐MVP×${mvps}`);
-  return `<span class="badge-strip" title="锦标赛徽章">${parts.join(' ')}</span>`;
+  return parts.length ? `<span class="badge-strip" title="锦标赛徽章">${parts.join(' ')}</span>` : '';
 }
 
 function tournamentBackHTML(nickname) {
   const hist = playerTournamentHistory(nickname);
   const head = `<div class="lookup-heading"><h3>${escapeHtml(nickname)}</h3>${badgeStrip(nickname)}<button type="button" class="flip-btn" data-flip>← 返回数据卡</button></div>`;
   if (!hist.length) return `${head}<p class="field-help">还没有锦标赛记录。</p>`;
+  const chipOf = h => h.placement === null
+    ? '<span class="place-chip place-chip-part">参赛</span>'
+    : `<span class="place-chip place-chip-${h.placement}">${PLACE_MEDALS[h.placement] ?? '🏅'} ${placeName(h.placement)}</span>`;
   return `${head}<p class="eyebrow">TOURNAMENT BOOK</p><h3 class="tournament-back-title">锦标赛荣誉簿</h3><div class="tournament-history">${hist.map(h => `
-    <article class="tournament-entry place-${h.placement}">
-      <div class="tournament-entry-head"><span class="place-chip place-chip-${h.placement}">${PLACE_MEDALS[h.placement] ?? '🏅'} ${placeName(h.placement)}</span><strong>${escapeHtml(h.tournament.name)}</strong><small>${escapeHtml(h.tournament.date)}</small>${h.isMvp ? '<span class="mvp-chip">⭐ 赛事MVP</span>' : ''}</div>
-      <p class="tournament-team">队友：${h.teammates.map(escapeHtml).join('、') || '—'}</p>
+    <article class="tournament-entry place-${h.placement ?? 'part'}">
+      <div class="tournament-entry-head">${chipOf(h)}<strong>${escapeHtml(h.tournament.name)}</strong><small>${escapeHtml(h.tournament.date)}</small>${h.isMvp ? '<span class="mvp-chip">⭐ 赛事MVP</span>' : ''}</div>
+      ${h.teammates.length ? `<p class="tournament-team">队友：${h.teammates.map(escapeHtml).join('、')}</p>` : ''}
       <p class="tournament-stats">${h.games ? `出场 ${h.games} · ${h.wins} 胜 · 场均 ${h.avg('pts').toFixed(1)} 分 / ${h.avg('reb').toFixed(1)} 板 / ${h.avg('ast').toFixed(1)} 助 / ${h.avg('stl').toFixed(1)} 断 / ${h.avg('blk').toFixed(1)} 帽` : '个人数据未录入'}</p>
     </article>`).join('')}</div>`;
 }
