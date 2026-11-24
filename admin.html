@@ -79,25 +79,6 @@
 <p id="seasonStatus"></p><form id="seasonForm"><label>新赛季名称<input id="seasonName" maxlength="60" required placeholder="例如：十一月赛季"></label><label class="inline-check"><input id="seasonConfirm" type="checkbox" required>我已确认，保留历史并从今天开启新赛季</label><button class="primary" type="submit">开启新赛季 →</button></form><p id="seasonMessage" role="status"></p>
 </section>
 <section id="tournamentAdmin" class="card"></section>
-<section class="card" id="trenameCard">
-<div class="card-title">
-<div>
-<p class="eyebrow">RENAME IN TOURNAMENT</p>
-<h2>锦标赛修改ID <small>同步改名比赛记录、领奖台与 MVP，成功后自动写入昵称映射</small></h2>
-</div>
-</div>
-<div class="form-grid four">
-<label>选择锦标赛<select id="trenameTournament" required></select></label>
-<label>原ID（模糊匹配）<input id="trenameFrom" maxlength="80" placeholder="如：Day1One" autocomplete="off" required></label>
-<label>目标ID<input id="trenameTo" list="nicknameList" maxlength="80" placeholder="如：小铭，可点选已有选手" autocomplete="off" required></label>
-<label class="rename-action"><span class="field-help">先预览，再确认</span><button id="trenamePreview" class="ghost" type="button">预览匹配 →</button></label>
-</div>
-<div id="trenamePreviewBox" hidden>
-<p id="trenameSummary" class="field-help"></p>
-<button id="trenameConfirm" class="primary" type="button">确认修改以上记录 →</button>
-</div>
-<p id="trenameStatus" class="field-help" role="status"></p>
-</section>
 <section class="admin-grid">
 <div class="card">
 <div class="card-title">
@@ -173,18 +154,20 @@
 <div class="card-title">
 <div>
 <p class="eyebrow">RENAME PLAYER</p>
-<h2>一键修改ID <small>仅影响所选日期的记录</small></h2>
+<h2>一键修改ID <small>预览 → 确认两段式；一次性游戏ID改名后自动写入昵称映射</small></h2>
 </div>
 </div>
 <div class="form-grid four">
-<label>比赛日期<input id="renameDate" type="date" required></label>
+<label>修改范围<select id="renameScope"><option value="games" selected>平时比赛（按日期）</option><option value="tournament">锦标赛</option></select></label>
+<label id="renameDateWrap">比赛日期<input id="renameDate" type="date" required></label>
+<label id="renameTournamentWrap" hidden>选择锦标赛<select id="renameTournament"></select></label>
 <label>原ID（模糊匹配）<input id="renameFrom" list="nicknameList" maxlength="80" placeholder="如：卡梅隆安东尼" autocomplete="off" required></label>
 <label>目标ID<input id="renameTo" list="nicknameList" maxlength="80" placeholder="如：恩比德，可点选已有选手" autocomplete="off" required></label>
 <label class="rename-action"><span class="field-help">先预览，再确认</span><button id="renamePreview" class="ghost" type="button">预览匹配 →</button></label>
 </div>
 <div id="renamePreviewBox" hidden>
 <p id="renameSummary" class="field-help"></p>
-<div class="table-wrap">
+<div class="table-wrap" id="renameRowsWrap">
 <table class="batch-table">
 <thead><tr><th>日期 / 场次</th><th>当前绰号</th><th>得分</th><th>篮板</th><th>助攻</th><th>抢断</th><th>盖帽</th><th>胜负</th></tr></thead>
 <tbody id="renameRows"></tbody>

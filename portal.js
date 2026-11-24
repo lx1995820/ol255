@@ -260,14 +260,13 @@ function resetRenamePreview() {
   select('#renameStatus').textContent = '';
 }
 
-// ===== 锦标赛修改ID：预览 → 确认两段式 =====
-function resetTRenamePreview() {
-  select('#trenamePreviewBox').hidden = true;
-  select('#trenameStatus').textContent = '';
-}
+// ===== 一键修改ID：平时比赛 / 锦标赛 双范围统一入口 =====
+function resetTRenamePreview() { resetRenamePreview(); }
 
-async function loadTRenameChoices() {
-  const selectEl = select('#trenameTournament');
+function renameScope() { return select('#renameScope').value === 'tournament' ? 'tournament' : 'games'; }
+
+async function loadRenameTournaments() {
+  const selectEl = select('#renameTournament');
   try {
     const data = await api('admin/tournaments');
     const list = data.tournaments || [];
@@ -277,71 +276,49 @@ async function loadTRenameChoices() {
   } catch { selectEl.innerHTML = '<option value="">加载失败，请刷新</option>'; }
 }
 
-async function previewTRename() {
-  resetTRenamePreview();
-  const tournamentId = Number(select('#trenameTournament').value);
-  const from = select('#trenameFrom').value.trim();
-  const to = select('#trenameTo').value.trim();
-  if (!tournamentId || !from || !to) { select('#trenameStatus').textContent = '请填完整：锦标赛、原ID、目标ID。'; return; }
-  if (from === to) { select('#trenameStatus').textContent = '原ID与目标ID相同，无需修改。'; return; }
-  const button = select('#trenamePreview');
-  button.disabled = true;
-  select('#trenameStatus').textContent = '正在匹配…';
-  try {
-    const data = await api('admin/rename', { method: 'POST', body: JSON.stringify({ scope: 'tournament', tournamentId, from, to }) });
-    if (!data.count) { select('#trenameStatus').textContent = data.message || '该届锦标赛没有匹配的记录。'; return; }
-    const parts = [`<strong>${data.count}</strong> 条比赛记录（第 ${data.rounds.join('、')} 场）`];
-    if (data.inPodium) parts.push('领奖台阵容');
-    if (data.isMvp) parts.push('赛事 MVP');
-    select('#trenameSummary').innerHTML = `匹配到 ${data.nicknames.map(n => `「${escapeHtml(n)}」`).join('、')}，将影响：${parts.join(' + ')}，全部改为「<strong>${escapeHtml(to)}</strong>」；只改这一届锦标赛，其他赛事不受影响：`;
-    select('#trenamePreviewBox').hidden = false;
-    select('#trenameStatus').textContent = '';
-    select('#trenamePreviewBox').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-  } catch (error) {
-    select('#trenameStatus').textContent = error.message || '匹配失败，请稍后重试。';
-  } finally { button.disabled = false; }
+function onRenameScopeChange() {
+  const isT = renameScope() === 'tournament';
+  select('#renameDateWrap').hidden = isT;
+  select('#renameTournamentWrap').hidden = !isT;
+  if (isT) loadRenameTournaments();
+  resetRenamePreview();
 }
 
-async function confirmTRename() {
-  const tournamentId = Number(select('#trenameTournament').value);
-  const from = select('#trenameFrom').value.trim();
-  const to = select('#trenameTo').value.trim();
-  const button = select('#trenameConfirm');
-  button.disabled = true;
-  select('#trenameStatus').textContent = '正在修改…';
-  try {
-    const data = await api('admin/rename', { method: 'POST', body: JSON.stringify({ scope: 'tournament', tournamentId, from, to, confirm: true }) });
-    select('#trenamePreviewBox').hidden = true;
-    const scopeParts = [`${data.updated} 条比赛记录`];
-    if (data.inPodium) scopeParts.push('领奖台');
-    if (data.isMvp) scopeParts.push('MVP');
-    select('#trenameStatus').textContent = `完成：已把 ${data.nicknames.map(n => `「${n}」`).join('、')} 改为「${data.to}」（${scopeParts.join(' + ')}）。${data.alias ? '已自动写入昵称映射表，下次识别自动归位。' : ''}`;
-    select('#trenameFrom').value = '';
-    if (loadTournaments) await loadTournaments();
-  } catch (error) {
-    select('#trenameStatus').textContent = error.message || '修改失败，请稍后重试。';
-  } finally { button.disabled = false; }
-}
 
 
 async function previewRename() {
+  const scope = renameScope();
   const date = select('#renameDate').value;
+  const tournamentId = Number(select('#renameTournament').value);
   const from = select('#renameFrom').value.trim();
   const to = select('#renameTo').value.trim();
-  if (!date || !from || !to) { select('#renameStatus').textContent = '请填完整：比赛日期、原ID、目标ID。'; return; }
+  if (scope === 'games' && !date) { select('#renameStatus').textContent = '请选择比赛日期。'; return; }
+  if (scope === 'tournament' && !tournamentId) { select('#renameStatus').textContent = '请选择锦标赛。'; return; }
+  if (!from || !to) { select('#renameStatus').textContent = '请填完整：原ID、目标ID。'; return; }
   if (from === to) { select('#renameStatus').textContent = '原ID与目标ID相同，无需修改。'; return; }
   const button = select('#renamePreview');
   button.disabled = true;
   select('#renameStatus').textContent = '正在匹配…';
   try {
-    const data = await api('admin/rename', { method: 'POST', body: JSON.stringify({ date, from, to }) });
+    const payload = scope === 'tournament' ? { scope, tournamentId, from, to } : { date, from, to };
+    const data = await api('admin/rename', { method: 'POST', body: JSON.stringify(payload) });
     if (!data.count) {
       resetRenamePreview();
-      select('#renameStatus').textContent = data.message || '该日期下没有匹配的记录。';
+      select('#renameStatus').textContent = data.message || '没有匹配的记录。';
       return;
     }
-    select('#renameSummary').innerHTML = `匹配到 <strong>${data.count}</strong> 条记录（${data.nicknames.map(n => `「${escapeHtml(n)}」`).join('、')}），将全部改为「<strong>${escapeHtml(to)}</strong>」；只改 ${escapeHtml(date)} 这一天，其他日期不受影响：`;
-    select('#renameRows').innerHTML = data.rows.map(r => `<tr><td>${escapeHtml(r.date)}${r.roundNumber != null ? ' · 第' + r.roundNumber + '场' : ''}</td><td><strong>${escapeHtml(r.nickname)}</strong></td>${metrics.map(key => `<td>${r[key] ?? ''}</td>`).join('')}<td>${escapeHtml(r.result || '')}</td></tr>`).join('');
+    if (scope === 'tournament') {
+      const parts = [`<strong>${data.count}</strong> 条比赛记录（第 ${data.rounds.join('、')} 场）`];
+      if (data.inPodium) parts.push('领奖台阵容');
+      if (data.isMvp) parts.push('赛事 MVP');
+      select('#renameSummary').innerHTML = `匹配到 ${data.nicknames.map(n => `「${escapeHtml(n)}」`).join('、')}，将影响：${parts.join(' + ')}，全部改为「<strong>${escapeHtml(to)}</strong>」；只改这一届锦标赛，其他赛事不受影响：`;
+      select('#renameRows').innerHTML = '';
+      select('#renameRowsWrap').hidden = true;
+    } else {
+      select('#renameSummary').innerHTML = `匹配到 <strong>${data.count}</strong> 条记录（${data.nicknames.map(n => `「${escapeHtml(n)}」`).join('、')}），将全部改为「<strong>${escapeHtml(to)}</strong>」；只改 ${escapeHtml(date)} 这一天，其他日期不受影响：`;
+      select('#renameRows').innerHTML = data.rows.map(r => `<tr><td>${escapeHtml(r.date)}${r.roundNumber != null ? ' · 第' + r.roundNumber + '场' : ''}</td><td><strong>${escapeHtml(r.nickname)}</strong></td>${metrics.map(key => `<td>${r[key] ?? ''}</td>`).join('')}<td>${escapeHtml(r.result || '')}</td></tr>`).join('');
+      select('#renameRowsWrap').hidden = false;
+    }
     select('#renamePreviewBox').hidden = false;
     select('#renameStatus').textContent = '';
     select('#renamePreviewBox').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
@@ -351,16 +328,22 @@ async function previewRename() {
 }
 
 async function confirmRename() {
+  const scope = renameScope();
   const date = select('#renameDate').value;
+  const tournamentId = Number(select('#renameTournament').value);
   const from = select('#renameFrom').value.trim();
   const to = select('#renameTo').value.trim();
   const button = select('#renameConfirm');
   button.disabled = true;
   select('#renameStatus').textContent = '正在修改…';
   try {
-    const data = await api('admin/rename', { method: 'POST', body: JSON.stringify({ date, from, to, confirm: true }) });
+    const payload = scope === 'tournament' ? { scope, tournamentId, from, to, confirm: true } : { date, from, to, confirm: true };
+    const data = await api('admin/rename', { method: 'POST', body: JSON.stringify(payload) });
     select('#renamePreviewBox').hidden = true;
-    select('#renameStatus').textContent = `完成：已把 ${data.nicknames.map(n => `「${n}」`).join('、')} 的 ${data.updated} 条记录改为「${data.to}」（仅限 ${date} 当天）。${data.alias ? '已自动写入昵称映射表，下次识别自动归位。' : ''}`;
+    const scopeText = scope === 'tournament'
+      ? [`${data.updated} 条比赛记录`, ...(data.inPodium ? ['领奖台'] : []), ...(data.isMvp ? ['MVP'] : [])].join(' + ')
+      : `${data.updated} 条记录（仅限 ${date} 当天）`;
+    select('#renameStatus').textContent = `完成：已把 ${data.nicknames.map(n => `「${n}」`).join('、')} 改为「${data.to}」（${scopeText}）。${data.alias ? '已自动写入昵称映射表，下次识别自动归位。' : ''}`;
     select('#renameFrom').value = '';
     await loadAdmin();
   } catch (error) {
@@ -551,13 +534,8 @@ async function initializeAdmin() {
   select('#renameDate').value = today();
   select('#renamePreview').onclick = previewRename;
   select('#renameConfirm').onclick = confirmRename;
-  ['#renameDate', '#renameFrom', '#renameTo'].forEach(id => { select(id).oninput = resetRenamePreview; });
-  // 锦标赛修改ID 绑定
-  loadTRenameChoices();
-  select('#trenamePreview').onclick = previewTRename;
-  select('#trenameConfirm').onclick = confirmTRename;
-  ['#trenameTournament', '#trenameFrom', '#trenameTo'].forEach(id => { select(id).oninput = resetTRenamePreview; });
-  bindNicknameAutocomplete(select('#trenameTo'));
+  ['#renameDate', '#renameFrom', '#renameTo', '#renameTournament'].forEach(id => { select(id).oninput = resetRenamePreview; });
+  select('#renameScope').onchange = onRenameScopeChange;
   ['#nickname', '#renameFrom', '#renameTo'].forEach(id => bindNicknameAutocomplete(select(id)));
   select('#cancelEdit').onclick = () => resetForm();
   select('#date').onchange = () => {
