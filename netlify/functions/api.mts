@@ -61,7 +61,7 @@ function parseGame(body: unknown): GameInput | null {
 function parseTournament(body: any): typeof tournaments.$inferInsert | null {
   if (!body || typeof body !== 'object' || Array.isArray(body) || Object.keys(body).some(k=>!['name','date','status','podium','mvp','records','bracket','revision'].includes(k))) return null;
   if (typeof body.name !== 'string' || !body.name.trim() || body.name.trim().length>80 || !['ongoing','completed'].includes(body.status)) return null;
-  if (typeof body.mvp !== 'string' || body.mvp.trim().length>80 || !Array.isArray(body.podium) || body.podium.length!==3) return null;
+  if (typeof body.mvp !== 'string' || body.mvp.trim().length>80 || !Array.isArray(body.podium) || body.podium.length<3 || body.podium.length>4) return null;
   const podium: string[][]=[];
   for (const team of body.podium) {
     if (!Array.isArray(team) || team.length>5 || team.some(n=>typeof n!=='string' || !n.trim() || n.trim().length>80)) return null;
@@ -101,8 +101,8 @@ function parseTournament(body: any): typeof tournaments.$inferInsert | null {
     const {date,...record}=game;
     records.push({...record,roundNumber:game.roundNumber});
   }
-  const participants=new Set(records.map(r=>r.nickname));
-  if (body.status==='completed' && (!records.length || podium.some(team=>team.length!==5) || !participants.has(body.mvp.trim()) || names.some(n=>!participants.has(n)) || [...rounds.values()].some(r=>r.W!==5 || r.L!==5))) return null;
+  // 只校验场次结构完整；records 允许是部分场次（如只有某队的比赛视角），领奖台成员不强求全部出场
+  if (body.status==='completed' && (!records.length || podium.some(team=>team.length!==5) || [...rounds.values()].some(r=>r.W!==5 || r.L!==5))) return null;
   return {name:body.name.trim(),date:body.date,status:body.status,podium,mvp:body.mvp.trim(),records,bracket};
 }
 

@@ -28,7 +28,7 @@ export function initializeTournamentAdmin(api, escapeHtml) {
     <label>赛事档案<select id="tournamentEditorChoice"><option value="">新建锦标赛</option></select></label><button type="button" class="ghost" id="reloadTournaments">重新加载已保存赛事</button>
     <form id="tournamentForm"><div class="form-grid two"><label>赛事名称<input name="name" maxlength="80" required></label><label>比赛日期<input name="date" type="date" min="2000-01-01" max="2100-12-31" required></label></div>
     <div class="form-grid two"><label>赛事状态<select name="status"><option value="ongoing">进行中</option><option value="completed">已结束</option></select></label><label>MVP 昵称<input name="mvp" maxlength="80" placeholder="手动指定本届参赛选手"></label></div>
-    <div class="form-grid">${['冠军','亚军','季军'].map((title,i)=>`<label>${title}阵容<textarea name="podium${i}" rows="2" placeholder="每行一个昵称，共 5 人"></textarea></label>`).join('')}</div><label>BO3 淘汰赛树（JSON）<textarea name="bracket" rows="6" placeholder='{"rounds":[{"name":"半决赛","matches":[{"a":"队伍A","b":"队伍B","aScore":2,"bScore":1,"winner":"队伍A"}]}]}'></textarea></label>
+    <div class="form-grid">${['冠军','亚军','季军','殿军'].map((title,i)=>`<label>${title}阵容<textarea name="podium${i}" rows="2" placeholder="每行一个昵称，共 5 人"></textarea></label>`).join('')}</div><label>BO3 淘汰赛树（JSON）<textarea name="bracket" rows="6" placeholder='{"rounds":[{"name":"半决赛","matches":[{"a":"队伍A","b":"队伍B","aScore":2,"bScore":1,"winner":"队伍A"}]}]}'></textarea></label>
     <p class="field-help">每行填写一名选手一场的数据。同场编号相同，胜负用于区分两队，每队最多 5 人。结束赛事前每场须满 10 人，前三名各填 5 名本届参赛选手，MVP 也须已参赛。删除行后需保存才生效。</p>
     <div class="tournament-ocr"><strong>截图识别锦标赛数据</strong><span>每张截图对应一场比赛，识别结果会加入下方草稿，仍需核对后保存。</span><input id="tournamentImages" type="file" accept="image/png,image/jpeg,image/webp,.png,.jpg,.jpeg,.webp" multiple><button type="button" class="ghost" id="recognizeTournamentImages">选择截图并识别</button><p id="tournamentOcrStatus" role="status"></p></div>
     <div class="table-wrap"><table class="batch-table"><thead><tr><th>场次</th><th>昵称</th>${statKeys.map(k=>`<th>${statLabels[k]}</th>`).join('')}<th>胜负</th><th>操作</th></tr></thead><tbody id="tournamentDraftRows"></tbody></table></div>
@@ -45,7 +45,7 @@ export function initializeTournamentAdmin(api, escapeHtml) {
     current=tournaments.find(t=>String(t.id)===chooser.value)||null;
     form.reset();field('date').value=current?.date||chinaDate();
     field('name').value=current?.name||'';field('status').value=current?.status||'ongoing';field('mvp').value=current?.mvp||'';
-    for(let i=0;i<3;i++)field(`podium${i}`).value=(current?.podium[i]||[]).join('\n');
+    for(let i=0;i<4;i++)field(`podium${i}`).value=(current?.podium[i]||[]).join('\n');
     field('bracket').value=current?.bracket?.rounds?.length?JSON.stringify(current.bracket,null,2):'';
     tbody.innerHTML='';(current?.records||[]).forEach(appendRow);
     message.textContent=current?'正在编辑已保存赛事；修改后请保存。':'填写名称和日期即可启动锦标赛，随后可持续补录比赛。';
@@ -75,7 +75,7 @@ export function initializeTournamentAdmin(api, escapeHtml) {
     event.preventDefault();if(saving)return;saving=true;
     const records=[...tbody.rows].map(tr=>Object.fromEntries([...tr.querySelectorAll('[data-key]')].map(input=>[input.dataset.key,input.value])));
     let bracket={rounds:[]}; try { if(field('bracket').value.trim()) bracket=JSON.parse(field('bracket').value); } catch { message.textContent='淘汰赛树 JSON 格式不正确'; saving=false; return; }
-    const body={name:field('name').value,date:field('date').value,status:field('status').value,mvp:field('mvp').value,podium:[0,1,2].map(i=>field(`podium${i}`).value.split('\n').map(n=>n.trim()).filter(Boolean)),records,bracket,...(current?{revision:current.revision}:{})};
+    const body={name:field('name').value,date:field('date').value,status:field('status').value,mvp:field('mvp').value,podium:[0,1,2,3].map(i=>field(`podium${i}`).value.split('\n').map(n=>n.trim()).filter(Boolean)).filter(team=>team.length),records,bracket,...(current?{revision:current.revision}:{})};
     const endpoint=current?`admin/tournaments/${current.id}`:'admin/tournaments';
     const method=current?'PUT':'POST';
     root.querySelectorAll('button,input,textarea,select').forEach(el=>el.disabled=true);message.textContent='正在保存锦标赛…';
