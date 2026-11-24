@@ -292,7 +292,7 @@ export default async (request: Request) => {
       return json(payload);
     }
     if (extra && request.method === 'POST') {
-      const limit = (path.endsWith('recognize') || path.endsWith('upload')) ? 4500000 : path.endsWith('/round-image') ? 2200000 : 150000;
+      const limit = (path.endsWith('recognize') || path.endsWith('upload')) ? 4500000 : (path.endsWith('/round-image') || path.endsWith('/tournament-image')) ? 2200000 : 150000;
       if (Number(request.headers.get('content-length') ?? 0) > limit) return json({ error: '请求过大' }, 413);
       const raw = await request.text();
       if (raw.length > limit) return json({ error: '请求过大，请减少图片大小或导入行数' }, 413);
