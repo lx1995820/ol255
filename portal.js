@@ -1,5 +1,6 @@
 import { initializeScreenshotUpload } from './screenshot-upload.js';
 import { renderTournamentSection, initializeTournamentAdmin } from './tournaments.js';
+import { initializeTeamSplitter } from './team-splitter.js';
 import {
   acceptInvite, getUser, handleAuthCallback, hydrateSession,
   login, logout, requestPasswordRecovery, updateUser,
@@ -526,6 +527,7 @@ function resetLoginFlow() {
 async function initializeAdmin() {
   initializeBatch();
   loadTournaments = initializeTournamentAdmin(api, escapeHtml);
+  initializeTeamSplitter(api, escapeHtml);
   select('#loginForm').onsubmit = async event => {
     event.preventDefault();
     const button = select('#loginSubmit');
