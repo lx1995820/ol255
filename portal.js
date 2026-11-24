@@ -260,6 +260,70 @@ function resetRenamePreview() {
   select('#renameStatus').textContent = '';
 }
 
+// ===== 锦标赛修改ID：预览 → 确认两段式 =====
+function resetTRenamePreview() {
+  select('#trenamePreviewBox').hidden = true;
+  select('#trenameStatus').textContent = '';
+}
+
+async function loadTRenameChoices() {
+  const selectEl = select('#trenameTournament');
+  try {
+    const data = await api('admin/tournaments');
+    const list = data.tournaments || [];
+    selectEl.innerHTML = list.length
+      ? list.map(t => `<option value="${t.id}">${escapeHtml(t.name)} · ${escapeHtml(t.date)}</option>`).join('')
+      : '<option value="">暂无锦标赛</option>';
+  } catch { selectEl.innerHTML = '<option value="">加载失败，请刷新</option>'; }
+}
+
+async function previewTRename() {
+  resetTRenamePreview();
+  const tournamentId = Number(select('#trenameTournament').value);
+  const from = select('#trenameFrom').value.trim();
+  const to = select('#trenameTo').value.trim();
+  if (!tournamentId || !from || !to) { select('#trenameStatus').textContent = '请填完整：锦标赛、原ID、目标ID。'; return; }
+  if (from === to) { select('#trenameStatus').textContent = '原ID与目标ID相同，无需修改。'; return; }
+  const button = select('#trenamePreview');
+  button.disabled = true;
+  select('#trenameStatus').textContent = '正在匹配…';
+  try {
+    const data = await api('admin/rename', { method: 'POST', body: JSON.stringify({ scope: 'tournament', tournamentId, from, to }) });
+    if (!data.count) { select('#trenameStatus').textContent = data.message || '该届锦标赛没有匹配的记录。'; return; }
+    const parts = [`<strong>${data.count}</strong> 条比赛记录（第 ${data.rounds.join('、')} 场）`];
+    if (data.inPodium) parts.push('领奖台阵容');
+    if (data.isMvp) parts.push('赛事 MVP');
+    select('#trenameSummary').innerHTML = `匹配到 ${data.nicknames.map(n => `「${escapeHtml(n)}」`).join('、')}，将影响：${parts.join(' + ')}，全部改为「<strong>${escapeHtml(to)}</strong>」；只改这一届锦标赛，其他赛事不受影响：`;
+    select('#trenamePreviewBox').hidden = false;
+    select('#trenameStatus').textContent = '';
+    select('#trenamePreviewBox').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  } catch (error) {
+    select('#trenameStatus').textContent = error.message || '匹配失败，请稍后重试。';
+  } finally { button.disabled = false; }
+}
+
+async function confirmTRename() {
+  const tournamentId = Number(select('#trenameTournament').value);
+  const from = select('#trenameFrom').value.trim();
+  const to = select('#trenameTo').value.trim();
+  const button = select('#trenameConfirm');
+  button.disabled = true;
+  select('#trenameStatus').textContent = '正在修改…';
+  try {
+    const data = await api('admin/rename', { method: 'POST', body: JSON.stringify({ scope: 'tournament', tournamentId, from, to, confirm: true }) });
+    select('#trenamePreviewBox').hidden = true;
+    const scopeParts = [`${data.updated} 条比赛记录`];
+    if (data.inPodium) scopeParts.push('领奖台');
+    if (data.isMvp) scopeParts.push('MVP');
+    select('#trenameStatus').textContent = `完成：已把 ${data.nicknames.map(n => `「${n}」`).join('、')} 改为「${data.to}」（${scopeParts.join(' + ')}）。${data.alias ? '已自动写入昵称映射表，下次识别自动归位。' : ''}`;
+    select('#trenameFrom').value = '';
+    if (loadTournaments) await loadTournaments();
+  } catch (error) {
+    select('#trenameStatus').textContent = error.message || '修改失败，请稍后重试。';
+  } finally { button.disabled = false; }
+}
+
+
 async function previewRename() {
   const date = select('#renameDate').value;
   const from = select('#renameFrom').value.trim();
@@ -296,7 +360,7 @@ async function confirmRename() {
   try {
     const data = await api('admin/rename', { method: 'POST', body: JSON.stringify({ date, from, to, confirm: true }) });
     select('#renamePreviewBox').hidden = true;
-    select('#renameStatus').textContent = `完成：已把 ${data.nicknames.map(n => `「${n}」`).join('、')} 的 ${data.updated} 条记录改为「${data.to}」（仅限 ${date} 当天）。`;
+    select('#renameStatus').textContent = `完成：已把 ${data.nicknames.map(n => `「${n}」`).join('、')} 的 ${data.updated} 条记录改为「${data.to}」（仅限 ${date} 当天）。${data.alias ? '已自动写入昵称映射表，下次识别自动归位。' : ''}`;
     select('#renameFrom').value = '';
     await loadAdmin();
   } catch (error) {
@@ -488,6 +552,12 @@ async function initializeAdmin() {
   select('#renamePreview').onclick = previewRename;
   select('#renameConfirm').onclick = confirmRename;
   ['#renameDate', '#renameFrom', '#renameTo'].forEach(id => { select(id).oninput = resetRenamePreview; });
+  // 锦标赛修改ID 绑定
+  loadTRenameChoices();
+  select('#trenamePreview').onclick = previewTRename;
+  select('#trenameConfirm').onclick = confirmTRename;
+  ['#trenameTournament', '#trenameFrom', '#trenameTo'].forEach(id => { select(id).oninput = resetTRenamePreview; });
+  bindNicknameAutocomplete(select('#trenameTo'));
   ['#nickname', '#renameFrom', '#renameTo'].forEach(id => bindNicknameAutocomplete(select(id)));
   select('#cancelEdit').onclick = () => resetForm();
   select('#date').onchange = () => {

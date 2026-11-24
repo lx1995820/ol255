@@ -280,7 +280,7 @@ export default async (request: Request) => {
       let body: any;
       try { body = JSON.parse(raw); } catch { return json({ error: '提交格式不正确' }, 400); }
       if (!body || typeof body !== 'object' || Array.isArray(body)) return json({ error: '提交格式不正确' }, 400);
-      const fields = path.endsWith('/recognize') ? ['image', 'resolve'] : path.endsWith('/upload') ? ['image'] : path.endsWith('/seasons') ? ['name', 'confirm'] : path.endsWith('/rename') ? ['date', 'from', 'to', 'confirm'] : path.endsWith('/round-image') ? ['date', 'roundNumber', 'image', 'thumb', 'remove'] : ['rows', 'confirm'];
+      const fields = path.endsWith('/recognize') ? ['image', 'resolve'] : path.endsWith('/upload') ? ['image'] : path.endsWith('/seasons') ? ['name', 'confirm'] : path.endsWith('/rename') ? ['date', 'from', 'to', 'confirm', 'scope', 'tournamentId'] : path.endsWith('/round-image') ? ['date', 'roundNumber', 'image', 'thumb', 'remove'] : ['rows', 'confirm'];
       if (Object.keys(body).some(key => !fields.includes(key))) return json({ error: '提交包含不支持的字段' }, 400);
       if (path.endsWith('/seasons')) {
         const date = chinaDate();
@@ -305,33 +305,81 @@ export default async (request: Request) => {
         await uploads().set(thumbKey, body.thumb);
         return json({ ok: true, date, roundNumber: round });
       }
-      // 一键修改ID：仅作用于所选日期的记录；先预览（confirm 不为 true），确认后才写入
+      // 一键修改ID：scope=games 按日期改比赛记录；scope=tournament 改某届锦标赛的 records+podium+mvp
+      // 均为「预览 → 确认」两段式（confirm 不为 true 时只预览）；写库前校验目标 ID 唯一性，冲突即阻止
       if (path.endsWith('/rename')) {
+        const scope = body?.scope === 'tournament' ? 'tournament' : 'games';
         const from = typeof body?.from === 'string' ? body.from.trim() : '';
         const to = typeof body?.to === 'string' ? body.to.trim() : '';
-        if (typeof body?.date !== 'string' || !/^\d{4}-\d{2}-\d{2}$/.test(body.date)) return json({ error: '请选择要修改的比赛日期' }, 400);
-        if (from.length < 2 || from.length > 80) return json({ error: '原ID至少 2 个字符' }, 400);
-        if (!to || to.length > 80) return json({ error: '请填写目标ID' }, 400);
-        const dayRecords = await db.select().from(games).where(eq(games.date, body.date));
-        if (!dayRecords.length) return json({ error: '所选日期没有任何比赛记录' }, 404);
+        if (from.length < 2 || from.length > 80) return json({ error: '原ID至少 2 个字符、最多 80 字符' }, 400);
+        if (!to || to.length > 80) return json({ error: '请填写目标ID（1–80 字符）' }, 400);
+        if (/[\r\n\t]/.test(to)) return json({ error: '目标ID不能包含换行或制表符' }, 400);
+        if (from === to) return json({ error: '原ID与目标ID相同，无需修改' }, 400);
         // 模糊匹配：去掉空白与常见 OCR 多余笔画后相等，或互为子串（如「丿卡梅隆安东尼」↔「卡梅隆安东尼」）
         const normalize = (value: string) => value.replace(/[\s丿丶丨㇏亻彳·\-_]+/g, '');
         const fromNorm = normalize(from);
+        // 改名成功后：原ID若是一次性游戏ID（比赛中无其他记录），自动写入昵称映射表，下次识别自动归位
+        const maybeUpsertAlias = async () => {
+          try {
+            const rest = await db.select({ id: games.id }).from(games).where(eq(games.nickname, from)).limit(1);
+            if (rest.length) return false; // 原名还有其他比赛记录，是正式昵称，不建别名
+            await db.insert(nickAliases).values({ alias: from, nickname: to })
+              .onConflictDoUpdate({ target: nickAliases.alias, set: { nickname: to } });
+            return true;
+          } catch { return false; }
+        };
+        if (scope === 'tournament') {
+          const tid = Number(body?.tournamentId);
+          if (!Number.isSafeInteger(tid) || tid < 1) return json({ error: '请选择要修改的锦标赛' }, 400);
+          const [t] = await db.select().from(tournaments).where(eq(tournaments.id, tid));
+          if (!t) return json({ error: '锦标赛不存在，请刷新后重试' }, 404);
+          const tRecords = (Array.isArray(t.records) ? t.records : []) as any[];
+          const tPodium = (Array.isArray(t.podium) ? t.podium : []) as string[][];
+          const allNames = [...new Set([...tRecords.map(r => r.nickname), ...tPodium.flat(), t.mvp].filter(Boolean))] as string[];
+          const names = allNames.filter(name => name === from || normalize(name) === fromNorm || name.includes(from) || from.includes(name));
+          if (!names.length) return json({ count: 0, nicknames: [], rounds: [], inPodium: false, isMvp: false, message: '该届锦标赛没有匹配「' + from + '」的选手' });
+          const hitRecords = tRecords.filter(r => names.includes(r.nickname));
+          const rounds = [...new Set(hitRecords.map(r => r.roundNumber))].sort((a, b) => a - b);
+          const inPodium = tPodium.some(team => team.some(n => names.includes(n)));
+          const isMvp = names.includes(t.mvp);
+          // 唯一性：目标ID若已存在于受影响的轮次，合并会产生同人同轮两条记录，阻止
+          const conflictRounds = rounds.filter(rn => tRecords.some(r => r.roundNumber === rn && r.nickname === to));
+          if (conflictRounds.length) return json({ error: `目标ID「${to}」在第 ${conflictRounds.join('、')} 场已有记录，合并会造成同人同场两条，请先处理` }, 409);
+          if (body.confirm !== true) return json({ count: hitRecords.length, nicknames: names, rounds, inPodium, isMvp });
+          if (names.every(n => n === to)) return json({ error: '匹配到的ID已经与目标ID相同' }, 400);
+          const newRecords = tRecords.map(r => names.includes(r.nickname) ? { ...r, nickname: to } : r);
+          const newPodium = tPodium.map(team => team.map(n => names.includes(n) ? to : n));
+          if (new Set(newPodium.flat()).size !== newPodium.flat().length) return json({ error: `领奖台上「${to}」会重复出现，请先调整阵容` }, 409);
+          const changed = await db.update(tournaments)
+            .set({ records: newRecords, podium: newPodium, mvp: isMvp ? to : t.mvp, revision: sql`${tournaments.revision} + 1` })
+            .where(and(eq(tournaments.id, tid), eq(tournaments.revision, t.revision))).returning({ id: tournaments.id });
+          if (!changed.length) return json({ error: '赛事刚被其他管理员修改，请重新加载后再试' }, 409);
+          const alias = await maybeUpsertAlias();
+          return json({ updated: hitRecords.length, nicknames: names, to, rounds, inPodium, isMvp, alias });
+        }
+        if (typeof body?.date !== 'string' || !/^\d{4}-\d{2}-\d{2}$/.test(body.date)) return json({ error: '请选择要修改的比赛日期' }, 400);
+        const dayRecords = await db.select().from(games).where(eq(games.date, body.date));
+        if (!dayRecords.length) return json({ error: '所选日期没有任何比赛记录' }, 404);
+        const fromNormG = fromNorm;
         const distinct = [...new Set(dayRecords.map(record => record.nickname as string))];
-        const names = distinct.filter(name => name === from || normalize(name) === fromNorm || name.includes(from) || from.includes(name));
+        const names = distinct.filter(name => name === from || normalize(name) === fromNormG || name.includes(from) || from.includes(name));
         if (!names.length) return json({ count: 0, nicknames: [], rows: [], message: '该日期下没有匹配「' + from + '」的选手记录' });
         const rows = dayRecords.filter(record => names.includes(record.nickname));
+        // 唯一性：目标ID在同日同场已存在时阻止（games 有唯一索引，硬写会失败）
+        const hitRounds = new Set(rows.map(r => r.roundNumber));
+        const conflict = dayRecords.filter(r => r.nickname === to && hitRounds.has(r.roundNumber));
+        if (conflict.length) return json({ error: `目标ID「${to}」在第 ${[...new Set(conflict.map(r => r.roundNumber))].join('、')} 场已有记录，合并会造成同人同场两条，请先处理` }, 409);
         if (body.confirm !== true) {
           return json({
             count: rows.length, nicknames: names,
             rows: rows.map(r => ({ id: r.id, date: r.date, roundNumber: r.roundNumber, nickname: r.nickname, pts: r.pts, reb: r.reb, ast: r.ast, stl: r.stl, blk: r.blk, result: r.result })),
           });
         }
-        if (names.every(name => name === to)) return json({ error: '匹配到的ID已经与目标ID相同，无需修改' }, 400);
         const updated = await db.update(games).set({ nickname: to })
           .where(and(eq(games.date, body.date), inArray(games.nickname, names)))
           .returning({ id: games.id });
-        return json({ updated: updated.length, nicknames: names, to });
+        const alias = await maybeUpsertAlias();
+        return json({ updated: updated.length, nicknames: names, to, alias });
       }
       if (path.endsWith('/upload')) {
         if (typeof body.image !== 'string' || !/^data:image\/(png|jpeg|webp);base64,[A-Za-z0-9+/=]+$/.test(body.image)) return json({ error: '图片格式无效' }, 400);
