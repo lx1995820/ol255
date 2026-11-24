@@ -25,3 +25,12 @@
 .tournament-team{margin:6px 0 2px;font-size:13px;color:#aab0c0}
 .tournament-stats{margin:2px 0 0;font-size:13px;color:#8b90a0}
 .place-chip-part{background:rgba(120,180,144,.16);color:#6fae8c}
+
+/* 比赛记录分页器 */
+.pager{display:flex;align-items:center;flex-wrap:wrap;gap:6px;padding:10px 4px 2px;font-size:13px}
+.pager-btn{border:1px solid var(--border,#3a3f4b);background:transparent;color:inherit;border-radius:8px;padding:4px 10px;cursor:pointer;font-size:13px;min-width:34px}
+.pager-btn:hover:not(:disabled){border-color:#e8b64c;color:#e8b64c}
+.pager-btn.active{background:#e8b64c;border-color:#e8b64c;color:#1a1d24;font-weight:600}
+.pager-btn:disabled{opacity:.4;cursor:not-allowed}
+.pager-gap{color:#8b90a0;padding:0 2px}
+.pager-info{margin-left:auto;color:#8b90a0;font-size:12px}

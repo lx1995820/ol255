@@ -191,6 +191,45 @@ function filteredGames(prefix, query) {
     && (!roundFilter.value || (roundFilter.value === 'pending' ? game.roundNumber == null : game.roundNumber === Number(roundFilter.value)))));
 }
 
+// ===== 比赛记录分页：默认每页 100 条，前端分页（数据已在内存，榜单统计不受影响）=====
+const PAGE_SIZE = 100;
+const gamePages = { public: 1, admin: 1 };
+
+function renderPager(prefix, total, rerender) {
+  const box = select(`#${prefix}Pager`);
+  if (!box) return;
+  const pages = Math.max(1, Math.ceil(total / PAGE_SIZE));
+  const cur = Math.min(Math.max(1, gamePages[prefix]), pages);
+  gamePages[prefix] = cur;
+  if (!total) { box.innerHTML = ''; return; }
+  if (pages === 1) { box.innerHTML = `<span class="pager-info">共 ${total} 条</span>`; return; }
+  const nums = new Set([1, pages, cur - 1, cur, cur + 1]);
+  const ordered = [...nums].filter(p => p >= 1 && p <= pages).sort((a, b) => a - b);
+  let html = `<button class="pager-btn" data-page="${cur - 1}" ${cur === 1 ? 'disabled' : ''}>‹ 上一页</button>`;
+  let prev = 0;
+  for (const p of ordered) {
+    if (p - prev > 1) html += '<span class="pager-gap">…</span>';
+    html += `<button class="pager-btn ${p === cur ? 'active' : ''}" data-page="${p}">${p}</button>`;
+    prev = p;
+  }
+  html += `<button class="pager-btn" data-page="${cur + 1}" ${cur === pages ? 'disabled' : ''}>下一页 ›</button><span class="pager-info">第 ${cur} / ${pages} 页 · 共 ${total} 条</span>`;
+  box.innerHTML = html;
+  box.querySelectorAll('[data-page]').forEach(btn => {
+    btn.onclick = () => {
+      gamePages[prefix] = Number(btn.dataset.page);
+      rerender();
+      box.closest('.card, .table-card')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    };
+  });
+}
+
+function pageSlice(prefix, records) {
+  const pages = Math.max(1, Math.ceil(records.length / PAGE_SIZE));
+  const cur = Math.min(Math.max(1, gamePages[prefix]), pages);
+  gamePages[prefix] = cur;
+  return records.slice((cur - 1) * PAGE_SIZE, cur * PAGE_SIZE);
+}
+
 function gameCells(game) {
   return `<td>${escapeHtml(roundLabel(game))}</td><td><strong>${escapeHtml(game.nickname)}</strong>${tagMarkup(game.nickname)}${isAdmin ? '' : commentButton(game.nickname)}</td>
     ${metrics.map(key => `<td>${game[key]}</td>`).join('')}
@@ -203,8 +242,9 @@ function renderPublicGames() {
   const thumbCell = game => hasRoundImage(game.date, game.roundNumber)
     ? `<td><img class="round-thumb" loading="lazy" src="/api/round-image?date=${game.date}&round=${game.roundNumber}&size=thumb" data-full="/api/round-image?date=${game.date}&round=${game.roundNumber}&size=image" alt="查看当场截图"></td>`
     : '<td class="no-thumb"></td>';
-  select('#publicGameRows').innerHTML = records.map(game => `<tr>${gameCells(game)}${thumbCell(game)}</tr>`).join('')
+  select('#publicGameRows').innerHTML = pageSlice('public', records).map(game => `<tr>${gameCells(game)}${thumbCell(game)}</tr>`).join('')
     || '<tr><td colspan="9" class="empty">暂无匹配比赛记录</td></tr>';
+  renderPager('public', records.length, renderPublicGames);
 }
 
 function updateMonth() {
@@ -392,9 +432,10 @@ function renderAdmin() {
   updateRoundChoices();
   const query = select('#filter').value.trim();
   const records = filteredGames('admin', query);
-  select('#gameRows').innerHTML = records.map(game => `<tr>${gameCells(game)}
+  select('#gameRows').innerHTML = pageSlice('admin', records).map(game => `<tr>${gameCells(game)}
     <td><button class="row-btn" data-edit="${game.id}">编辑</button><button class="row-btn" data-delete="${game.id}">删除</button></td>
   </tr>`).join('') || '<tr><td colspan="9" class="empty">暂无匹配记录</td></tr>';
+  renderPager('admin', records.length, renderAdmin);
   document.querySelectorAll('[data-edit]').forEach(button => {
     button.onclick = () => editGame(button.dataset.edit);
   });
@@ -525,12 +566,13 @@ async function initializeAdmin() {
     } catch { select('#loginStatus').textContent = '暂时无法发送重置邮件，请稍后重试。'; }
     finally { button.disabled = false; }
   };
-  select('#filter').oninput = renderAdmin;
+  select('#filter').oninput = () => { gamePages.admin = 1; renderAdmin(); };
   select('#adminDateFilter').onchange = () => {
     select('#adminRoundFilter').value = '';
+    gamePages.admin = 1;
     renderAdmin();
   };
-  select('#adminRoundFilter').onchange = renderAdmin;
+  select('#adminRoundFilter').onchange = () => { gamePages.admin = 1; renderAdmin(); };
   select('#renameDate').value = today();
   select('#renamePreview').onclick = previewRename;
   select('#renameConfirm').onclick = confirmRename;
@@ -905,13 +947,15 @@ function initializePublic() {
   };
   select('#publicSearch').oninput = event => {
     lookup(event.target.value);
+    gamePages.public = 1;
     renderPublicGames();
   };
   select('#publicDateFilter').onchange = () => {
     select('#publicRoundFilter').value = '';
+    gamePages.public = 1;
     renderPublicGames();
   };
-  select('#publicRoundFilter').onchange = renderPublicGames;
+  select('#publicRoundFilter').onchange = () => { gamePages.public = 1; renderPublicGames(); };
   select('#refreshPublic').onclick = refreshPublic;
   initializePlayerComments(api, escapeHtml, refreshPublic);
   refreshPublic();
