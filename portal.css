@@ -78,3 +78,9 @@
 .avatar-item .row-btn{margin-left:0;padding:4px 10px;border:1px solid var(--line);border-radius:6px}
 /* 比赛记录里的卡面标签 */
 .card-tag{display:inline-block;margin-left:6px;padding:1px 7px;border-radius:9px;background:rgba(217,43,43,.08);color:#D92B2B;font-size:10px;font-weight:600;vertical-align:1px}
+
+/* 头像库分组（同卡面多皮肤变体） */
+.avatar-group{grid-column:1/-1;margin-bottom:14px}
+.avatar-group h4{font-size:13px;margin:0 0 8px;color:var(--ink)}
+.avatar-group h4 small{color:#999;font-weight:400;font-size:10px;margin-left:6px}
+.avatar-subgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:10px}

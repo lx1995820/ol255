@@ -23,14 +23,21 @@ export function initializeAvatarsAdmin(api, escapeHtml) {
     const pen = pending.filter(p => !q || p.phash.includes(q));
     $('#libraryCount').textContent = library.length;
     $('#pendingCount').textContent = pending.length;
-    $('#avatarLibrary').innerHTML = lib.map(a => `
-      <figure class="avatar-item" data-id="${a.id}">
-        ${a.image ? `<img src="${a.image}" alt="${escapeHtml(a.cardName)}" loading="lazy">` : '<div class="avatar-noimg">无图</div>'}
-        <figcaption>
-          <input class="avatar-name" value="${escapeHtml(a.cardName)}" maxlength="60" aria-label="卡面名">
-          <div class="avatar-ops"><button type="button" class="row-btn" data-save="${a.id}">保存</button><button type="button" class="row-btn" data-del="${a.id}">删除</button></div>
-        </figcaption>
-      </figure>`).join('') || '<p class="empty">图库为空，待标注区点名后自动出现在这里。</p>';
+    // 同一卡面名（含不同皮肤/设备变体）归为一组展示
+    const groups = new Map();
+    lib.forEach(a => { if (!groups.has(a.cardName)) groups.set(a.cardName, []); groups.get(a.cardName).push(a); });
+    $('#avatarLibrary').innerHTML = [...groups.entries()].map(([name, items]) => `
+      <section class="avatar-group">
+        <h4>${escapeHtml(name)} <small>${items.length} 个变体</small></h4>
+        <div class="avatar-subgrid">${items.map(a => `
+          <figure class="avatar-item" data-id="${a.id}">
+            ${a.image ? `<img src="${a.image}" alt="${escapeHtml(a.cardName)}" loading="lazy">` : '<div class="avatar-noimg">无图</div>'}
+            <figcaption>
+              <input class="avatar-name" value="${escapeHtml(a.cardName)}" maxlength="60" aria-label="卡面名">
+              <div class="avatar-ops"><button type="button" class="row-btn" data-save="${a.id}">保存</button><button type="button" class="row-btn" data-del="${a.id}">删除</button></div>
+            </figcaption>
+          </figure>`).join('')}</div>
+      </section>`).join('') || '<p class="empty">图库为空，待标注区点名后自动出现在这里。</p>';
     $('#avatarPending').innerHTML = pen.map(p => `
       <figure class="avatar-item pending" data-key="${escapeHtml(p.key)}">
         ${p.image ? `<img src="${p.image}" alt="待标注头像" loading="lazy">` : '<div class="avatar-noimg">无图</div>'}
