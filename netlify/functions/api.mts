@@ -1,5 +1,6 @@
 import type { Config } from '@netlify/functions';
-import { getUser, verifyRequestOrigin } from '@netlify/identity';
+import { verifyRequestOrigin } from '@netlify/identity';
+import { createHmac, timingSafeEqual } from 'node:crypto';
 import { and, desc, eq, inArray, sql } from 'drizzle-orm';
 import { getDb } from '../../db/index.js';
 import { games, seasons, tournaments, nickAliases } from '../../db/schema.js';
@@ -9,6 +10,31 @@ import { getStore } from '@netlify/blobs';
 import { createHash } from 'node:crypto';
 import { archiveCompletedMonths } from '../../lib/honors.js';
 import { ensureCurrentSeason } from '../../lib/seasons.js';
+
+// ===== 自建管理员认证（替代 Netlify Identity，迁移到任何平台均可用）=====
+// 环境变量 ADMIN_ACCOUNTS：JSON，键=邮箱、值=密码，如 {"a@qq.com":"pwd1","b@qq.com":"pwd2"}
+// 令牌 = base64url(email).过期毫秒.HMAC-SHA256 签名；签名密钥默认由账号表派生，改密码即全员令牌失效
+const adminAccounts = (): Record<string, string> => {
+  try { const parsed = JSON.parse(process.env.ADMIN_ACCOUNTS || '{}'); return parsed && typeof parsed === 'object' && !Array.isArray(parsed) ? parsed : {}; } catch { return {}; }
+};
+const adminSecret = () => process.env.ADMIN_SECRET || createHmac('sha256', 'court-pulse-admin').update(JSON.stringify(adminAccounts())).digest('hex');
+const signAdminToken = (email: string) => {
+  const payload = `${Buffer.from(email, 'utf8').toString('base64url')}.${Date.now() + 12 * 3600 * 1000}`;
+  return `${payload}.${createHmac('sha256', adminSecret()).update(payload).digest('base64url')}`;
+};
+const verifyAdminToken = (header: string | null): boolean => {
+  const token = /^Bearer (.+)$/.exec(header || '')?.[1] || '';
+  const parts = token.split('.');
+  if (parts.length !== 3) return false;
+  const payload = `${parts[0]}.${parts[1]}`;
+  const expected = createHmac('sha256', adminSecret()).update(payload).digest('base64url');
+  const a = Buffer.from(parts[2]), b = Buffer.from(expected);
+  if (a.length !== b.length || !timingSafeEqual(a, b)) return false;
+  if (!/^\d+$/.test(parts[1]) || Number(parts[1]) < Date.now()) return false;
+  let email = '';
+  try { email = Buffer.from(parts[0], 'base64url').toString('utf8').trim().toLowerCase(); } catch { return false; }
+  return email.length > 3 && email in adminAccounts();
+};
 
 type Game = typeof games.$inferSelect;
 type GameInput = Omit<Game, 'id'>;
@@ -204,16 +230,30 @@ export default async (request: Request) => {
   const extra = ['/api/admin/upload', '/api/admin/recognize', '/api/admin/import', '/api/admin/seasons', '/api/admin/rename', '/api/admin/round-image', '/api/admin/tournament-image'].includes(path);
   const collection = path === '/api/admin/games';
   const match = path.match(/^\/api\/admin\/games\/(\d+)$/);
-  if (!publicRead && !collection && !match && !extra && !tournamentCollection && !tournamentMatch) return json({ error: '接口不存在' }, 404);
+  const loginRoute = path === '/api/admin/login';
+  if (!publicRead && !loginRoute && !collection && !match && !extra && !tournamentCollection && !tournamentMatch) return json({ error: '接口不存在' }, 404);
   try {
     if (!publicRead) {
       if (request.method !== 'GET') {
         try { verifyRequestOrigin(request); }
         catch { return json({ error: '不允许跨站修改数据' }, 403); }
       }
-      const user = await getUser();
-      if (!user) return json({ error: '请先登录管理员账户' }, 401);
-      if (!user.roles?.includes('admin')) return json({ error: '账户尚未获授 admin 管理员角色' }, 403);
+      if (!loginRoute && !verifyAdminToken(request.headers.get('authorization'))) return json({ error: '请先登录管理员账户' }, 401);
+    }
+    // 自建登录：校验邮箱+密码，签发 12 小时令牌
+    if (loginRoute) {
+      if (request.method !== 'POST') return json({ error: '接口不存在' }, 404);
+      const raw = await request.text();
+      if (raw.length > 2000) return json({ error: '请求过大' }, 413);
+      let body: any;
+      try { body = JSON.parse(raw); } catch { return json({ error: '提交格式不正确' }, 400); }
+      const email = typeof body?.email === 'string' ? body.email.trim().toLowerCase() : '';
+      const password = typeof body?.password === 'string' ? body.password : '';
+      const accounts = adminAccounts();
+      const expected = accounts[email];
+      const passOk = expected != null && (() => { const x = Buffer.from(password), y = Buffer.from(String(expected)); return x.length === y.length && timingSafeEqual(x, y); })();
+      if (!email || !passOk) return json({ error: '邮箱或密码不正确' }, 401);
+      return json({ token: signAdminToken(email), email });
     }
     const uploads = () => getStore('court-pulse-screenshots');
     // 公开读：按场次取截图（键为确定性 round-{size}:{date}:{round}，天然去重）；直接返回图片二进制，可走 CDN 缓存

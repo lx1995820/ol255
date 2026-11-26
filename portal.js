@@ -1,12 +1,13 @@
 import { initializeScreenshotUpload } from './screenshot-upload.js';
 import { renderTournamentSection, initializeTournamentAdmin } from './tournaments.js';
 import { initializeTeamSplitter } from './team-splitter.js';
-import {
-  acceptInvite, getUser, handleAuthCallback, hydrateSession,
-  login, logout, requestPasswordRecovery, updateUser,
-} from '@netlify/identity';
 import { aggregate, chinaDate, tagsFor, relationships, playerRelationships, rate, statKeys, statLabels, defenseScore, tagTips, aiRatings, aiDimKeys, aiWeights, marginalValue } from './lib/statistics.js';
 import { initializePlayerComments, stars } from './player-comments.js';
+
+// 自建管理员会话（替代 Netlify Identity）：localStorage 存 12 小时令牌，随 Authorization 头发送
+const SESSION_KEY = 'court_admin_session';
+const sessionToken = () => { try { return localStorage.getItem(SESSION_KEY) || ''; } catch { return ''; } };
+const setSession = token => { try { token ? localStorage.setItem(SESSION_KEY, token) : localStorage.removeItem(SESSION_KEY); } catch { /* 隐私模式下静默失败 */ } };
 
 const isAdmin = location.pathname.endsWith('admin.html');
 const select = selector => document.querySelector(selector);
@@ -26,8 +27,6 @@ let playerTags = new Map();
 let aiData = { scores: new Map(), dims: new Map() };
 let historyTags = new Map();
 let activeMetric = 'pts';
-let authMode = 'login';
-let inviteToken = '';
 let refreshing = false;
 let savingGame = false;
 let loadTournaments;
@@ -256,10 +255,10 @@ function updateMonth() {
 }
 
 async function api(path, options = {}) {
-  if (isAdmin) await getUser();
+  const headers = { 'Content-Type': 'application/json', ...options.headers };
+  if (isAdmin && sessionToken()) headers.Authorization = `Bearer ${sessionToken()}`;
   const response = await fetch(`/api/${path}`, {
-    ...options, credentials: 'same-origin', cache: 'no-store',
-    headers: { 'Content-Type': 'application/json', ...options.headers },
+    ...options, credentials: 'same-origin', cache: 'no-store', headers,
   });
   const data = await response.json().catch(() => ({ error:
     response.status === 413 ? '图片请求过大，请裁剪后重试' :
@@ -411,19 +410,23 @@ function showLogin() {
 }
 
 async function bootAdmin() {
-  const user = await getUser();
-  select('#loginLogout').hidden = !user;
-  if (!user) {
+  select('#loginLogout').hidden = !sessionToken();
+  if (!sessionToken()) {
     showLogin();
-    return;
-  }
-  if (!user.roles?.includes('admin')) {
-    showLogin();
-    select('#loginStatus').textContent = '此账户尚未获授 admin 角色，请由网站所有者在 Netlify Identity 中配置后重新登录。';
     return;
   }
   select('#date').value = today();
-  await loadAdmin();
+  try {
+    await loadAdmin();
+  } catch (error) {
+    if (error.status === 401 || error.status === 403) {
+      setSession('');
+      showLogin();
+      select('#loginStatus').textContent = '登录已过期，请重新登录。';
+      return;
+    }
+    throw error;
+  }
   select('#login').hidden = true;
   select('#adminApp').hidden = false;
 }
@@ -499,30 +502,8 @@ async function deleteGame(id, button) {
   }
 }
 
-function configurePasswordFlow(mode) {
-  authMode = mode;
-  showLogin();
-  select('#emailLabel').hidden = true;
-  select('#email').required = false;
-  select('#password').autocomplete = 'new-password';
-  select('#password').minLength = 8;
-  select('#password').placeholder = '设置新密码（至少 8 位）';
-  select('#loginSubmit').textContent = mode === 'invite' ? '接受邀请并设置密码 →' : '保存新密码 →';
-  select('#forgotPassword').hidden = true;
-  select('#loginHelp').textContent = '设置你自己的账户密码，之后使用邮箱和密码登录后台。';
-}
-
 function resetLoginFlow() {
-  authMode = 'login';
-  inviteToken = '';
   select('#loginForm').reset();
-  select('#emailLabel').hidden = false;
-  select('#email').required = true;
-  select('#password').autocomplete = 'current-password';
-  select('#password').minLength = 0;
-  select('#password').placeholder = '输入账户密码';
-  select('#loginSubmit').textContent = '进入后台 →';
-  select('#forgotPassword').hidden = false;
 }
 
 async function initializeAdmin() {
@@ -535,40 +516,31 @@ async function initializeAdmin() {
     button.disabled = true;
     select('#loginStatus').textContent = '正在验证账户…';
     try {
-      if (authMode === 'invite') await acceptInvite(inviteToken, select('#password').value);
-      else if (authMode === 'recovery') await updateUser({ password: select('#password').value });
-      else await login(select('#email').value.trim(), select('#password').value);
+      const res = await fetch('/api/admin/login', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: select('#email').value.trim(), password: select('#password').value }),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) throw Object.assign(new Error(data.error || '登录失败'), { status: res.status });
+      setSession(data.token);
       resetLoginFlow();
       select('#loginStatus').textContent = '';
       await bootAdmin();
     } catch (error) {
-      select('#loginStatus').textContent = error.status === 401 ? '邮箱或密码无效，请检查后重试。' : '操作失败，请确认账户信息、网络连接或邀请链接是否有效。';
+      select('#loginStatus').textContent = error.status === 401 ? '邮箱或密码无效，请检查后重试。' : '操作失败，请检查网络连接后重试。';
     } finally { button.disabled = false; }
   };
   const signOut = async () => {
-    try {
-      await logout();
-      allGames = [];
-      allPlayers = [];
-      resetForm();
-      resetLoginFlow();
-      select('#loginStatus').textContent = '';
-      await bootAdmin();
-    } catch { select('#loginStatus').textContent = '退出失败，请刷新页面后重试。'; }
+    setSession('');
+    allGames = [];
+    allPlayers = [];
+    resetForm();
+    resetLoginFlow();
+    select('#loginStatus').textContent = '';
+    showLogin();
   };
   select('#logout').onclick = signOut;
   select('#loginLogout').onclick = signOut;
-  select('#forgotPassword').onclick = async () => {
-    const email = select('#email');
-    if (!email.reportValidity()) return;
-    const button = select('#forgotPassword');
-    button.disabled = true;
-    try {
-      await requestPasswordRecovery(email.value.trim());
-      select('#loginStatus').textContent = '如该邮箱已注册，密码重置邮件已发送，请检查收件箱。';
-    } catch { select('#loginStatus').textContent = '暂时无法发送重置邮件，请稍后重试。'; }
-    finally { button.disabled = false; }
-  };
   select('#filter').oninput = () => { gamePages.admin = 1; renderAdmin(); };
   select('#adminDateFilter').onchange = () => {
     select('#adminRoundFilter').value = '';
@@ -668,21 +640,10 @@ async function initializeAdmin() {
     }
   };
   try {
-    await hydrateSession();
-    const callback = await handleAuthCallback();
-    if (callback?.type === 'invite') {
-      inviteToken = callback.token;
-      configurePasswordFlow('invite');
-      return;
-    }
-    if (callback?.type === 'recovery') {
-      configurePasswordFlow('recovery');
-      return;
-    }
     await bootAdmin();
   } catch {
     showLogin();
-    select('#loginStatus').textContent = '账户或数据服务暂不可用。请重试登录；邀请链接失效时请联系网站所有者。';
+    select('#loginStatus').textContent = '数据服务暂不可用，请稍后重试登录。';
   }
 }
 
