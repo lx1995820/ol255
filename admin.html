@@ -60,7 +60,7 @@
 </section>
 <section class="card batch-card">
 <div class="card-title"><div><p class="eyebrow">SCREENSHOT DESK</p><h2>批量截图录入</h2></div><span class="public-note">先上传 · 自动纠错 · 入库</span></div>
-<p class="field-help">支持 PNG / JPG / WebP，每张最多 25MB，每批最多 20 张，自动压缩后上传。支持新昵称；已有选手请保持昵称一致，避免拆分统计；每张图片对应一场比赛。请设置日期与起始场次。截图先留存，首次异常仅提醒一次，随后自动重识别并匹配数据库、补全缺项后逐图入库。无法恢复的数据按历史均值估算，无历史暂记 0；胜负无法恢复时按历史多数结果或负场暂填，说明保留在处理结果中，可稍后修改。</p>
+<p class="field-help">支持 PNG / JPG / WebP，每张最多 25MB，每批最多 20 张，自动压缩后上传。支持新昵称；已有选手请保持昵称一致，避免拆分统计；每张图片对应一场比赛。请设置日期与起始场次。入库成功后当场截图自动挂到比赛记录（前台可预览）；截图先留存，首次异常仅提醒一次，随后自动重识别并匹配数据库、补全缺项后逐图入库。无法恢复的数据按历史均值估算，无历史暂记 0；胜负无法恢复时按历史多数结果或负场暂填，说明保留在处理结果中，可稍后修改。</p>
 <div class="form-grid two"><label>比赛日期<input id="batchDate" type="date" required></label><label>起始场次<input id="batchRound" type="number" min="1" max="10000" value="1" required></label></div>
 <ol class="upload-steps" aria-label="截图录入流程"><li>01 选择截图</li><li>02 智能识别</li><li>03 自动入库</li></ol>
 <div id="batchDrop" class="upload-drop" tabindex="0" role="button" aria-label="选择或拖入比赛截图" aria-describedby="batchUploadHelp">

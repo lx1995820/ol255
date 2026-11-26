@@ -35,8 +35,32 @@ export async function prepareImage(file) {
   } finally { URL.revokeObjectURL(url); }
 }
 
-export async function recognizeScreenshot(api, image, metrics) {
-  let data;
+// 生成挂到比赛记录的当场截图（大图 1600w + 缩略图 400w，与迁移规格一致）
+export async function prepareRoundImages(file) {
+  const url = URL.createObjectURL(file);
+  const image = new Image();
+  try {
+    await new Promise((resolve, reject) => {
+      image.onload = resolve;
+      image.onerror = () => reject(new Error('无法读取图片'));
+      image.src = url;
+    });
+    const encode = (maxDim, quality) => {
+      const scale = Math.min(1, maxDim / Math.max(image.naturalWidth, image.naturalHeight));
+      const canvas = document.createElement('canvas');
+      canvas.width = Math.max(1, Math.round(image.naturalWidth * scale));
+      canvas.height = Math.max(1, Math.round(image.naturalHeight * scale));
+      const ctx = canvas.getContext('2d');
+      ctx.fillStyle = '#fff';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
+      return canvas.toDataURL('image/jpeg', quality);
+    };
+    return { image: encode(1600, 0.8), thumb: encode(400, 0.7) };
+  } finally { URL.revokeObjectURL(url); }
+}
+
+export async function recognizeScreenshot(api, image, metrics) {  let data;
   for (let attempt = 0; attempt < 2; attempt++) {
     data = await api('admin/recognize', { method: 'POST', body: JSON.stringify({ image, resolve: attempt > 0 }) });
     if (attempt === 0 && (data.warnings?.length || data.rows?.some(row => !row.nickname || !row.result || metrics.some(key => row[key] == null)))) continue;
@@ -211,8 +235,13 @@ export function initializeScreenshotUpload({ api, metrics, labels, escapeHtml, l
           // Save each screenshot independently so one failure cannot block the batch.
           const rows = item.rows.map(row => Object.fromEntries(['date', 'roundNumber', 'nickname', ...metrics, 'result'].map(key => [key, row[key]])));
           const response = await api('admin/import', { method: 'POST', body: JSON.stringify({ rows, confirm: true }) });
+          // 入库成功后自动把当场截图挂到比赛记录（前台可预览）；挂图失败不阻塞入库结果，仅提示
+          try {
+            const pair = await prepareRoundImages(item.file);
+            await api('admin/round-image', { method: 'POST', body: JSON.stringify({ date: item.date, roundNumber: item.roundNumber, image: pair.image, thumb: pair.thumb }) });
+          } catch { item.warnings = [...(item.warnings || []), '当场截图未保存成功，可在比赛记录的编辑里补传。']; }
           item.state = 'saved';
-          item.message = `已入库 ${response.count} 条，跳过已有记录 ${response.skipped ?? 0} 条。${item.warnings.length ? '自动补全与匹配说明见下方，可在比赛列表修改。' : ''}`;
+          item.message = `已入库 ${response.count} 条，跳过已有记录 ${response.skipped ?? 0} 条，当场截图已保存。${item.warnings.length ? '自动补全与匹配说明见下方，可在比赛列表修改。' : ''}`;
           item.rows = [];
           reviewConfirmed = false;
         } catch (error) {
