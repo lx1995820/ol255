@@ -127,8 +127,9 @@ function parseTournament(body: any): typeof tournaments.$inferInsert | null {
     const {date,...record}=game;
     records.push({...record,roundNumber:game.roundNumber});
   }
-  // 只校验场次结构完整；records 允许是部分场次（如只有某队的比赛视角），领奖台成员不强求全部出场
-  if (body.status==='completed' && (!records.length || podium.some(team=>team.length!==5) || [...rounds.values()].some(r=>r.W!==5 || r.L!==5))) return null;
+  // 只校验场次结构完整；records 允许是部分场次（如只有某队的比赛视角），领奖台成员不强求全部出场；
+  // 每场双方各 1-5 人即可（允许赛后删减个别选手记录，不再强制 5v5 满员）
+  if (body.status==='completed' && (!records.length || podium.some(team=>team.length!==5) || [...rounds.values()].some(r=>r.W<1 || r.L<1))) return null;
   return {name:body.name.trim(),date:body.date,status:body.status,podium,mvp:body.mvp.trim(),records,bracket};
 }
 
@@ -311,7 +312,7 @@ export default async (request: Request) => {
       let body: any;
       try { body = JSON.parse(raw); } catch { return json({error:'提交格式不正确'},400); }
       const values = parseTournament(body);
-      if (!values) return json({error:'请检查赛事名称、日期、场次与五项整数数据；同场每队最多 5 人，昵称不能重复。结束赛事须填写各 5 人的冠亚季军阵容及参赛 MVP。'},400);
+      if (!values) return json({error:'请检查赛事名称、日期、场次与五项整数数据；同场每队最多 5 人，昵称不能重复；每场胜负双方至少各 1 人。结束赛事须填写各 5 人的冠亚季军阵容及参赛 MVP。'},400);
       if (tournamentMatch && (!Number.isSafeInteger(body.revision) || body.revision < 1)) return json({error:'请重新加载赛事后保存'},400);
       const changed = tournamentCollection
         ? await db.insert(tournaments).values(values).returning()
