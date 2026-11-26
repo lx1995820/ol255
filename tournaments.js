@@ -30,6 +30,7 @@ export function initializeTournamentAdmin(api, escapeHtml) {
     <label>赛事档案<select id="tournamentEditorChoice"><option value="">新建锦标赛</option></select></label><button type="button" class="ghost" id="reloadTournaments">重新加载已保存赛事</button>
     <form id="tournamentForm"><div class="form-grid two"><label>赛事名称<input name="name" maxlength="80" required></label><label>比赛日期<input name="date" type="date" min="2000-01-01" max="2100-12-31" required></label></div>
     <div class="form-grid two"><label>赛事状态<select name="status"><option value="ongoing">进行中</option><option value="completed">已结束</option></select></label><label>MVP 昵称<input name="mvp" maxlength="80" placeholder="手动指定本届参赛选手"></label></div>
+    <div class="podium-paste"><label>快速粘贴赛况公告<textarea id="podiumPaste" rows="5" placeholder="直接粘贴群里的赛况公告，点下方按钮自动识别填入，支持格式：&#10;冠军：东东、泉英俊、小铭、西瓜、摘金&#10;亚军：乔老板、k、VC、电网、鸭子&#10;MVP：东东"></textarea></label><button type="button" class="ghost" id="parsePodiumPaste">解析并填入名次 →</button></div>
     <div class="form-grid">${['冠军','亚军','季军','殿军'].map((title,i)=>`<label>${title}阵容<textarea name="podium${i}" rows="2" placeholder="每行一个昵称，共 5 人"></textarea></label>`).join('')}</div><label>BO3 淘汰赛树（JSON · 选填，不填不影响保存）<textarea name="bracket" rows="6" placeholder='{"rounds":[{"name":"半决赛","matches":[{"a":"队伍A","b":"队伍B","aScore":2,"bScore":1,"winner":"队伍A"}]}]}'></textarea></label>
     <p class="field-help">每行填写一名选手一场的数据。同场编号相同，胜负用于区分两队，每队最多 5 人。结束赛事前每场双方至少各 1 人，前三名各填 5 名本届参赛选手，MVP 也须已参赛。删除行后需保存才生效。</p>
     <div class="tournament-ocr"><strong>截图识别锦标赛数据</strong><span>每张截图对应一场比赛，识别结果会加入下方草稿，仍需核对后保存。</span><input id="tournamentImages" type="file" accept="image/png,image/jpeg,image/webp,.png,.jpg,.jpeg,.webp" multiple><button type="button" class="ghost" id="recognizeTournamentImages">选择截图并识别</button><p id="tournamentOcrStatus" role="status"></p></div>
@@ -59,6 +60,39 @@ export function initializeTournamentAdmin(api, escapeHtml) {
   };
   chooser.onchange=edit;
   root.querySelector('#reloadTournaments').onclick=()=>load().catch(error=>message.textContent=error.message);
+  // 快速粘贴赛况公告：解析 冠军/亚军/季军/殿军 与 MVP 行，自动填入表单（噪声行如 @所有人、恭喜他们 自动忽略）
+  root.querySelector('#parsePodiumPaste').onclick=()=>{
+    const text=root.querySelector('#podiumPaste').value;
+    if(!text.trim()){ message.textContent='请先粘贴赛况公告文本。'; return; }
+    const placeIdx={'冠军':0,'亚军':1,'季军':2,'殿军':3,'第一名':0,'第二名':1,'第三名':2,'第四名':3};
+    const found={0:null,1:null,2:null,3:null};
+    let mvp='',cupName='',dateStr='';
+    for(const rawLine of text.split('\n')){
+      const line=rawLine.trim();
+      if(!line||line.startsWith('@')) continue;
+      const mPlace=line.match(/^(冠军|亚军|季军|殿军|第[一二三四]名)\s*[:：]?\s*(.+)$/);
+      if(mPlace){
+        const names=mPlace[2].split(/[、，,，;；\/\s]+/).map(n=>n.trim()).filter(Boolean);
+        if(names.length) found[placeIdx[mPlace[1]]]=names;
+        continue;
+      }
+      const mMvp=line.match(/MVP\s*[:：]?\s*(.+)$/i);
+      if(mMvp){ mvp=mMvp[1].replace(/[。！!,，\s]+$/,'').trim(); continue; }
+      const mCup=line.match(/第[一二三四五六七八九十\d]+届[^，。,：:\s@]{1,20}?(?:杯|锦标赛|赛)/);
+      if(mCup) cupName=mCup[0];
+      const mDate=line.match(/(?<!\d)(\d{2})(\d{2})\s*日/)||line.match(/(\d{1,2})\s*月\s*(\d{1,2})\s*[日号]/);
+      if(mDate){ dateStr=`${mDate[1].padStart(2,'0')}-${mDate[2].padStart(2,'0')}`; }
+    }
+    const teams=Object.entries(found).filter(([,v])=>v);
+    if(!teams.length){ message.textContent='没有识别到名次行，请确认文本里包含「冠军：」「亚军：」这样的行。'; return; }
+    teams.forEach(([i,names])=>{ field(`podium${i}`).value=names.join('\n'); });
+    const extra=[];
+    if(mvp&&!field('mvp').value){ field('mvp').value=mvp; extra.push(`MVP：${mvp}`); }
+    else if(mvp) extra.push(`MVP 已存在未覆盖（识别到：${mvp}）`);
+    if(cupName&&!field('name').value){ field('name').value=cupName; extra.push(`赛事名：${cupName}`); }
+    if(dateStr&&!field('date').value){ const y=new Date().getFullYear(); field('date').value=`${y}-${dateStr}`; extra.push(`日期：${y}-${dateStr}（请核对年份）`); }
+    message.textContent=`已填入 ${teams.length} 个名次（${teams.map(([i,n])=>['冠军','亚军','季军','殿军'][i]+' '+n.length+' 人').join('、')}）${extra.length?'；'+extra.join('；'):''}。请核对后保存。`;
+  };
   root.querySelector('#addTournamentRow').onclick=()=>appendRow({roundNumber:Math.max(1,...[...tbody.querySelectorAll('[data-key="roundNumber"]')].map(input=>Number(input.value)||1))});
   root.querySelector('#addTournamentRound').onclick=()=>{
     const roundNumber=Math.max(0,...[...tbody.querySelectorAll('[data-key="roundNumber"]')].map(input=>Number(input.value)||0))+1;

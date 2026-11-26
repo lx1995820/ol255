@@ -53,3 +53,12 @@
 .shots-row{display:flex;gap:8px;overflow-x:auto;padding:6px 2px}
 .tournament-thumb{height:72px;border-radius:8px;border:1px solid var(--border,#3a3f4b);cursor:zoom-in;flex:0 0 auto;transition:transform .15s}
 .tournament-thumb:hover{transform:scale(1.04);border-color:#e8b64c}
+
+/* 25分俱乐部截图 */
+.club-members>span{min-width:168px}
+.club-thumb{display:block;width:100%;max-width:230px;border-radius:6px;margin-bottom:9px;cursor:zoom-in;border:1px solid var(--line,#dfdfdc)}
+.club-thumb:hover{border-color:var(--orange)}
+
+/* 赛况公告粘贴解析 */
+.podium-paste{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:end;margin:10px 0 4px}
+.podium-paste textarea{width:100%}

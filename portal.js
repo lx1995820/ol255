@@ -899,8 +899,8 @@ function initializePublic() {
     if (img?.dataset.full) showImageOverlay(img.dataset.full, '当场比赛截图');
   });
   document.addEventListener('click', event => {
-    const img = event.target.closest('.tournament-thumb');
-    if (img?.dataset.full) showImageOverlay(img.dataset.full, '锦标赛战绩图');
+    const img = event.target.closest('.tournament-thumb, .club-thumb');
+    if (img?.dataset.full) showImageOverlay(img.dataset.full, '当场战绩截图');
   });
   if (/^#(?:access_token|confirmation_token|recovery_token|invite_token|email_change_token|error)=/.test(location.hash)) {
     location.replace(`/admin.html${location.hash}`);
@@ -960,8 +960,30 @@ function renderExtras() {
   }).join('');
   const relation=relationships(historicGames);
   select('#relationshipRows').innerHTML=[['最强搭子',relation.best],['一生之敌',relation.enemies],['三巨头',relation.triples],['卧龙凤雏',relation.worst],['默契老搭档',relation.veterans],['势均力敌',relation.balanced]].map(([title,items])=>`<article class="honor-item"><h3>${title}</h3><ol class="record-list">${items.map((item,i)=>`<li class="${i===0?'gold-winner':''}"><div><strong>${item.names.map(escapeHtml).join(['一生之敌','势均力敌'].includes(title)?' 遇上 ':' ＋ ')}</strong><small>${item.games} 场 · ${item.wins} 胜 · 胜率 ${rate(item).toFixed(1)}%${title==='一生之敌'?` · 平滑胜率下降 ${item.drop.toFixed(1)} 个百分点 · 其他对局 ${item.baselineGames} 场`:title==='势均力敌'?` · 交手 ${item.wins} : ${item.games-item.wins}`:` · 排序胜率 ${item.adjusted.toFixed(1)}% · 人均综合 ${item.average.toFixed(1)}`}</small></div></li>`).join('')||'<li>暂无符合样本门槛的组合（共同参赛至少 10 场）</li>'}</ol></article>`).join('');
-  const club=allPlayers.filter(p=>p.records.pts>=25).sort((a,b)=>b.records.pts-a.records.pts||a.nickname.localeCompare(b.nickname,'zh-CN'));
-  select('#relationshipRows').innerHTML+=`<article class="honor-item club-card"><h3>25 分俱乐部成员</h3><div class="club-members">${club.map(p=>`<span><strong>${escapeHtml(p.nickname)}</strong>${tagMarkup(p.nickname)}<small>最高 ${p.records.pts} 分</small>${commentButton(p.nickname)}</span>`).join('')||'<p class="empty">等待首位单场 25 分选手</p>'}</div></article>`;
+  // 25 分俱乐部：常规赛 + 锦标赛合并统计，挂载当场战绩截图（有图可点击放大）
+  const clubPerformances = [];
+  for (const g of allGames) {
+    if (g.pts < 25) continue;
+    const has = hasRoundImage(g.date, g.roundNumber);
+    clubPerformances.push({ nickname: g.nickname, pts: g.pts, label: roundLabel(g), thumb: has ? `/api/round-image?date=${g.date}&round=${g.roundNumber}&size=thumb` : '', full: has ? `/api/round-image?date=${g.date}&round=${g.roundNumber}&size=image` : '' });
+  }
+  const tournamentImageSet = new Set(allTournamentImages.map(i => `${i.tournamentId}:${i.index}`));
+  for (const t of allTournaments) {
+    for (const r of (Array.isArray(t.records) ? t.records : [])) {
+      if (r.pts < 25) continue;
+      const has = tournamentImageSet.has(`${t.id}:${r.roundNumber}`);
+      clubPerformances.push({ nickname: r.nickname, pts: r.pts, label: `${t.name} 第${r.roundNumber}场`, thumb: has ? `/api/tournament-image?id=${t.id}&index=${r.roundNumber}&size=thumb` : '', full: has ? `/api/tournament-image?id=${t.id}&index=${r.roundNumber}&size=image` : '' });
+    }
+  }
+  const clubMap = new Map();
+  for (const p of clubPerformances) {
+    const cur = clubMap.get(p.nickname);
+    if (!cur) clubMap.set(p.nickname, { best: p, times: 1 });
+    else { cur.times++; if (p.pts > cur.best.pts) cur.best = p; }
+  }
+  const clubList = [...clubMap.entries()].map(([nickname, v]) => ({ nickname, ...v }))
+    .sort((a, b) => b.best.pts - a.best.pts || b.times - a.times || a.nickname.localeCompare(b.nickname, 'zh-CN'));
+  select('#relationshipRows').innerHTML+=`<article class="honor-item club-card"><h3>25 分俱乐部成员</h3><p class="field-help">常规赛与锦标赛合并统计；挂了小图的成员可点击查看当场战绩截图。</p><div class="club-members">${clubList.map(m=>`<span>${m.best.thumb?`<img class="club-thumb" loading="lazy" src="${m.best.thumb}" data-full="${m.best.full}" alt="${escapeHtml(m.nickname)} 当场战绩截图">`:''}<strong>${escapeHtml(m.nickname)}</strong>${tagMarkup(m.nickname)}<small>最高 ${m.best.pts} 分 · ${escapeHtml(m.best.label)}${m.times>1?` · 共 ${m.times} 次 25+`:''}</small>${commentButton(m.nickname)}</span>`).join('')||'<p class="empty">等待首位单场 25 分选手</p>'}</div></article>`;
   select('#honorWall').innerHTML=honorHistory.map(entry=>{
   const entryGames = historicGames.filter(game => cycleKey(game.date) === entry.month);
   const eligible = new Set(aggregate(entryGames).filter(player => player.games >= cycleMinimum(entryGames)).map(player => player.nickname));
