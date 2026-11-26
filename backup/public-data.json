@@ -1,6 +1,726 @@
 {
  "games": [
   {
+   "id": 1791527915276,
+   "date": "2026-11-26",
+   "roundNumber": 4,
+   "nickname": "骚九",
+   "pts": 0,
+   "reb": 1,
+   "ast": 3,
+   "stl": 1,
+   "blk": 2,
+   "result": "L"
+  },
+  {
+   "id": 1791527915275,
+   "date": "2026-11-26",
+   "roundNumber": 4,
+   "nickname": "蛋面",
+   "pts": 10,
+   "reb": 3,
+   "ast": 2,
+   "stl": 1,
+   "blk": 0,
+   "result": "L"
+  },
+  {
+   "id": 1791527915274,
+   "date": "2026-11-26",
+   "roundNumber": 4,
+   "nickname": "收徒",
+   "pts": 5,
+   "reb": 0,
+   "ast": 1,
+   "stl": 1,
+   "blk": 0,
+   "result": "L"
+  },
+  {
+   "id": 1791527915273,
+   "date": "2026-11-26",
+   "roundNumber": 4,
+   "nickname": "小凯",
+   "pts": 14,
+   "reb": 0,
+   "ast": 5,
+   "stl": 1,
+   "blk": 0,
+   "result": "L"
+  },
+  {
+   "id": 1791527915272,
+   "date": "2026-11-26",
+   "roundNumber": 4,
+   "nickname": "板王",
+   "pts": 2,
+   "reb": 4,
+   "ast": 1,
+   "stl": 1,
+   "blk": 1,
+   "result": "L"
+  },
+  {
+   "id": 1791527915271,
+   "date": "2026-11-26",
+   "roundNumber": 4,
+   "nickname": "东东",
+   "pts": 13,
+   "reb": 6,
+   "ast": 1,
+   "stl": 1,
+   "blk": 0,
+   "result": "W"
+  },
+  {
+   "id": 1791527915270,
+   "date": "2026-11-26",
+   "roundNumber": 4,
+   "nickname": "仙人掌",
+   "pts": 7,
+   "reb": 1,
+   "ast": 1,
+   "stl": 2,
+   "blk": 0,
+   "result": "W"
+  },
+  {
+   "id": 1791527915269,
+   "date": "2026-11-26",
+   "roundNumber": 4,
+   "nickname": "轩少",
+   "pts": 3,
+   "reb": 1,
+   "ast": 2,
+   "stl": 1,
+   "blk": 0,
+   "result": "W"
+  },
+  {
+   "id": 1791527915268,
+   "date": "2026-11-26",
+   "roundNumber": 4,
+   "nickname": "君安",
+   "pts": 15,
+   "reb": 1,
+   "ast": 5,
+   "stl": 1,
+   "blk": 0,
+   "result": "W"
+  },
+  {
+   "id": 1791527915267,
+   "date": "2026-11-26",
+   "roundNumber": 4,
+   "nickname": "猪哥",
+   "pts": 4,
+   "reb": 3,
+   "ast": 2,
+   "stl": 1,
+   "blk": 1,
+   "result": "W"
+  },
+  {
+   "id": 1791527915266,
+   "date": "2026-11-26",
+   "roundNumber": 3,
+   "nickname": "老戴",
+   "pts": 2,
+   "reb": 2,
+   "ast": 0,
+   "stl": 0,
+   "blk": 0,
+   "result": "L"
+  },
+  {
+   "id": 1791527915265,
+   "date": "2026-11-26",
+   "roundNumber": 3,
+   "nickname": "仙人掌",
+   "pts": 5,
+   "reb": 2,
+   "ast": 0,
+   "stl": 0,
+   "blk": 0,
+   "result": "L"
+  },
+  {
+   "id": 1791527915264,
+   "date": "2026-11-26",
+   "roundNumber": 3,
+   "nickname": "板王",
+   "pts": 0,
+   "reb": 0,
+   "ast": 1,
+   "stl": 2,
+   "blk": 0,
+   "result": "L"
+  },
+  {
+   "id": 1791527915263,
+   "date": "2026-11-26",
+   "roundNumber": 3,
+   "nickname": "小凯",
+   "pts": 16,
+   "reb": 0,
+   "ast": 3,
+   "stl": 1,
+   "blk": 0,
+   "result": "L"
+  },
+  {
+   "id": 1791527915262,
+   "date": "2026-11-26",
+   "roundNumber": 3,
+   "nickname": "东东",
+   "pts": 6,
+   "reb": 7,
+   "ast": 3,
+   "stl": 2,
+   "blk": 0,
+   "result": "L"
+  },
+  {
+   "id": 1791527915261,
+   "date": "2026-11-26",
+   "roundNumber": 3,
+   "nickname": "蛋面",
+   "pts": 3,
+   "reb": 1,
+   "ast": 0,
+   "stl": 2,
+   "blk": 1,
+   "result": "W"
+  },
+  {
+   "id": 1791527915260,
+   "date": "2026-11-26",
+   "roundNumber": 3,
+   "nickname": "收徒",
+   "pts": 4,
+   "reb": 0,
+   "ast": 0,
+   "stl": 0,
+   "blk": 0,
+   "result": "W"
+  },
+  {
+   "id": 1791527915259,
+   "date": "2026-11-26",
+   "roundNumber": 3,
+   "nickname": "猪哥",
+   "pts": 4,
+   "reb": 1,
+   "ast": 0,
+   "stl": 1,
+   "blk": 0,
+   "result": "W"
+  },
+  {
+   "id": 1791527915258,
+   "date": "2026-11-26",
+   "roundNumber": 3,
+   "nickname": "君安",
+   "pts": 12,
+   "reb": 0,
+   "ast": 4,
+   "stl": 0,
+   "blk": 0,
+   "result": "W"
+  },
+  {
+   "id": 1791527915257,
+   "date": "2026-11-26",
+   "roundNumber": 3,
+   "nickname": "轩少",
+   "pts": 8,
+   "reb": 5,
+   "ast": 1,
+   "stl": 2,
+   "blk": 0,
+   "result": "W"
+  },
+  {
+   "id": 1791527915256,
+   "date": "2026-11-26",
+   "roundNumber": 2,
+   "nickname": "仙人掌",
+   "pts": 0,
+   "reb": 1,
+   "ast": 1,
+   "stl": 1,
+   "blk": 0,
+   "result": "L"
+  },
+  {
+   "id": 1791527915255,
+   "date": "2026-11-26",
+   "roundNumber": 2,
+   "nickname": "板王",
+   "pts": 9,
+   "reb": 0,
+   "ast": 1,
+   "stl": 1,
+   "blk": 0,
+   "result": "L"
+  },
+  {
+   "id": 1791527915254,
+   "date": "2026-11-26",
+   "roundNumber": 2,
+   "nickname": "小凯",
+   "pts": 9,
+   "reb": 1,
+   "ast": 7,
+   "stl": 3,
+   "blk": 0,
+   "result": "L"
+  },
+  {
+   "id": 1791527915253,
+   "date": "2026-11-26",
+   "roundNumber": 2,
+   "nickname": "老戴",
+   "pts": 8,
+   "reb": 0,
+   "ast": 1,
+   "stl": 0,
+   "blk": 0,
+   "result": "L"
+  },
+  {
+   "id": 1791527915252,
+   "date": "2026-11-26",
+   "roundNumber": 2,
+   "nickname": "东东",
+   "pts": 5,
+   "reb": 8,
+   "ast": 0,
+   "stl": 1,
+   "blk": 0,
+   "result": "L"
+  },
+  {
+   "id": 1791527915251,
+   "date": "2026-11-26",
+   "roundNumber": 2,
+   "nickname": "蛋面",
+   "pts": 0,
+   "reb": 2,
+   "ast": 1,
+   "stl": 1,
+   "blk": 0,
+   "result": "W"
+  },
+  {
+   "id": 1791527915250,
+   "date": "2026-11-26",
+   "roundNumber": 2,
+   "nickname": "收徒",
+   "pts": 4,
+   "reb": 3,
+   "ast": 1,
+   "stl": 0,
+   "blk": 0,
+   "result": "W"
+  },
+  {
+   "id": 1791527915249,
+   "date": "2026-11-26",
+   "roundNumber": 2,
+   "nickname": "猪哥",
+   "pts": 4,
+   "reb": 0,
+   "ast": 0,
+   "stl": 0,
+   "blk": 0,
+   "result": "W"
+  },
+  {
+   "id": 1791527915248,
+   "date": "2026-11-26",
+   "roundNumber": 2,
+   "nickname": "君安",
+   "pts": 14,
+   "reb": 0,
+   "ast": 2,
+   "stl": 1,
+   "blk": 0,
+   "result": "W"
+  },
+  {
+   "id": 1791527915247,
+   "date": "2026-11-26",
+   "roundNumber": 2,
+   "nickname": "轩少",
+   "pts": 14,
+   "reb": 8,
+   "ast": 2,
+   "stl": 2,
+   "blk": 1,
+   "result": "W"
+  },
+  {
+   "id": 1791527915246,
+   "date": "2026-11-26",
+   "roundNumber": 1,
+   "nickname": "老戴",
+   "pts": 5,
+   "reb": 5,
+   "ast": 0,
+   "stl": 1,
+   "blk": 1,
+   "result": "W"
+  },
+  {
+   "id": 1791527915245,
+   "date": "2026-11-26",
+   "roundNumber": 1,
+   "nickname": "仙人掌",
+   "pts": 0,
+   "reb": 3,
+   "ast": 1,
+   "stl": 0,
+   "blk": 0,
+   "result": "W"
+  },
+  {
+   "id": 1791527915244,
+   "date": "2026-11-26",
+   "roundNumber": 1,
+   "nickname": "板王",
+   "pts": 5,
+   "reb": 0,
+   "ast": 4,
+   "stl": 0,
+   "blk": 0,
+   "result": "W"
+  },
+  {
+   "id": 1791527915243,
+   "date": "2026-11-26",
+   "roundNumber": 1,
+   "nickname": "小凯",
+   "pts": 10,
+   "reb": 1,
+   "ast": 3,
+   "stl": 1,
+   "blk": 1,
+   "result": "W"
+  },
+  {
+   "id": 1791527915242,
+   "date": "2026-11-26",
+   "roundNumber": 1,
+   "nickname": "东东",
+   "pts": 8,
+   "reb": 3,
+   "ast": 0,
+   "stl": 2,
+   "blk": 1,
+   "result": "W"
+  },
+  {
+   "id": 1791527915241,
+   "date": "2026-11-26",
+   "roundNumber": 1,
+   "nickname": "蛋面",
+   "pts": 5,
+   "reb": 0,
+   "ast": 1,
+   "stl": 2,
+   "blk": 0,
+   "result": "L"
+  },
+  {
+   "id": 1791527915240,
+   "date": "2026-11-26",
+   "roundNumber": 1,
+   "nickname": "收徒",
+   "pts": 4,
+   "reb": 1,
+   "ast": 0,
+   "stl": 0,
+   "blk": 0,
+   "result": "L"
+  },
+  {
+   "id": 1791527915239,
+   "date": "2026-11-26",
+   "roundNumber": 1,
+   "nickname": "猪哥",
+   "pts": 0,
+   "reb": 0,
+   "ast": 2,
+   "stl": 0,
+   "blk": 0,
+   "result": "L"
+  },
+  {
+   "id": 1791527915238,
+   "date": "2026-11-26",
+   "roundNumber": 1,
+   "nickname": "君安",
+   "pts": 9,
+   "reb": 3,
+   "ast": 2,
+   "stl": 1,
+   "blk": 1,
+   "result": "L"
+  },
+  {
+   "id": 1791527915237,
+   "date": "2026-11-26",
+   "roundNumber": 1,
+   "nickname": "轩少",
+   "pts": 7,
+   "reb": 5,
+   "ast": 1,
+   "stl": 0,
+   "blk": 0,
+   "result": "L"
+  },
+  {
+   "id": 1791527915236,
+   "date": "2026-11-25",
+   "roundNumber": 2,
+   "nickname": "小凯",
+   "pts": 12,
+   "reb": 5,
+   "ast": 3,
+   "stl": 0,
+   "blk": 0,
+   "result": "L"
+  },
+  {
+   "id": 1791527915235,
+   "date": "2026-11-25",
+   "roundNumber": 2,
+   "nickname": "一马",
+   "pts": 9,
+   "reb": 0,
+   "ast": 0,
+   "stl": 1,
+   "blk": 0,
+   "result": "L"
+  },
+  {
+   "id": 1791527915234,
+   "date": "2026-11-25",
+   "roundNumber": 2,
+   "nickname": "仙人掌",
+   "pts": 0,
+   "reb": 0,
+   "ast": 4,
+   "stl": 2,
+   "blk": 0,
+   "result": "L"
+  },
+  {
+   "id": 1791527915233,
+   "date": "2026-11-25",
+   "roundNumber": 2,
+   "nickname": "底角",
+   "pts": 14,
+   "reb": 1,
+   "ast": 4,
+   "stl": 1,
+   "blk": 0,
+   "result": "L"
+  },
+  {
+   "id": 1791527915232,
+   "date": "2026-11-25",
+   "roundNumber": 2,
+   "nickname": "蛋面",
+   "pts": 0,
+   "reb": 2,
+   "ast": 0,
+   "stl": 0,
+   "blk": 0,
+   "result": "L"
+  },
+  {
+   "id": 1791527915231,
+   "date": "2026-11-25",
+   "roundNumber": 2,
+   "nickname": "东东",
+   "pts": 2,
+   "reb": 10,
+   "ast": 3,
+   "stl": 1,
+   "blk": 2,
+   "result": "W"
+  },
+  {
+   "id": 1791527915230,
+   "date": "2026-11-25",
+   "roundNumber": 2,
+   "nickname": "星空",
+   "pts": 0,
+   "reb": 3,
+   "ast": 0,
+   "stl": 2,
+   "blk": 0,
+   "result": "W"
+  },
+  {
+   "id": 1791527915229,
+   "date": "2026-11-25",
+   "roundNumber": 2,
+   "nickname": "轩少",
+   "pts": 27,
+   "reb": 1,
+   "ast": 1,
+   "stl": 1,
+   "blk": 0,
+   "result": "W"
+  },
+  {
+   "id": 1791527915228,
+   "date": "2026-11-25",
+   "roundNumber": 2,
+   "nickname": "老戴",
+   "pts": 5,
+   "reb": 1,
+   "ast": 4,
+   "stl": 1,
+   "blk": 0,
+   "result": "W"
+  },
+  {
+   "id": 1791527915227,
+   "date": "2026-11-25",
+   "roundNumber": 2,
+   "nickname": "泉英俊",
+   "pts": 2,
+   "reb": 0,
+   "ast": 1,
+   "stl": 0,
+   "blk": 0,
+   "result": "W"
+  },
+  {
+   "id": 1791527915226,
+   "date": "2026-11-25",
+   "roundNumber": 1,
+   "nickname": "仙人掌",
+   "pts": 3,
+   "reb": 7,
+   "ast": 2,
+   "stl": 0,
+   "blk": 1,
+   "result": "W"
+  },
+  {
+   "id": 1791527915225,
+   "date": "2026-11-25",
+   "roundNumber": 1,
+   "nickname": "梅西",
+   "pts": 0,
+   "reb": 5,
+   "ast": 0,
+   "stl": 0,
+   "blk": 1,
+   "result": "W"
+  },
+  {
+   "id": 1791527915224,
+   "date": "2026-11-25",
+   "roundNumber": 1,
+   "nickname": "猪哥",
+   "pts": 0,
+   "reb": 1,
+   "ast": 1,
+   "stl": 2,
+   "blk": 0,
+   "result": "W"
+  },
+  {
+   "id": 1791527915223,
+   "date": "2026-11-25",
+   "roundNumber": 1,
+   "nickname": "小凯",
+   "pts": 30,
+   "reb": 4,
+   "ast": 4,
+   "stl": 1,
+   "blk": 0,
+   "result": "W"
+  },
+  {
+   "id": 1791527915222,
+   "date": "2026-11-25",
+   "roundNumber": 1,
+   "nickname": "白云",
+   "pts": 14,
+   "reb": 1,
+   "ast": 1,
+   "stl": 2,
+   "blk": 0,
+   "result": "W"
+  },
+  {
+   "id": 1791527915221,
+   "date": "2026-11-25",
+   "roundNumber": 1,
+   "nickname": "东东",
+   "pts": 6,
+   "reb": 3,
+   "ast": 3,
+   "stl": 5,
+   "blk": 0,
+   "result": "L"
+  },
+  {
+   "id": 1791527915220,
+   "date": "2026-11-25",
+   "roundNumber": 1,
+   "nickname": "星空",
+   "pts": 7,
+   "reb": 4,
+   "ast": 1,
+   "stl": 1,
+   "blk": 0,
+   "result": "L"
+  },
+  {
+   "id": 1791527915219,
+   "date": "2026-11-25",
+   "roundNumber": 1,
+   "nickname": "轩少",
+   "pts": 11,
+   "reb": 0,
+   "ast": 5,
+   "stl": 2,
+   "blk": 0,
+   "result": "L"
+  },
+  {
+   "id": 1791527915218,
+   "date": "2026-11-25",
+   "roundNumber": 1,
+   "nickname": "老戴",
+   "pts": 15,
+   "reb": 1,
+   "ast": 2,
+   "stl": 2,
+   "blk": 0,
+   "result": "L"
+  },
+  {
+   "id": 1791527915217,
+   "date": "2026-11-25",
+   "roundNumber": 1,
+   "nickname": "泉英俊",
+   "pts": 4,
+   "reb": 1,
+   "ast": 2,
+   "stl": 2,
+   "blk": 0,
+   "result": "L"
+  },
+  {
    "id": 1791527915196,
    "date": "2026-11-24",
    "roundNumber": 3,
@@ -24051,6 +24771,295 @@
  ],
  "players": [
   {
+   "nickname": "骚九",
+   "games": 95,
+   "wins": 47,
+   "pts": 5.831578947368421,
+   "reb": 2.8526315789473684,
+   "ast": 2.094736842105263,
+   "stl": 1.1157894736842104,
+   "blk": 0.4105263157894737,
+   "records": {
+    "pts": 22,
+    "reb": 13,
+    "ast": 9,
+    "stl": 4,
+    "blk": 3
+   }
+  },
+  {
+   "nickname": "蛋面",
+   "games": 15,
+   "wins": 6,
+   "pts": 5.866666666666666,
+   "reb": 1.3333333333333333,
+   "ast": 0.8666666666666667,
+   "stl": 0.6,
+   "blk": 0.13333333333333333,
+   "records": {
+    "pts": 12,
+    "reb": 6,
+    "ast": 2,
+    "stl": 2,
+    "blk": 1
+   }
+  },
+  {
+   "nickname": "收徒",
+   "games": 92,
+   "wins": 39,
+   "pts": 6.195652173913044,
+   "reb": 1.3478260869565217,
+   "ast": 0.782608695652174,
+   "stl": 0.4782608695652174,
+   "blk": 0.13043478260869565,
+   "records": {
+    "pts": 20,
+    "reb": 8,
+    "ast": 7,
+    "stl": 3,
+    "blk": 3
+   }
+  },
+  {
+   "nickname": "小凯",
+   "games": 162,
+   "wins": 96,
+   "pts": 12.450617283950617,
+   "reb": 1.9753086419753085,
+   "ast": 4.067901234567901,
+   "stl": 2.006172839506173,
+   "blk": 0.20987654320987653,
+   "records": {
+    "pts": 30,
+    "reb": 11,
+    "ast": 10,
+    "stl": 8,
+    "blk": 3
+   }
+  },
+  {
+   "nickname": "板王",
+   "games": 90,
+   "wins": 49,
+   "pts": 6.977777777777778,
+   "reb": 2.4555555555555557,
+   "ast": 2.9,
+   "stl": 1.2222222222222223,
+   "blk": 0.3333333333333333,
+   "records": {
+    "pts": 22,
+    "reb": 16,
+    "ast": 8,
+    "stl": 6,
+    "blk": 3
+   }
+  },
+  {
+   "nickname": "东东",
+   "games": 44,
+   "wins": 26,
+   "pts": 8.045454545454545,
+   "reb": 5.636363636363637,
+   "ast": 2.25,
+   "stl": 1.5909090909090908,
+   "blk": 0.9318181818181818,
+   "records": {
+    "pts": 19,
+    "reb": 11,
+    "ast": 8,
+    "stl": 5,
+    "blk": 3
+   }
+  },
+  {
+   "nickname": "仙人掌",
+   "games": 71,
+   "wins": 34,
+   "pts": 4.549295774647887,
+   "reb": 4.23943661971831,
+   "ast": 2.084507042253521,
+   "stl": 0.8450704225352113,
+   "blk": 0.5070422535211268,
+   "records": {
+    "pts": 14,
+    "reb": 14,
+    "ast": 7,
+    "stl": 4,
+    "blk": 3
+   }
+  },
+  {
+   "nickname": "轩少",
+   "games": 127,
+   "wins": 72,
+   "pts": 9.472440944881889,
+   "reb": 2.622047244094488,
+   "ast": 2,
+   "stl": 1.078740157480315,
+   "blk": 0.2992125984251969,
+   "records": {
+    "pts": 28,
+    "reb": 11,
+    "ast": 7,
+    "stl": 7,
+    "blk": 3
+   }
+  },
+  {
+   "nickname": "君安",
+   "games": 64,
+   "wins": 34,
+   "pts": 13.03125,
+   "reb": 0.796875,
+   "ast": 4.15625,
+   "stl": 1.046875,
+   "blk": 0.21875,
+   "records": {
+    "pts": 30,
+    "reb": 11,
+    "ast": 10,
+    "stl": 5,
+    "blk": 3
+   }
+  },
+  {
+   "nickname": "猪哥",
+   "games": 11,
+   "wins": 7,
+   "pts": 4.090909090909091,
+   "reb": 2.090909090909091,
+   "ast": 1.1818181818181819,
+   "stl": 1.0909090909090908,
+   "blk": 0.18181818181818182,
+   "records": {
+    "pts": 9,
+    "reb": 7,
+    "ast": 2,
+    "stl": 3,
+    "blk": 1
+   }
+  },
+  {
+   "nickname": "老戴",
+   "games": 104,
+   "wins": 56,
+   "pts": 8.596153846153847,
+   "reb": 1.5865384615384615,
+   "ast": 2.6346153846153846,
+   "stl": 0.6346153846153846,
+   "blk": 0.14423076923076922,
+   "records": {
+    "pts": 31,
+    "reb": 11,
+    "ast": 11,
+    "stl": 4,
+    "blk": 2
+   }
+  },
+  {
+   "nickname": "一马",
+   "games": 5,
+   "wins": 3,
+   "pts": 4.8,
+   "reb": 2.2,
+   "ast": 0.8,
+   "stl": 0.4,
+   "blk": 0,
+   "records": {
+    "pts": 9,
+    "reb": 5,
+    "ast": 2,
+    "stl": 1,
+    "blk": 0
+   }
+  },
+  {
+   "nickname": "底角",
+   "games": 80,
+   "wins": 38,
+   "pts": 9.675,
+   "reb": 2.175,
+   "ast": 2.7125,
+   "stl": 1.0375,
+   "blk": 0.125,
+   "records": {
+    "pts": 25,
+    "reb": 9,
+    "ast": 11,
+    "stl": 5,
+    "blk": 1
+   }
+  },
+  {
+   "nickname": "星空",
+   "games": 33,
+   "wins": 19,
+   "pts": 4.151515151515151,
+   "reb": 2.6363636363636362,
+   "ast": 0.696969696969697,
+   "stl": 0.696969696969697,
+   "blk": 0.24242424242424243,
+   "records": {
+    "pts": 10,
+    "reb": 8,
+    "ast": 3,
+    "stl": 3,
+    "blk": 1
+   }
+  },
+  {
+   "nickname": "泉英俊",
+   "games": 79,
+   "wins": 33,
+   "pts": 9.936708860759493,
+   "reb": 2.569620253164557,
+   "ast": 2.240506329113924,
+   "stl": 0.8227848101265823,
+   "blk": 0.27848101265822783,
+   "records": {
+    "pts": 36,
+    "reb": 16,
+    "ast": 11,
+    "stl": 3,
+    "blk": 3
+   }
+  },
+  {
+   "nickname": "梅西",
+   "games": 83,
+   "wins": 39,
+   "pts": 5.180722891566265,
+   "reb": 2.289156626506024,
+   "ast": 2.072289156626506,
+   "stl": 1.036144578313253,
+   "blk": 0.2289156626506024,
+   "records": {
+    "pts": 17,
+    "reb": 10,
+    "ast": 9,
+    "stl": 6,
+    "blk": 2
+   }
+  },
+  {
+   "nickname": "白云",
+   "games": 81,
+   "wins": 51,
+   "pts": 4.703703703703703,
+   "reb": 1.7654320987654322,
+   "ast": 0.691358024691358,
+   "stl": 0.6296296296296297,
+   "blk": 0.08641975308641975,
+   "records": {
+    "pts": 15,
+    "reb": 6,
+    "ast": 3,
+    "stl": 2,
+    "blk": 2
+   }
+  },
+  {
    "nickname": "乔老板",
    "games": 8,
    "wins": 3,
@@ -24068,23 +25077,6 @@
    }
   },
   {
-   "nickname": "收徒",
-   "games": 88,
-   "wins": 37,
-   "pts": 6.284090909090909,
-   "reb": 1.3636363636363635,
-   "ast": 0.7954545454545454,
-   "stl": 0.48863636363636365,
-   "blk": 0.13636363636363635,
-   "records": {
-    "pts": 20,
-    "reb": 8,
-    "ast": 7,
-    "stl": 3,
-    "blk": 3
-   }
-  },
-  {
    "nickname": "山王",
    "games": 82,
    "wins": 43,
@@ -24099,142 +25091,6 @@
     "ast": 5,
     "stl": 6,
     "blk": 2
-   }
-  },
-  {
-   "nickname": "小凯",
-   "games": 156,
-   "wins": 94,
-   "pts": 12.346153846153847,
-   "reb": 1.9807692307692308,
-   "ast": 4.064102564102564,
-   "stl": 2.0384615384615383,
-   "blk": 0.21153846153846154,
-   "records": {
-    "pts": 30,
-    "reb": 11,
-    "ast": 10,
-    "stl": 8,
-    "blk": 3
-   }
-  },
-  {
-   "nickname": "骚九",
-   "games": 94,
-   "wins": 47,
-   "pts": 5.8936170212765955,
-   "reb": 2.872340425531915,
-   "ast": 2.0851063829787235,
-   "stl": 1.1170212765957446,
-   "blk": 0.39361702127659576,
-   "records": {
-    "pts": 22,
-    "reb": 13,
-    "ast": 9,
-    "stl": 4,
-    "blk": 3
-   }
-  },
-  {
-   "nickname": "仙人掌",
-   "games": 65,
-   "wins": 31,
-   "pts": 4.7384615384615385,
-   "reb": 4.415384615384616,
-   "ast": 2.1384615384615384,
-   "stl": 0.8461538461538461,
-   "blk": 0.5384615384615384,
-   "records": {
-    "pts": 14,
-    "reb": 14,
-    "ast": 7,
-    "stl": 4,
-    "blk": 3
-   }
-  },
-  {
-   "nickname": "蛋面",
-   "games": 10,
-   "wins": 4,
-   "pts": 7,
-   "reb": 1.2,
-   "ast": 0.9,
-   "stl": 0.3,
-   "blk": 0.1,
-   "records": {
-    "pts": 12,
-    "reb": 6,
-    "ast": 2,
-    "stl": 1,
-    "blk": 1
-   }
-  },
-  {
-   "nickname": "白云",
-   "games": 80,
-   "wins": 50,
-   "pts": 4.5875,
-   "reb": 1.775,
-   "ast": 0.6875,
-   "stl": 0.6125,
-   "blk": 0.0875,
-   "records": {
-    "pts": 15,
-    "reb": 6,
-    "ast": 3,
-    "stl": 2,
-    "blk": 2
-   }
-  },
-  {
-   "nickname": "老戴",
-   "games": 99,
-   "wins": 54,
-   "pts": 8.676767676767676,
-   "reb": 1.5757575757575757,
-   "ast": 2.696969696969697,
-   "stl": 0.6262626262626263,
-   "blk": 0.1414141414141414,
-   "records": {
-    "pts": 31,
-    "reb": 11,
-    "ast": 11,
-    "stl": 4,
-    "blk": 2
-   }
-  },
-  {
-   "nickname": "轩少",
-   "games": 121,
-   "wins": 68,
-   "pts": 9.363636363636363,
-   "reb": 2.5867768595041323,
-   "ast": 2,
-   "stl": 1.0661157024793388,
-   "blk": 0.30578512396694213,
-   "records": {
-    "pts": 28,
-    "reb": 11,
-    "ast": 7,
-    "stl": 7,
-    "blk": 3
-   }
-  },
-  {
-   "nickname": "东东",
-   "games": 38,
-   "wins": 23,
-   "pts": 8.263157894736842,
-   "reb": 5.552631578947368,
-   "ast": 2.3421052631578947,
-   "stl": 1.5263157894736843,
-   "blk": 1,
-   "records": {
-    "pts": 19,
-    "reb": 11,
-    "ast": 8,
-    "stl": 5,
-    "blk": 3
    }
   },
   {
@@ -24269,23 +25125,6 @@
     "ast": 3,
     "stl": 3,
     "blk": 2
-   }
-  },
-  {
-   "nickname": "板王",
-   "games": 86,
-   "wins": 48,
-   "pts": 7.116279069767442,
-   "reb": 2.5232558139534884,
-   "ast": 2.953488372093023,
-   "stl": 1.2325581395348837,
-   "blk": 0.3372093023255814,
-   "records": {
-    "pts": 22,
-    "reb": 16,
-    "ast": 8,
-    "stl": 6,
-    "blk": 3
    }
   },
   {
@@ -24408,40 +25247,6 @@
    }
   },
   {
-   "nickname": "底角",
-   "games": 79,
-   "wins": 38,
-   "pts": 9.620253164556962,
-   "reb": 2.189873417721519,
-   "ast": 2.6962025316455698,
-   "stl": 1.0379746835443038,
-   "blk": 0.12658227848101267,
-   "records": {
-    "pts": 25,
-    "reb": 9,
-    "ast": 11,
-    "stl": 5,
-    "blk": 1
-   }
-  },
-  {
-   "nickname": "一马",
-   "games": 4,
-   "wins": 3,
-   "pts": 3.75,
-   "reb": 2.75,
-   "ast": 1,
-   "stl": 0.25,
-   "blk": 0,
-   "records": {
-    "pts": 7,
-    "reb": 5,
-    "ast": 2,
-    "stl": 1,
-    "blk": 0
-   }
-  },
-  {
    "nickname": "MacFans东契奇",
    "games": 1,
    "wins": 1,
@@ -24527,23 +25332,6 @@
    }
   },
   {
-   "nickname": "君安",
-   "games": 60,
-   "wins": 31,
-   "pts": 13.066666666666666,
-   "reb": 0.7833333333333333,
-   "ast": 4.216666666666667,
-   "stl": 1.0666666666666667,
-   "blk": 0.21666666666666667,
-   "records": {
-    "pts": 30,
-    "reb": 11,
-    "ast": 10,
-    "stl": 5,
-    "blk": 3
-   }
-  },
-  {
    "nickname": "大黑",
    "games": 32,
    "wins": 13,
@@ -24575,40 +25363,6 @@
     "ast": 5,
     "stl": 3,
     "blk": 3
-   }
-  },
-  {
-   "nickname": "猪哥",
-   "games": 6,
-   "wins": 3,
-   "pts": 5.5,
-   "reb": 3,
-   "ast": 1.3333333333333333,
-   "stl": 1.3333333333333333,
-   "blk": 0.16666666666666666,
-   "records": {
-    "pts": 9,
-    "reb": 7,
-    "ast": 2,
-    "stl": 3,
-    "blk": 1
-   }
-  },
-  {
-   "nickname": "梅西",
-   "games": 82,
-   "wins": 38,
-   "pts": 5.2439024390243905,
-   "reb": 2.2560975609756095,
-   "ast": 2.097560975609756,
-   "stl": 1.048780487804878,
-   "blk": 0.21951219512195122,
-   "records": {
-    "pts": 17,
-    "reb": 10,
-    "ast": 9,
-    "stl": 6,
-    "blk": 2
    }
   },
   {
@@ -24711,23 +25465,6 @@
     "ast": 5,
     "stl": 1,
     "blk": 3
-   }
-  },
-  {
-   "nickname": "星空",
-   "games": 31,
-   "wins": 18,
-   "pts": 4.193548387096774,
-   "reb": 2.5806451612903225,
-   "ast": 0.7096774193548387,
-   "stl": 0.6451612903225806,
-   "blk": 0.25806451612903225,
-   "records": {
-    "pts": 10,
-    "reb": 8,
-    "ast": 3,
-    "stl": 3,
-    "blk": 1
    }
   },
   {
@@ -24847,23 +25584,6 @@
     "ast": 2,
     "stl": 1,
     "blk": 0
-   }
-  },
-  {
-   "nickname": "泉英俊",
-   "games": 77,
-   "wins": 32,
-   "pts": 10.116883116883116,
-   "reb": 2.6233766233766236,
-   "ast": 2.25974025974026,
-   "stl": 0.8181818181818182,
-   "blk": 0.2857142857142857,
-   "records": {
-    "pts": 36,
-    "reb": 16,
-    "ast": 11,
-    "stl": 3,
-    "blk": 3
    }
   },
   {
@@ -25881,6 +26601,2704 @@
  ],
  "tournaments": [
   {
+   "id": 10,
+   "name": "第一届taco杯",
+   "date": "2026-11-25",
+   "status": "completed",
+   "podium": [
+    [
+     "东东",
+     "泉英俊",
+     "小铭",
+     "西瓜",
+     "摘金"
+    ],
+    [
+     "乔老板",
+     "乔老板1",
+     "乔老板3",
+     "乔老板2",
+     "鸭子"
+    ],
+    [
+     "小凯",
+     "轩少",
+     "轮休卡",
+     "白云",
+     "收徒"
+    ],
+    [
+     "猪咪",
+     "板王",
+     "阿sir",
+     "13",
+     "憶辰"
+    ]
+   ],
+   "mvp": "东东",
+   "records": [
+    {
+     "ast": 4,
+     "blk": 0,
+     "pts": 12,
+     "reb": 1,
+     "stl": 0,
+     "result": "W",
+     "nickname": "泉英俊",
+     "roundNumber": 1
+    },
+    {
+     "ast": 4,
+     "blk": 0,
+     "pts": 19,
+     "reb": 0,
+     "stl": 3,
+     "result": "W",
+     "nickname": "摘金",
+     "roundNumber": 1
+    },
+    {
+     "ast": 3,
+     "blk": 0,
+     "pts": 3,
+     "reb": 0,
+     "stl": 1,
+     "result": "W",
+     "nickname": "小铭",
+     "roundNumber": 1
+    },
+    {
+     "ast": 0,
+     "blk": 0,
+     "pts": 6,
+     "reb": 6,
+     "stl": 0,
+     "result": "W",
+     "nickname": "西瓜",
+     "roundNumber": 1
+    },
+    {
+     "ast": 2,
+     "blk": 0,
+     "pts": 8,
+     "reb": 9,
+     "stl": 1,
+     "result": "W",
+     "nickname": "东东",
+     "roundNumber": 1
+    },
+    {
+     "ast": 2,
+     "blk": 0,
+     "pts": 7,
+     "reb": 1,
+     "stl": 1,
+     "result": "L",
+     "nickname": "Zhakexi",
+     "roundNumber": 1
+    },
+    {
+     "ast": 2,
+     "blk": 0,
+     "pts": 5,
+     "reb": 0,
+     "stl": 0,
+     "result": "L",
+     "nickname": "黑猫",
+     "roundNumber": 1
+    },
+    {
+     "ast": 1,
+     "blk": 0,
+     "pts": 10,
+     "reb": 0,
+     "stl": 0,
+     "result": "L",
+     "nickname": "凯間加内特",
+     "roundNumber": 1
+    },
+    {
+     "ast": 1,
+     "blk": 0,
+     "pts": 0,
+     "reb": 4,
+     "stl": 0,
+     "result": "L",
+     "nickname": "瞬息",
+     "roundNumber": 1
+    },
+    {
+     "ast": 2,
+     "blk": 0,
+     "pts": 7,
+     "reb": 5,
+     "stl": 0,
+     "result": "L",
+     "nickname": "sikui",
+     "roundNumber": 1
+    },
+    {
+     "ast": 1,
+     "blk": 1,
+     "pts": 8,
+     "reb": 11,
+     "stl": 1,
+     "result": "W",
+     "nickname": "白云",
+     "roundNumber": 2
+    },
+    {
+     "ast": 3,
+     "blk": 0,
+     "pts": 42,
+     "reb": 1,
+     "stl": 2,
+     "result": "W",
+     "nickname": "轩少",
+     "roundNumber": 2
+    },
+    {
+     "ast": 14,
+     "blk": 0,
+     "pts": 6,
+     "reb": 1,
+     "stl": 2,
+     "result": "W",
+     "nickname": "小凯",
+     "roundNumber": 2
+    },
+    {
+     "ast": 1,
+     "blk": 0,
+     "pts": 3,
+     "reb": 1,
+     "stl": 0,
+     "result": "W",
+     "nickname": "轮休卡",
+     "roundNumber": 2
+    },
+    {
+     "ast": 0,
+     "blk": 0,
+     "pts": 3,
+     "reb": 2,
+     "stl": 1,
+     "result": "W",
+     "nickname": "收徒",
+     "roundNumber": 2
+    },
+    {
+     "ast": 1,
+     "blk": 0,
+     "pts": 4,
+     "reb": 6,
+     "stl": 0,
+     "result": "L",
+     "nickname": "归己",
+     "roundNumber": 2
+    },
+    {
+     "ast": 5,
+     "blk": 0,
+     "pts": 9,
+     "reb": 1,
+     "stl": 0,
+     "result": "L",
+     "nickname": "havefunwithit",
+     "roundNumber": 2
+    },
+    {
+     "ast": 1,
+     "blk": 0,
+     "pts": 6,
+     "reb": 2,
+     "stl": 1,
+     "result": "L",
+     "nickname": "贺州插秧王",
+     "roundNumber": 2
+    },
+    {
+     "ast": 1,
+     "blk": 1,
+     "pts": 18,
+     "reb": 3,
+     "stl": 0,
+     "result": "L",
+     "nickname": "你们一起上",
+     "roundNumber": 2
+    },
+    {
+     "ast": 3,
+     "blk": 0,
+     "pts": 0,
+     "reb": 1,
+     "stl": 0,
+     "result": "L",
+     "nickname": "黑鸡强",
+     "roundNumber": 2
+    },
+    {
+     "ast": 2,
+     "blk": 2,
+     "pts": 2,
+     "reb": 7,
+     "stl": 1,
+     "result": "W",
+     "nickname": "白云",
+     "roundNumber": 3
+    },
+    {
+     "ast": 1,
+     "blk": 1,
+     "pts": 17,
+     "reb": 1,
+     "stl": 1,
+     "result": "W",
+     "nickname": "轩少",
+     "roundNumber": 3
+    },
+    {
+     "ast": 6,
+     "blk": 0,
+     "pts": 11,
+     "reb": 0,
+     "stl": 1,
+     "result": "W",
+     "nickname": "小凯",
+     "roundNumber": 3
+    },
+    {
+     "ast": 1,
+     "blk": 0,
+     "pts": 0,
+     "reb": 1,
+     "stl": 0,
+     "result": "W",
+     "nickname": "轮休卡",
+     "roundNumber": 3
+    },
+    {
+     "ast": 0,
+     "blk": 0,
+     "pts": 6,
+     "reb": 1,
+     "stl": 1,
+     "result": "W",
+     "nickname": "收徒",
+     "roundNumber": 3
+    },
+    {
+     "ast": 2,
+     "blk": 1,
+     "pts": 2,
+     "reb": 8,
+     "stl": 0,
+     "result": "L",
+     "nickname": "贫僧涅槃重生",
+     "roundNumber": 3
+    },
+    {
+     "ast": 2,
+     "blk": 0,
+     "pts": 6,
+     "reb": 0,
+     "stl": 0,
+     "result": "L",
+     "nickname": "自来桥第一深情",
+     "roundNumber": 3
+    },
+    {
+     "ast": 1,
+     "blk": 2,
+     "pts": 6,
+     "reb": 1,
+     "stl": 0,
+     "result": "L",
+     "nickname": "桜木花道Hanamichi",
+     "roundNumber": 3
+    },
+    {
+     "ast": 4,
+     "blk": 0,
+     "pts": 21,
+     "reb": 0,
+     "stl": 3,
+     "result": "L",
+     "nickname": "AirJordanGOAT",
+     "roundNumber": 3
+    },
+    {
+     "ast": 1,
+     "blk": 0,
+     "pts": 0,
+     "reb": 1,
+     "stl": 0,
+     "result": "L",
+     "nickname": "EVG无敌锁",
+     "roundNumber": 3
+    },
+    {
+     "ast": 7,
+     "blk": 0,
+     "pts": 15,
+     "reb": 3,
+     "stl": 0,
+     "result": "W",
+     "nickname": "AirJordanGOAT",
+     "roundNumber": 4
+    },
+    {
+     "ast": 0,
+     "blk": 0,
+     "pts": 7,
+     "reb": 0,
+     "stl": 1,
+     "result": "W",
+     "nickname": "自来桥第一深情",
+     "roundNumber": 4
+    },
+    {
+     "ast": 2,
+     "blk": 0,
+     "pts": 13,
+     "reb": 2,
+     "stl": 1,
+     "result": "W",
+     "nickname": "桜木花道Hanamichi",
+     "roundNumber": 4
+    },
+    {
+     "ast": 2,
+     "blk": 0,
+     "pts": 5,
+     "reb": 2,
+     "stl": 1,
+     "result": "W",
+     "nickname": "EVG无敌锁",
+     "roundNumber": 4
+    },
+    {
+     "ast": 4,
+     "blk": 1,
+     "pts": 5,
+     "reb": 5,
+     "stl": 0,
+     "result": "W",
+     "nickname": "贫僧涅槃重生",
+     "roundNumber": 4
+    },
+    {
+     "ast": 0,
+     "blk": 0,
+     "pts": 17,
+     "reb": 1,
+     "stl": 1,
+     "result": "L",
+     "nickname": "下",
+     "roundNumber": 4
+    },
+    {
+     "ast": 8,
+     "blk": 0,
+     "pts": 10,
+     "reb": 2,
+     "stl": 0,
+     "result": "L",
+     "nickname": "xxxxx2",
+     "roundNumber": 4
+    },
+    {
+     "ast": 0,
+     "blk": 0,
+     "pts": 5,
+     "reb": 0,
+     "stl": 1,
+     "result": "L",
+     "nickname": "乔老板",
+     "roundNumber": 4
+    },
+    {
+     "ast": 2,
+     "blk": 0,
+     "pts": 5,
+     "reb": 4,
+     "stl": 0,
+     "result": "L",
+     "nickname": "鸭子",
+     "roundNumber": 4
+    },
+    {
+     "ast": 2,
+     "blk": 0,
+     "pts": 5,
+     "reb": 3,
+     "stl": 0,
+     "result": "L",
+     "nickname": "xxxxx3",
+     "roundNumber": 4
+    },
+    {
+     "ast": 6,
+     "blk": 0,
+     "pts": 7,
+     "reb": 5,
+     "stl": 2,
+     "result": "W",
+     "nickname": "底角",
+     "roundNumber": 5
+    },
+    {
+     "ast": 3,
+     "blk": 0,
+     "pts": 21,
+     "reb": 1,
+     "stl": 1,
+     "result": "W",
+     "nickname": "君安",
+     "roundNumber": 5
+    },
+    {
+     "ast": 1,
+     "blk": 0,
+     "pts": 9,
+     "reb": 1,
+     "stl": 1,
+     "result": "W",
+     "nickname": "KingHaoDa",
+     "roundNumber": 5
+    },
+    {
+     "ast": 2,
+     "blk": 0,
+     "pts": 7,
+     "reb": 5,
+     "stl": 2,
+     "result": "W",
+     "nickname": "蛋面",
+     "roundNumber": 5
+    },
+    {
+     "ast": 1,
+     "blk": 0,
+     "pts": 6,
+     "reb": 5,
+     "stl": 1,
+     "result": "W",
+     "nickname": "姚足足",
+     "roundNumber": 5
+    },
+    {
+     "ast": 7,
+     "blk": 0,
+     "pts": 4,
+     "reb": 1,
+     "stl": 1,
+     "result": "L",
+     "nickname": "凯間加内特",
+     "roundNumber": 5
+    },
+    {
+     "ast": 1,
+     "blk": 0,
+     "pts": 11,
+     "reb": 0,
+     "stl": 1,
+     "result": "L",
+     "nickname": "黑猫",
+     "roundNumber": 5
+    },
+    {
+     "ast": 0,
+     "blk": 0,
+     "pts": 7,
+     "reb": 1,
+     "stl": 0,
+     "result": "L",
+     "nickname": "Zhakexi",
+     "roundNumber": 5
+    },
+    {
+     "ast": 1,
+     "blk": 0,
+     "pts": 4,
+     "reb": 7,
+     "stl": 0,
+     "result": "L",
+     "nickname": "瞬息",
+     "roundNumber": 5
+    },
+    {
+     "ast": 1,
+     "blk": 1,
+     "pts": 6,
+     "reb": 5,
+     "stl": 1,
+     "result": "L",
+     "nickname": "sikui",
+     "roundNumber": 5
+    },
+    {
+     "ast": 0,
+     "blk": 1,
+     "pts": 10,
+     "reb": 6,
+     "stl": 2,
+     "result": "W",
+     "nickname": "白云",
+     "roundNumber": 6
+    },
+    {
+     "ast": 2,
+     "blk": 0,
+     "pts": 17,
+     "reb": 1,
+     "stl": 1,
+     "result": "W",
+     "nickname": "轩少",
+     "roundNumber": 6
+    },
+    {
+     "ast": 8,
+     "blk": 0,
+     "pts": 5,
+     "reb": 1,
+     "stl": 0,
+     "result": "W",
+     "nickname": "小凯",
+     "roundNumber": 6
+    },
+    {
+     "ast": 3,
+     "blk": 0,
+     "pts": 3,
+     "reb": 2,
+     "stl": 2,
+     "result": "W",
+     "nickname": "轮休卡",
+     "roundNumber": 6
+    },
+    {
+     "ast": 1,
+     "blk": 0,
+     "pts": 3,
+     "reb": 0,
+     "stl": 0,
+     "result": "W",
+     "nickname": "收徒",
+     "roundNumber": 6
+    },
+    {
+     "ast": 1,
+     "blk": 0,
+     "pts": 6,
+     "reb": 2,
+     "stl": 0,
+     "result": "L",
+     "nickname": "乔老板",
+     "roundNumber": 6
+    },
+    {
+     "ast": 2,
+     "blk": 0,
+     "pts": 3,
+     "reb": 0,
+     "stl": 0,
+     "result": "L",
+     "nickname": "鸭子",
+     "roundNumber": 6
+    },
+    {
+     "ast": 2,
+     "blk": 0,
+     "pts": 13,
+     "reb": 1,
+     "stl": 1,
+     "result": "W",
+     "nickname": "泉英俊",
+     "roundNumber": 7
+    },
+    {
+     "ast": 5,
+     "blk": 0,
+     "pts": 18,
+     "reb": 0,
+     "stl": 0,
+     "result": "W",
+     "nickname": "摘金",
+     "roundNumber": 7
+    },
+    {
+     "ast": 1,
+     "blk": 0,
+     "pts": 3,
+     "reb": 0,
+     "stl": 1,
+     "result": "W",
+     "nickname": "小铭",
+     "roundNumber": 7
+    },
+    {
+     "ast": 0,
+     "blk": 0,
+     "pts": 0,
+     "reb": 1,
+     "stl": 1,
+     "result": "W",
+     "nickname": "西瓜",
+     "roundNumber": 7
+    },
+    {
+     "ast": 1,
+     "blk": 1,
+     "pts": 8,
+     "reb": 5,
+     "stl": 2,
+     "result": "W",
+     "nickname": "东东",
+     "roundNumber": 7
+    },
+    {
+     "ast": 0,
+     "blk": 0,
+     "pts": 4,
+     "reb": 0,
+     "stl": 0,
+     "result": "L",
+     "nickname": "KingHaoDa",
+     "roundNumber": 7
+    },
+    {
+     "ast": 5,
+     "blk": 0,
+     "pts": 16,
+     "reb": 0,
+     "stl": 0,
+     "result": "L",
+     "nickname": "君安",
+     "roundNumber": 7
+    },
+    {
+     "ast": 2,
+     "blk": 0,
+     "pts": 15,
+     "reb": 0,
+     "stl": 0,
+     "result": "L",
+     "nickname": "底角",
+     "roundNumber": 7
+    },
+    {
+     "ast": 1,
+     "blk": 0,
+     "pts": 0,
+     "reb": 3,
+     "stl": 1,
+     "result": "L",
+     "nickname": "蛋面",
+     "roundNumber": 7
+    },
+    {
+     "ast": 1,
+     "blk": 0,
+     "pts": 6,
+     "reb": 5,
+     "stl": 0,
+     "result": "L",
+     "nickname": "姚足足",
+     "roundNumber": 7
+    },
+    {
+     "ast": 2,
+     "blk": 0,
+     "pts": 8,
+     "reb": 0,
+     "stl": 2,
+     "result": "W",
+     "nickname": "泉英俊",
+     "roundNumber": 8
+    },
+    {
+     "ast": 1,
+     "blk": 0,
+     "pts": 23,
+     "reb": 1,
+     "stl": 0,
+     "result": "W",
+     "nickname": "摘金",
+     "roundNumber": 8
+    },
+    {
+     "ast": 0,
+     "blk": 0,
+     "pts": 3,
+     "reb": 0,
+     "stl": 1,
+     "result": "W",
+     "nickname": "小铭",
+     "roundNumber": 8
+    },
+    {
+     "ast": 2,
+     "blk": 0,
+     "pts": 2,
+     "reb": 1,
+     "stl": 0,
+     "result": "W",
+     "nickname": "西瓜",
+     "roundNumber": 8
+    },
+    {
+     "ast": 4,
+     "blk": 1,
+     "pts": 2,
+     "reb": 7,
+     "stl": 1,
+     "result": "W",
+     "nickname": "东东",
+     "roundNumber": 8
+    },
+    {
+     "ast": 0,
+     "blk": 0,
+     "pts": 2,
+     "reb": 1,
+     "stl": 0,
+     "result": "L",
+     "nickname": "鸭子",
+     "roundNumber": 8
+    },
+    {
+     "ast": 0,
+     "blk": 0,
+     "pts": 6,
+     "reb": 0,
+     "stl": 2,
+     "result": "L",
+     "nickname": "乔老板",
+     "roundNumber": 8
+    },
+    {
+     "ast": 1,
+     "blk": 0,
+     "pts": 12,
+     "reb": 0,
+     "stl": 0,
+     "result": "W",
+     "nickname": "泉英俊",
+     "roundNumber": 9
+    },
+    {
+     "ast": 7,
+     "blk": 0,
+     "pts": 12,
+     "reb": 1,
+     "stl": 0,
+     "result": "W",
+     "nickname": "摘金",
+     "roundNumber": 9
+    },
+    {
+     "ast": 2,
+     "blk": 0,
+     "pts": 3,
+     "reb": 2,
+     "stl": 0,
+     "result": "W",
+     "nickname": "小铭",
+     "roundNumber": 9
+    },
+    {
+     "ast": 1,
+     "blk": 0,
+     "pts": 0,
+     "reb": 1,
+     "stl": 0,
+     "result": "W",
+     "nickname": "西瓜",
+     "roundNumber": 9
+    },
+    {
+     "ast": 0,
+     "blk": 3,
+     "pts": 18,
+     "reb": 12,
+     "stl": 2,
+     "result": "W",
+     "nickname": "东东",
+     "roundNumber": 9
+    },
+    {
+     "ast": 0,
+     "blk": 0,
+     "pts": 0,
+     "reb": 1,
+     "stl": 0,
+     "result": "L",
+     "nickname": "鸭子",
+     "roundNumber": 9
+    },
+    {
+     "ast": 0,
+     "blk": 0,
+     "pts": 0,
+     "reb": 0,
+     "stl": 0,
+     "result": "L",
+     "nickname": "乔老板",
+     "roundNumber": 9
+    },
+    {
+     "ast": 1,
+     "blk": 0,
+     "pts": 22,
+     "reb": 0,
+     "stl": 0,
+     "result": "L",
+     "nickname": "泉英俊",
+     "roundNumber": 10
+    },
+    {
+     "ast": 3,
+     "blk": 0,
+     "pts": 6,
+     "reb": 1,
+     "stl": 2,
+     "result": "L",
+     "nickname": "摘金",
+     "roundNumber": 10
+    },
+    {
+     "ast": 1,
+     "blk": 0,
+     "pts": 2,
+     "reb": 1,
+     "stl": 0,
+     "result": "L",
+     "nickname": "小铭",
+     "roundNumber": 10
+    },
+    {
+     "ast": 2,
+     "blk": 0,
+     "pts": 3,
+     "reb": 2,
+     "stl": 0,
+     "result": "L",
+     "nickname": "西瓜",
+     "roundNumber": 10
+    },
+    {
+     "ast": 3,
+     "blk": 3,
+     "pts": 10,
+     "reb": 7,
+     "stl": 2,
+     "result": "L",
+     "nickname": "东东",
+     "roundNumber": 10
+    },
+    {
+     "ast": 0,
+     "blk": 0,
+     "pts": 2,
+     "reb": 0,
+     "stl": 0,
+     "result": "W",
+     "nickname": "鸭子",
+     "roundNumber": 10
+    },
+    {
+     "ast": 2,
+     "blk": 0,
+     "pts": 6,
+     "reb": 1,
+     "stl": 2,
+     "result": "W",
+     "nickname": "乔老板",
+     "roundNumber": 10
+    },
+    {
+     "ast": 1,
+     "blk": 0,
+     "pts": 13,
+     "reb": 0,
+     "stl": 2,
+     "result": "L",
+     "nickname": "泉英俊",
+     "roundNumber": 11
+    },
+    {
+     "ast": 5,
+     "blk": 0,
+     "pts": 6,
+     "reb": 0,
+     "stl": 1,
+     "result": "L",
+     "nickname": "摘金",
+     "roundNumber": 11
+    },
+    {
+     "ast": 0,
+     "blk": 0,
+     "pts": 4,
+     "reb": 1,
+     "stl": 0,
+     "result": "L",
+     "nickname": "小铭",
+     "roundNumber": 11
+    },
+    {
+     "ast": 0,
+     "blk": 0,
+     "pts": 3,
+     "reb": 1,
+     "stl": 0,
+     "result": "L",
+     "nickname": "西瓜",
+     "roundNumber": 11
+    },
+    {
+     "ast": 5,
+     "blk": 1,
+     "pts": 10,
+     "reb": 8,
+     "stl": 1,
+     "result": "L",
+     "nickname": "东东",
+     "roundNumber": 11
+    },
+    {
+     "ast": 1,
+     "blk": 0,
+     "pts": 3,
+     "reb": 2,
+     "stl": 0,
+     "result": "W",
+     "nickname": "13",
+     "roundNumber": 11
+    },
+    {
+     "ast": 4,
+     "blk": 0,
+     "pts": 13,
+     "reb": 0,
+     "stl": 1,
+     "result": "W",
+     "nickname": "Aaaai丶",
+     "roundNumber": 11
+    },
+    {
+     "ast": 1,
+     "blk": 0,
+     "pts": 17,
+     "reb": 0,
+     "stl": 1,
+     "result": "W",
+     "nickname": "板王",
+     "roundNumber": 11
+    },
+    {
+     "ast": 0,
+     "blk": 0,
+     "pts": 0,
+     "reb": 0,
+     "stl": 0,
+     "result": "W",
+     "nickname": "KOBETTH",
+     "roundNumber": 11
+    },
+    {
+     "ast": 3,
+     "blk": 2,
+     "pts": 6,
+     "reb": 8,
+     "stl": 2,
+     "result": "W",
+     "nickname": "猪咪",
+     "roundNumber": 11
+    },
+    {
+     "ast": 1,
+     "blk": 1,
+     "pts": 6,
+     "reb": 3,
+     "stl": 0,
+     "result": "L",
+     "nickname": "泉英俊",
+     "roundNumber": 12
+    },
+    {
+     "ast": 3,
+     "blk": 0,
+     "pts": 15,
+     "reb": 1,
+     "stl": 0,
+     "result": "L",
+     "nickname": "摘金",
+     "roundNumber": 12
+    },
+    {
+     "ast": 0,
+     "blk": 0,
+     "pts": 6,
+     "reb": 0,
+     "stl": 1,
+     "result": "L",
+     "nickname": "小铭",
+     "roundNumber": 12
+    },
+    {
+     "ast": 1,
+     "blk": 0,
+     "pts": 0,
+     "reb": 6,
+     "stl": 0,
+     "result": "L",
+     "nickname": "西瓜",
+     "roundNumber": 12
+    },
+    {
+     "ast": 1,
+     "blk": 0,
+     "pts": 8,
+     "reb": 6,
+     "stl": 0,
+     "result": "L",
+     "nickname": "东东",
+     "roundNumber": 12
+    },
+    {
+     "ast": 1,
+     "blk": 0,
+     "pts": 4,
+     "reb": 7,
+     "stl": 0,
+     "result": "W",
+     "nickname": "白云",
+     "roundNumber": 12
+    },
+    {
+     "ast": 1,
+     "blk": 0,
+     "pts": 19,
+     "reb": 0,
+     "stl": 0,
+     "result": "W",
+     "nickname": "轩少",
+     "roundNumber": 12
+    },
+    {
+     "ast": 8,
+     "blk": 0,
+     "pts": 4,
+     "reb": 0,
+     "stl": 0,
+     "result": "W",
+     "nickname": "小凯",
+     "roundNumber": 12
+    },
+    {
+     "ast": 0,
+     "blk": 0,
+     "pts": 3,
+     "reb": 1,
+     "stl": 1,
+     "result": "W",
+     "nickname": "轮休卡",
+     "roundNumber": 12
+    },
+    {
+     "ast": 0,
+     "blk": 0,
+     "pts": 6,
+     "reb": 2,
+     "stl": 0,
+     "result": "W",
+     "nickname": "收徒",
+     "roundNumber": 12
+    },
+    {
+     "ast": 0,
+     "blk": 0,
+     "pts": 23,
+     "reb": 0,
+     "stl": 1,
+     "result": "W",
+     "nickname": "泉英俊",
+     "roundNumber": 13
+    },
+    {
+     "ast": 4,
+     "blk": 0,
+     "pts": 16,
+     "reb": 0,
+     "stl": 0,
+     "result": "W",
+     "nickname": "摘金",
+     "roundNumber": 13
+    },
+    {
+     "ast": 0,
+     "blk": 0,
+     "pts": 5,
+     "reb": 1,
+     "stl": 1,
+     "result": "W",
+     "nickname": "小铭",
+     "roundNumber": 13
+    },
+    {
+     "ast": 1,
+     "blk": 0,
+     "pts": 0,
+     "reb": 3,
+     "stl": 0,
+     "result": "W",
+     "nickname": "西瓜",
+     "roundNumber": 13
+    },
+    {
+     "ast": 3,
+     "blk": 0,
+     "pts": 2,
+     "reb": 9,
+     "stl": 2,
+     "result": "W",
+     "nickname": "东东",
+     "roundNumber": 13
+    },
+    {
+     "ast": 1,
+     "blk": 0,
+     "pts": 3,
+     "reb": 9,
+     "stl": 0,
+     "result": "L",
+     "nickname": "白云",
+     "roundNumber": 13
+    },
+    {
+     "ast": 0,
+     "blk": 0,
+     "pts": 14,
+     "reb": 0,
+     "stl": 1,
+     "result": "L",
+     "nickname": "轩少",
+     "roundNumber": 13
+    },
+    {
+     "ast": 8,
+     "blk": 0,
+     "pts": 17,
+     "reb": 2,
+     "stl": 2,
+     "result": "L",
+     "nickname": "小凯",
+     "roundNumber": 13
+    },
+    {
+     "ast": 2,
+     "blk": 0,
+     "pts": 8,
+     "reb": 0,
+     "stl": 0,
+     "result": "L",
+     "nickname": "轮休卡",
+     "roundNumber": 13
+    },
+    {
+     "ast": 0,
+     "blk": 0,
+     "pts": 0,
+     "reb": 1,
+     "stl": 0,
+     "result": "L",
+     "nickname": "收徒",
+     "roundNumber": 13
+    },
+    {
+     "ast": 2,
+     "blk": 0,
+     "pts": 9,
+     "reb": 1,
+     "stl": 0,
+     "result": "W",
+     "nickname": "轩少",
+     "roundNumber": 14
+    },
+    {
+     "ast": 4,
+     "blk": 0,
+     "pts": 15,
+     "reb": 0,
+     "stl": 3,
+     "result": "W",
+     "nickname": "小凯",
+     "roundNumber": 14
+    },
+    {
+     "ast": 1,
+     "blk": 0,
+     "pts": 8,
+     "reb": 0,
+     "stl": 0,
+     "result": "W",
+     "nickname": "轮休卡",
+     "roundNumber": 14
+    },
+    {
+     "ast": 0,
+     "blk": 0,
+     "pts": 3,
+     "reb": 0,
+     "stl": 0,
+     "result": "W",
+     "nickname": "收徒",
+     "roundNumber": 14
+    },
+    {
+     "ast": 2,
+     "blk": 0,
+     "pts": 4,
+     "reb": 8,
+     "stl": 0,
+     "result": "W",
+     "nickname": "白云",
+     "roundNumber": 14
+    },
+    {
+     "ast": 1,
+     "blk": 0,
+     "pts": 3,
+     "reb": 0,
+     "stl": 2,
+     "result": "L",
+     "nickname": "13",
+     "roundNumber": 14
+    },
+    {
+     "ast": 5,
+     "blk": 0,
+     "pts": 14,
+     "reb": 1,
+     "stl": 2,
+     "result": "L",
+     "nickname": "Aaaai丶",
+     "roundNumber": 14
+    },
+    {
+     "ast": 2,
+     "blk": 0,
+     "pts": 11,
+     "reb": 0,
+     "stl": 0,
+     "result": "L",
+     "nickname": "板王",
+     "roundNumber": 14
+    },
+    {
+     "ast": 0,
+     "blk": 0,
+     "pts": 0,
+     "reb": 0,
+     "stl": 1,
+     "result": "L",
+     "nickname": "KOBETTH",
+     "roundNumber": 14
+    },
+    {
+     "ast": 0,
+     "blk": 0,
+     "pts": 8,
+     "reb": 5,
+     "stl": 1,
+     "result": "L",
+     "nickname": "猪咪",
+     "roundNumber": 14
+    },
+    {
+     "ast": 0,
+     "blk": 0,
+     "pts": 20,
+     "reb": 1,
+     "stl": 1,
+     "result": "W",
+     "nickname": "轩少",
+     "roundNumber": 15
+    },
+    {
+     "ast": 8,
+     "blk": 0,
+     "pts": 9,
+     "reb": 1,
+     "stl": 2,
+     "result": "W",
+     "nickname": "小凯",
+     "roundNumber": 15
+    },
+    {
+     "ast": 1,
+     "blk": 0,
+     "pts": 7,
+     "reb": 2,
+     "stl": 1,
+     "result": "W",
+     "nickname": "轮休卡",
+     "roundNumber": 15
+    },
+    {
+     "ast": 0,
+     "blk": 0,
+     "pts": 5,
+     "reb": 2,
+     "stl": 0,
+     "result": "W",
+     "nickname": "收徒",
+     "roundNumber": 15
+    },
+    {
+     "ast": 1,
+     "blk": 0,
+     "pts": 0,
+     "reb": 6,
+     "stl": 0,
+     "result": "W",
+     "nickname": "白云",
+     "roundNumber": 15
+    },
+    {
+     "ast": 2,
+     "blk": 1,
+     "pts": 3,
+     "reb": 2,
+     "stl": 0,
+     "result": "L",
+     "nickname": "13",
+     "roundNumber": 15
+    },
+    {
+     "ast": 3,
+     "blk": 0,
+     "pts": 16,
+     "reb": 0,
+     "stl": 0,
+     "result": "L",
+     "nickname": "Aaaai丶",
+     "roundNumber": 15
+    },
+    {
+     "ast": 0,
+     "blk": 0,
+     "pts": 8,
+     "reb": 0,
+     "stl": 1,
+     "result": "L",
+     "nickname": "板王",
+     "roundNumber": 15
+    },
+    {
+     "ast": 0,
+     "blk": 0,
+     "pts": 6,
+     "reb": 4,
+     "stl": 0,
+     "result": "L",
+     "nickname": "KOBETTH",
+     "roundNumber": 15
+    },
+    {
+     "ast": 2,
+     "blk": 2,
+     "pts": 2,
+     "reb": 9,
+     "stl": 1,
+     "result": "L",
+     "nickname": "猪咪",
+     "roundNumber": 15
+    }
+   ],
+   "bracket": {
+    "rounds": []
+   },
+   "revision": 8,
+   "createdAt": "2026-11-25T18:37:45.398Z"
+  },
+  {
+   "id": 9,
+   "name": "第一届乔老板杯",
+   "date": "2026-11-24",
+   "status": "completed",
+   "podium": [
+    [
+     "猪咪",
+     "老戴",
+     "泉英俊",
+     "牛子",
+     "梅西"
+    ],
+    [
+     "底角",
+     "一马",
+     "轩少",
+     "骚九",
+     "星空"
+    ],
+    [
+     "淡然",
+     "小凯",
+     "一辰",
+     "雨落",
+     "蛋面"
+    ],
+    [
+     "周琦",
+     "托马斯",
+     "瞬息",
+     "外卡选手",
+     "外卡选手"
+    ]
+   ],
+   "mvp": "老戴",
+   "records": [
+    {
+     "ast": 5,
+     "blk": 0,
+     "pts": 25,
+     "reb": 1,
+     "stl": 1,
+     "result": "W",
+     "nickname": "底角",
+     "roundNumber": 1
+    },
+    {
+     "ast": 1,
+     "blk": 0,
+     "pts": 3,
+     "reb": 0,
+     "stl": 2,
+     "result": "W",
+     "nickname": "轩少",
+     "roundNumber": 1
+    },
+    {
+     "ast": 2,
+     "blk": 0,
+     "pts": 3,
+     "reb": 1,
+     "stl": 0,
+     "result": "W",
+     "nickname": "星空",
+     "roundNumber": 1
+    },
+    {
+     "ast": 0,
+     "blk": 1,
+     "pts": 6,
+     "reb": 7,
+     "stl": 0,
+     "result": "W",
+     "nickname": "一马",
+     "roundNumber": 1
+    },
+    {
+     "ast": 6,
+     "blk": 0,
+     "pts": 13,
+     "reb": 0,
+     "stl": 0,
+     "result": "L",
+     "nickname": "大黑医生",
+     "roundNumber": 1
+    },
+    {
+     "ast": 0,
+     "blk": 0,
+     "pts": 6,
+     "reb": 0,
+     "stl": 0,
+     "result": "L",
+     "nickname": "乔老板",
+     "roundNumber": 1
+    },
+    {
+     "ast": 1,
+     "blk": 0,
+     "pts": 8,
+     "reb": 0,
+     "stl": 2,
+     "result": "L",
+     "nickname": "钟忆丰",
+     "roundNumber": 1
+    },
+    {
+     "ast": 0,
+     "blk": 0,
+     "pts": 5,
+     "reb": 2,
+     "stl": 0,
+     "result": "L",
+     "nickname": "大黑",
+     "roundNumber": 1
+    },
+    {
+     "ast": 2,
+     "blk": 0,
+     "pts": 2,
+     "reb": 4,
+     "stl": 0,
+     "result": "L",
+     "nickname": "神奇林疯狂",
+     "roundNumber": 1
+    },
+    {
+     "ast": 7,
+     "blk": 0,
+     "pts": 19,
+     "reb": 1,
+     "stl": 0,
+     "result": "W",
+     "nickname": "底角",
+     "roundNumber": 2
+    },
+    {
+     "ast": 1,
+     "blk": 0,
+     "pts": 2,
+     "reb": 0,
+     "stl": 2,
+     "result": "W",
+     "nickname": "轩少",
+     "roundNumber": 2
+    },
+    {
+     "ast": 0,
+     "blk": 0,
+     "pts": 3,
+     "reb": 4,
+     "stl": 0,
+     "result": "W",
+     "nickname": "星空",
+     "roundNumber": 2
+    },
+    {
+     "ast": 1,
+     "blk": 3,
+     "pts": 12,
+     "reb": 6,
+     "stl": 1,
+     "result": "W",
+     "nickname": "一马",
+     "roundNumber": 2
+    },
+    {
+     "ast": 3,
+     "blk": 0,
+     "pts": 0,
+     "reb": 1,
+     "stl": 2,
+     "result": "L",
+     "nickname": "牛子",
+     "roundNumber": 2
+    },
+    {
+     "ast": 2,
+     "blk": 0,
+     "pts": 16,
+     "reb": 0,
+     "stl": 2,
+     "result": "L",
+     "nickname": "泉英俊",
+     "roundNumber": 2
+    },
+    {
+     "ast": 2,
+     "blk": 0,
+     "pts": 8,
+     "reb": 1,
+     "stl": 0,
+     "result": "L",
+     "nickname": "老戴",
+     "roundNumber": 2
+    },
+    {
+     "ast": 1,
+     "blk": 0,
+     "pts": 0,
+     "reb": 3,
+     "stl": 0,
+     "result": "L",
+     "nickname": "梅西",
+     "roundNumber": 2
+    },
+    {
+     "ast": 3,
+     "blk": 0,
+     "pts": 8,
+     "reb": 3,
+     "stl": 1,
+     "result": "L",
+     "nickname": "猪咪",
+     "roundNumber": 2
+    },
+    {
+     "ast": 2,
+     "blk": 0,
+     "pts": 25,
+     "reb": 2,
+     "stl": 1,
+     "result": "W",
+     "nickname": "底角",
+     "roundNumber": 3
+    },
+    {
+     "ast": 0,
+     "blk": 0,
+     "pts": 5,
+     "reb": 0,
+     "stl": 2,
+     "result": "W",
+     "nickname": "轩少",
+     "roundNumber": 3
+    },
+    {
+     "ast": 0,
+     "blk": 0,
+     "pts": 2,
+     "reb": 5,
+     "stl": 0,
+     "result": "W",
+     "nickname": "星空",
+     "roundNumber": 3
+    },
+    {
+     "ast": 4,
+     "blk": 0,
+     "pts": 4,
+     "reb": 14,
+     "stl": 2,
+     "result": "W",
+     "nickname": "一马",
+     "roundNumber": 3
+    },
+    {
+     "ast": 9,
+     "blk": 0,
+     "pts": 2,
+     "reb": 0,
+     "stl": 1,
+     "result": "L",
+     "nickname": "无德扣将",
+     "roundNumber": 3
+    },
+    {
+     "ast": 2,
+     "blk": 0,
+     "pts": 8,
+     "reb": 0,
+     "stl": 0,
+     "result": "L",
+     "nickname": "研语",
+     "roundNumber": 3
+    },
+    {
+     "ast": 0,
+     "blk": 0,
+     "pts": 4,
+     "reb": 1,
+     "stl": 0,
+     "result": "L",
+     "nickname": "科急跳墙",
+     "roundNumber": 3
+    },
+    {
+     "ast": 1,
+     "blk": 1,
+     "pts": 13,
+     "reb": 1,
+     "stl": 1,
+     "result": "L",
+     "nickname": "复刻奥胖",
+     "roundNumber": 3
+    },
+    {
+     "ast": 0,
+     "blk": 0,
+     "pts": 4,
+     "reb": 12,
+     "stl": 0,
+     "result": "L",
+     "nickname": "归己",
+     "roundNumber": 3
+    },
+    {
+     "ast": 2,
+     "blk": 0,
+     "pts": 20,
+     "reb": 0,
+     "stl": 2,
+     "result": "W",
+     "nickname": "瞬息",
+     "roundNumber": 4
+    },
+    {
+     "ast": 10,
+     "blk": 0,
+     "pts": 2,
+     "reb": 0,
+     "stl": 1,
+     "result": "W",
+     "nickname": "只会勾手的山东人",
+     "roundNumber": 4
+    },
+    {
+     "ast": 2,
+     "blk": 0,
+     "pts": 12,
+     "reb": 1,
+     "stl": 1,
+     "result": "W",
+     "nickname": "关雨婷",
+     "roundNumber": 4
+    },
+    {
+     "ast": 1,
+     "blk": 0,
+     "pts": 6,
+     "reb": 6,
+     "stl": 1,
+     "result": "W",
+     "nickname": "星空",
+     "roundNumber": 4
+    },
+    {
+     "ast": 5,
+     "blk": 1,
+     "pts": 8,
+     "reb": 8,
+     "stl": 0,
+     "result": "W",
+     "nickname": "托马斯",
+     "roundNumber": 4
+    },
+    {
+     "ast": 1,
+     "blk": 0,
+     "pts": 9,
+     "reb": 0,
+     "stl": 1,
+     "result": "L",
+     "nickname": "GEDXSCT一挖石头",
+     "roundNumber": 4
+    },
+    {
+     "ast": 4,
+     "blk": 0,
+     "pts": 5,
+     "reb": 1,
+     "stl": 0,
+     "result": "L",
+     "nickname": "AG迷魂",
+     "roundNumber": 4
+    },
+    {
+     "ast": 1,
+     "blk": 0,
+     "pts": 8,
+     "reb": 1,
+     "stl": 0,
+     "result": "L",
+     "nickname": "Daivl",
+     "roundNumber": 4
+    },
+    {
+     "ast": 1,
+     "blk": 0,
+     "pts": 7,
+     "reb": 7,
+     "stl": 0,
+     "result": "L",
+     "nickname": "老瘤芒丶麒麟",
+     "roundNumber": 4
+    },
+    {
+     "ast": 3,
+     "blk": 1,
+     "pts": 2,
+     "reb": 9,
+     "stl": 1,
+     "result": "L",
+     "nickname": "渣渣唐",
+     "roundNumber": 4
+    },
+    {
+     "ast": 2,
+     "blk": 0,
+     "pts": 19,
+     "reb": 2,
+     "stl": 1,
+     "result": "L",
+     "nickname": "瞬息",
+     "roundNumber": 5
+    },
+    {
+     "ast": 3,
+     "blk": 0,
+     "pts": 5,
+     "reb": 1,
+     "stl": 0,
+     "result": "L",
+     "nickname": "只会勾手的山东人",
+     "roundNumber": 5
+    },
+    {
+     "ast": 1,
+     "blk": 0,
+     "pts": 4,
+     "reb": 1,
+     "stl": 0,
+     "result": "L",
+     "nickname": "关雨婷",
+     "roundNumber": 5
+    },
+    {
+     "ast": 3,
+     "blk": 1,
+     "pts": 8,
+     "reb": 6,
+     "stl": 0,
+     "result": "L",
+     "nickname": "星空",
+     "roundNumber": 5
+    },
+    {
+     "ast": 1,
+     "blk": 1,
+     "pts": 0,
+     "reb": 1,
+     "stl": 0,
+     "result": "L",
+     "nickname": "托马斯",
+     "roundNumber": 5
+    },
+    {
+     "ast": 1,
+     "blk": 0,
+     "pts": 8,
+     "reb": 1,
+     "stl": 0,
+     "result": "W",
+     "nickname": "泉英俊",
+     "roundNumber": 5
+    },
+    {
+     "ast": 1,
+     "blk": 0,
+     "pts": 3,
+     "reb": 0,
+     "stl": 1,
+     "result": "W",
+     "nickname": "牛子",
+     "roundNumber": 5
+    },
+    {
+     "ast": 3,
+     "blk": 0,
+     "pts": 15,
+     "reb": 1,
+     "stl": 1,
+     "result": "W",
+     "nickname": "老戴",
+     "roundNumber": 5
+    },
+    {
+     "ast": 0,
+     "blk": 0,
+     "pts": 3,
+     "reb": 2,
+     "stl": 1,
+     "result": "W",
+     "nickname": "梅西",
+     "roundNumber": 5
+    },
+    {
+     "ast": 3,
+     "blk": 0,
+     "pts": 9,
+     "reb": 7,
+     "stl": 1,
+     "result": "W",
+     "nickname": "猪咪",
+     "roundNumber": 5
+    },
+    {
+     "ast": 8,
+     "blk": 0,
+     "pts": 18,
+     "reb": 2,
+     "stl": 0,
+     "result": "L",
+     "nickname": "底角",
+     "roundNumber": 6
+    },
+    {
+     "ast": 0,
+     "blk": 0,
+     "pts": 5,
+     "reb": 0,
+     "stl": 1,
+     "result": "L",
+     "nickname": "轩少",
+     "roundNumber": 6
+    },
+    {
+     "ast": 0,
+     "blk": 0,
+     "pts": 0,
+     "reb": 2,
+     "stl": 0,
+     "result": "L",
+     "nickname": "星空",
+     "roundNumber": 6
+    },
+    {
+     "ast": 2,
+     "blk": 0,
+     "pts": 11,
+     "reb": 9,
+     "stl": 1,
+     "result": "L",
+     "nickname": "一马",
+     "roundNumber": 6
+    },
+    {
+     "ast": 1,
+     "blk": 0,
+     "pts": 2,
+     "reb": 1,
+     "stl": 2,
+     "result": "W",
+     "nickname": "又炸了吖",
+     "roundNumber": 6
+    },
+    {
+     "ast": 0,
+     "blk": 0,
+     "pts": 0,
+     "reb": 0,
+     "stl": 0,
+     "result": "W",
+     "nickname": "蛋面",
+     "roundNumber": 6
+    },
+    {
+     "ast": 4,
+     "blk": 0,
+     "pts": 21,
+     "reb": 1,
+     "stl": 1,
+     "result": "W",
+     "nickname": "小凯",
+     "roundNumber": 6
+    },
+    {
+     "ast": 0,
+     "blk": 0,
+     "pts": 6,
+     "reb": 1,
+     "stl": 0,
+     "result": "W",
+     "nickname": "雨落",
+     "roundNumber": 6
+    },
+    {
+     "ast": 0,
+     "blk": 0,
+     "pts": 7,
+     "reb": 4,
+     "stl": 0,
+     "result": "W",
+     "nickname": "MacFans酸李子",
+     "roundNumber": 6
+    },
+    {
+     "ast": 6,
+     "blk": 0,
+     "pts": 15,
+     "reb": 2,
+     "stl": 1,
+     "result": "W",
+     "nickname": "底角",
+     "roundNumber": 7
+    },
+    {
+     "ast": 0,
+     "blk": 0,
+     "pts": 7,
+     "reb": 0,
+     "stl": 3,
+     "result": "W",
+     "nickname": "轩少",
+     "roundNumber": 7
+    },
+    {
+     "ast": 2,
+     "blk": 1,
+     "pts": 7,
+     "reb": 7,
+     "stl": 1,
+     "result": "W",
+     "nickname": "星空",
+     "roundNumber": 7
+    },
+    {
+     "ast": 1,
+     "blk": 0,
+     "pts": 7,
+     "reb": 8,
+     "stl": 1,
+     "result": "W",
+     "nickname": "一马",
+     "roundNumber": 7
+    },
+    {
+     "ast": 1,
+     "blk": 0,
+     "pts": 0,
+     "reb": 1,
+     "stl": 0,
+     "result": "L",
+     "nickname": "牛子",
+     "roundNumber": 7
+    },
+    {
+     "ast": 0,
+     "blk": 0,
+     "pts": 7,
+     "reb": 1,
+     "stl": 1,
+     "result": "L",
+     "nickname": "泉英俊",
+     "roundNumber": 7
+    },
+    {
+     "ast": 3,
+     "blk": 0,
+     "pts": 13,
+     "reb": 1,
+     "stl": 1,
+     "result": "L",
+     "nickname": "老戴",
+     "roundNumber": 7
+    },
+    {
+     "ast": 1,
+     "blk": 0,
+     "pts": 6,
+     "reb": 2,
+     "stl": 0,
+     "result": "L",
+     "nickname": "梅西",
+     "roundNumber": 7
+    },
+    {
+     "ast": 1,
+     "blk": 1,
+     "pts": 5,
+     "reb": 6,
+     "stl": 0,
+     "result": "L",
+     "nickname": "猪咪",
+     "roundNumber": 7
+    },
+    {
+     "ast": 5,
+     "blk": 0,
+     "pts": 2,
+     "reb": 0,
+     "stl": 0,
+     "result": "W",
+     "nickname": "老戴",
+     "roundNumber": 8
+    },
+    {
+     "ast": 0,
+     "blk": 0,
+     "pts": 5,
+     "reb": 1,
+     "stl": 0,
+     "result": "W",
+     "nickname": "牛子",
+     "roundNumber": 8
+    },
+    {
+     "ast": 1,
+     "blk": 0,
+     "pts": 16,
+     "reb": 0,
+     "stl": 1,
+     "result": "W",
+     "nickname": "泉英俊",
+     "roundNumber": 8
+    },
+    {
+     "ast": 2,
+     "blk": 0,
+     "pts": 4,
+     "reb": 2,
+     "stl": 0,
+     "result": "W",
+     "nickname": "梅西",
+     "roundNumber": 8
+    },
+    {
+     "ast": 0,
+     "blk": 0,
+     "pts": 7,
+     "reb": 5,
+     "stl": 3,
+     "result": "W",
+     "nickname": "猪咪",
+     "roundNumber": 8
+    },
+    {
+     "ast": 1,
+     "blk": 0,
+     "pts": 2,
+     "reb": 0,
+     "stl": 0,
+     "result": "L",
+     "nickname": "BDL丶逍遥哥哥",
+     "roundNumber": 8
+    },
+    {
+     "ast": 7,
+     "blk": 0,
+     "pts": 11,
+     "reb": 1,
+     "stl": 1,
+     "result": "L",
+     "nickname": "底角",
+     "roundNumber": 8
+    },
+    {
+     "ast": 0,
+     "blk": 0,
+     "pts": 2,
+     "reb": 2,
+     "stl": 1,
+     "result": "L",
+     "nickname": "星空",
+     "roundNumber": 8
+    },
+    {
+     "ast": 1,
+     "blk": 1,
+     "pts": 12,
+     "reb": 7,
+     "stl": 0,
+     "result": "L",
+     "nickname": "一马",
+     "roundNumber": 8
+    },
+    {
+     "ast": 2,
+     "blk": 0,
+     "pts": 10,
+     "reb": 0,
+     "stl": 1,
+     "result": "W",
+     "nickname": "老戴",
+     "roundNumber": 9
+    },
+    {
+     "ast": 2,
+     "blk": 0,
+     "pts": 4,
+     "reb": 1,
+     "stl": 1,
+     "result": "W",
+     "nickname": "牛子",
+     "roundNumber": 9
+    },
+    {
+     "ast": 2,
+     "blk": 1,
+     "pts": 10,
+     "reb": 0,
+     "stl": 1,
+     "result": "W",
+     "nickname": "泉英俊",
+     "roundNumber": 9
+    },
+    {
+     "ast": 3,
+     "blk": 0,
+     "pts": 4,
+     "reb": 3,
+     "stl": 2,
+     "result": "W",
+     "nickname": "梅西",
+     "roundNumber": 9
+    },
+    {
+     "ast": 2,
+     "blk": 2,
+     "pts": 7,
+     "reb": 5,
+     "stl": 2,
+     "result": "W",
+     "nickname": "猪咪",
+     "roundNumber": 9
+    },
+    {
+     "ast": 0,
+     "blk": 0,
+     "pts": 0,
+     "reb": 2,
+     "stl": 1,
+     "result": "L",
+     "nickname": "BDL丶逍遥哥哥",
+     "roundNumber": 9
+    },
+    {
+     "ast": 1,
+     "blk": 0,
+     "pts": 22,
+     "reb": 3,
+     "stl": 0,
+     "result": "L",
+     "nickname": "底角",
+     "roundNumber": 9
+    },
+    {
+     "ast": 1,
+     "blk": 0,
+     "pts": 0,
+     "reb": 0,
+     "stl": 1,
+     "result": "L",
+     "nickname": "星空",
+     "roundNumber": 9
+    },
+    {
+     "ast": 2,
+     "blk": 1,
+     "pts": 4,
+     "reb": 8,
+     "stl": 1,
+     "result": "L",
+     "nickname": "一马",
+     "roundNumber": 9
+    },
+    {
+     "ast": 6,
+     "blk": 0,
+     "pts": 13,
+     "reb": 0,
+     "stl": 0,
+     "result": "W",
+     "nickname": "老戴",
+     "roundNumber": 10
+    },
+    {
+     "ast": 1,
+     "blk": 0,
+     "pts": 9,
+     "reb": 1,
+     "stl": 2,
+     "result": "W",
+     "nickname": "牛子",
+     "roundNumber": 10
+    },
+    {
+     "ast": 1,
+     "blk": 0,
+     "pts": 14,
+     "reb": 0,
+     "stl": 1,
+     "result": "W",
+     "nickname": "泉英俊",
+     "roundNumber": 10
+    },
+    {
+     "ast": 2,
+     "blk": 0,
+     "pts": 3,
+     "reb": 4,
+     "stl": 1,
+     "result": "W",
+     "nickname": "梅西",
+     "roundNumber": 10
+    },
+    {
+     "ast": 1,
+     "blk": 0,
+     "pts": 6,
+     "reb": 3,
+     "stl": 1,
+     "result": "W",
+     "nickname": "猪咪",
+     "roundNumber": 10
+    },
+    {
+     "ast": 3,
+     "blk": 0,
+     "pts": 10,
+     "reb": 1,
+     "stl": 0,
+     "result": "L",
+     "nickname": "钟忆丰",
+     "roundNumber": 10
+    },
+    {
+     "ast": 4,
+     "blk": 1,
+     "pts": 8,
+     "reb": 0,
+     "stl": 1,
+     "result": "L",
+     "nickname": "大黑医生",
+     "roundNumber": 10
+    },
+    {
+     "ast": 2,
+     "blk": 0,
+     "pts": 14,
+     "reb": 1,
+     "stl": 0,
+     "result": "L",
+     "nickname": "乔老板",
+     "roundNumber": 10
+    },
+    {
+     "ast": 0,
+     "blk": 0,
+     "pts": 0,
+     "reb": 3,
+     "stl": 0,
+     "result": "L",
+     "nickname": "大黑",
+     "roundNumber": 10
+    },
+    {
+     "ast": 4,
+     "blk": 1,
+     "pts": 6,
+     "reb": 13,
+     "stl": 1,
+     "result": "L",
+     "nickname": "神奇林疯狂",
+     "roundNumber": 10
+    },
+    {
+     "ast": 1,
+     "blk": 1,
+     "pts": 2,
+     "reb": 3,
+     "stl": 0,
+     "result": "W",
+     "nickname": "白云",
+     "roundNumber": 11
+    },
+    {
+     "ast": 5,
+     "blk": 0,
+     "pts": 15,
+     "reb": 0,
+     "stl": 1,
+     "result": "W",
+     "nickname": "DY搜索An9WANG",
+     "roundNumber": 11
+    },
+    {
+     "ast": 0,
+     "blk": 0,
+     "pts": 6,
+     "reb": 1,
+     "stl": 2,
+     "result": "W",
+     "nickname": "可乐不樂",
+     "roundNumber": 11
+    },
+    {
+     "ast": 1,
+     "blk": 1,
+     "pts": 4,
+     "reb": 2,
+     "stl": 0,
+     "result": "W",
+     "nickname": "二十四乀",
+     "roundNumber": 11
+    },
+    {
+     "ast": 1,
+     "blk": 0,
+     "pts": 6,
+     "reb": 7,
+     "stl": 2,
+     "result": "W",
+     "nickname": "仙人掌",
+     "roundNumber": 11
+    },
+    {
+     "ast": 1,
+     "blk": 0,
+     "pts": 4,
+     "reb": 1,
+     "stl": 0,
+     "result": "L",
+     "nickname": "蛋面",
+     "roundNumber": 11
+    },
+    {
+     "ast": 0,
+     "blk": 0,
+     "pts": 4,
+     "reb": 0,
+     "stl": 3,
+     "result": "L",
+     "nickname": "又炸了吖",
+     "roundNumber": 11
+    },
+    {
+     "ast": 5,
+     "blk": 0,
+     "pts": 7,
+     "reb": 0,
+     "stl": 2,
+     "result": "L",
+     "nickname": "旭辉LBJ",
+     "roundNumber": 11
+    },
+    {
+     "ast": 0,
+     "blk": 0,
+     "pts": 2,
+     "reb": 1,
+     "stl": 1,
+     "result": "L",
+     "nickname": "雨落",
+     "roundNumber": 11
+    },
+    {
+     "ast": 1,
+     "blk": 0,
+     "pts": 4,
+     "reb": 6,
+     "stl": 1,
+     "result": "L",
+     "nickname": "MacFans酸李子",
+     "roundNumber": 11
+    },
+    {
+     "ast": 1,
+     "blk": 0,
+     "pts": 0,
+     "reb": 3,
+     "stl": 1,
+     "result": "W",
+     "nickname": "白云",
+     "roundNumber": 12
+    },
+    {
+     "ast": 4,
+     "blk": 0,
+     "pts": 13,
+     "reb": 0,
+     "stl": 0,
+     "result": "W",
+     "nickname": "DY搜索An9WANG",
+     "roundNumber": 12
+    },
+    {
+     "ast": 2,
+     "blk": 0,
+     "pts": 9,
+     "reb": 0,
+     "stl": 2,
+     "result": "W",
+     "nickname": "可乐不樂",
+     "roundNumber": 12
+    },
+    {
+     "ast": 1,
+     "blk": 0,
+     "pts": 5,
+     "reb": 4,
+     "stl": 2,
+     "result": "W",
+     "nickname": "二十四乀",
+     "roundNumber": 12
+    },
+    {
+     "ast": 1,
+     "blk": 0,
+     "pts": 5,
+     "reb": 10,
+     "stl": 2,
+     "result": "W",
+     "nickname": "仙人掌",
+     "roundNumber": 12
+    },
+    {
+     "ast": 2,
+     "blk": 0,
+     "pts": 10,
+     "reb": 0,
+     "stl": 1,
+     "result": "L",
+     "nickname": "Daivl",
+     "roundNumber": 12
+    },
+    {
+     "ast": 4,
+     "blk": 1,
+     "pts": 5,
+     "reb": 1,
+     "stl": 1,
+     "result": "L",
+     "nickname": "AG迷魂",
+     "roundNumber": 12
+    },
+    {
+     "ast": 3,
+     "blk": 0,
+     "pts": 0,
+     "reb": 0,
+     "stl": 2,
+     "result": "L",
+     "nickname": "GEDXSCT一挖石头",
+     "roundNumber": 12
+    },
+    {
+     "ast": 1,
+     "blk": 0,
+     "pts": 5,
+     "reb": 4,
+     "stl": 0,
+     "result": "L",
+     "nickname": "老瘤芒丶麒麟",
+     "roundNumber": 12
+    },
+    {
+     "ast": 0,
+     "blk": 0,
+     "pts": 7,
+     "reb": 12,
+     "stl": 0,
+     "result": "L",
+     "nickname": "渣渣唐",
+     "roundNumber": 12
+    },
+    {
+     "ast": 0,
+     "blk": 0,
+     "pts": 2,
+     "reb": 3,
+     "stl": 2,
+     "result": "L",
+     "nickname": "白云",
+     "roundNumber": 13
+    },
+    {
+     "ast": 3,
+     "blk": 0,
+     "pts": 17,
+     "reb": 0,
+     "stl": 2,
+     "result": "L",
+     "nickname": "DY搜索An9WANG",
+     "roundNumber": 13
+    },
+    {
+     "ast": 1,
+     "blk": 0,
+     "pts": 3,
+     "reb": 1,
+     "stl": 0,
+     "result": "L",
+     "nickname": "可乐不樂",
+     "roundNumber": 13
+    },
+    {
+     "ast": 1,
+     "blk": 0,
+     "pts": 4,
+     "reb": 4,
+     "stl": 1,
+     "result": "L",
+     "nickname": "二十四乀",
+     "roundNumber": 13
+    },
+    {
+     "ast": 3,
+     "blk": 0,
+     "pts": 6,
+     "reb": 3,
+     "stl": 1,
+     "result": "L",
+     "nickname": "仙人掌",
+     "roundNumber": 13
+    },
+    {
+     "ast": 0,
+     "blk": 0,
+     "pts": 3,
+     "reb": 2,
+     "stl": 1,
+     "result": "W",
+     "nickname": "关雨婷",
+     "roundNumber": 13
+    },
+    {
+     "ast": 5,
+     "blk": 0,
+     "pts": 2,
+     "reb": 1,
+     "stl": 1,
+     "result": "W",
+     "nickname": "只会勾手的山东人",
+     "roundNumber": 13
+    },
+    {
+     "ast": 2,
+     "blk": 0,
+     "pts": 15,
+     "reb": 1,
+     "stl": 0,
+     "result": "W",
+     "nickname": "瞬息",
+     "roundNumber": 13
+    },
+    {
+     "ast": 0,
+     "blk": 0,
+     "pts": 4,
+     "reb": 4,
+     "stl": 0,
+     "result": "W",
+     "nickname": "星空",
+     "roundNumber": 13
+    },
+    {
+     "ast": 3,
+     "blk": 0,
+     "pts": 11,
+     "reb": 5,
+     "stl": 0,
+     "result": "W",
+     "nickname": "托马斯",
+     "roundNumber": 13
+    }
+   ],
+   "bracket": {
+    "rounds": []
+   },
+   "revision": 8,
+   "createdAt": "2026-11-24T18:01:09.024Z"
+  },
+  {
    "id": 2,
    "name": "第一届牛子杯",
    "date": "2026-11-23",
@@ -25905,12 +29323,12 @@
      "13",
      "梅西",
      "牛子",
-     "雨落"
+     "星空"
     ],
     [
      "东东",
      "泉英俊",
-     "阿sir",
+     "建国",
      "淡然",
      "大黑"
     ]
@@ -26184,7 +29602,7 @@
      "reb": 0,
      "stl": 0,
      "result": "L",
-     "nickname": "Stephen丿乄Curry",
+     "nickname": "泉英俊",
      "roundNumber": 3
     },
     {
@@ -26204,7 +29622,7 @@
      "reb": 7,
      "stl": 0,
      "result": "L",
-     "nickname": "I Jimmy丶Butler",
+     "nickname": "东东",
      "roundNumber": 3
     },
     {
@@ -26284,7 +29702,7 @@
      "reb": 0,
      "stl": 1,
      "result": "W",
-     "nickname": "Stephen丿乄Curry",
+     "nickname": "泉英俊",
      "roundNumber": 4
     },
     {
@@ -26304,7 +29722,7 @@
      "reb": 12,
      "stl": 0,
      "result": "W",
-     "nickname": "I Jimmy丶Butler",
+     "nickname": "东东",
      "roundNumber": 4
     },
     {
@@ -26384,7 +29802,7 @@
      "reb": 1,
      "stl": 1,
      "result": "L",
-     "nickname": "MacFans琥狸",
+     "nickname": "我爱罗",
      "roundNumber": 5
     },
     {
@@ -26484,7 +29902,7 @@
      "reb": 0,
      "stl": 1,
      "result": "L",
-     "nickname": "lang风行",
+     "nickname": "板王",
      "roundNumber": 6
     },
     {
@@ -26504,7 +29922,7 @@
      "reb": 16,
      "stl": 1,
      "result": "L",
-     "nickname": "上官影永",
+     "nickname": "梅西",
      "roundNumber": 6
     },
     {
@@ -26574,7 +29992,7 @@
      "reb": 1,
      "stl": 0,
      "result": "L",
-     "nickname": "范佩西pcy",
+     "nickname": "托马斯",
      "roundNumber": 7
     },
     {
@@ -26584,7 +30002,7 @@
      "reb": 1,
      "stl": 0,
      "result": "L",
-     "nickname": "突击小能手",
+     "nickname": "红颜",
      "roundNumber": 7
     },
     {
@@ -26594,7 +30012,7 @@
      "reb": 5,
      "stl": 1,
      "result": "L",
-     "nickname": "乄星空丶摩羯",
+     "nickname": "星空",
      "roundNumber": 7
     },
     {
@@ -26604,7 +30022,7 @@
      "reb": 0,
      "stl": 2,
      "result": "L",
-     "nickname": "TONGKING",
+     "nickname": "补位",
      "roundNumber": 7
     },
     {
@@ -26614,15 +30032,774 @@
      "reb": 6,
      "stl": 0,
      "result": "L",
-     "nickname": "AB丶瞬息",
+     "nickname": "瞬息",
      "roundNumber": 7
     }
    ],
    "bracket": {
     "rounds": []
    },
-   "revision": 1,
+   "revision": 2,
    "createdAt": "2026-11-23T18:29:31.505Z"
+  },
+  {
+   "id": 4,
+   "name": "第一届老戴杯",
+   "date": "2026-11-21",
+   "status": "completed",
+   "podium": [
+    [
+     "达达",
+     "阿sir",
+     "淡然",
+     "板王",
+     "东东"
+    ],
+    [
+     "老戴",
+     "摘金",
+     "大黑",
+     "雨落",
+     "得瑟"
+    ],
+    [
+     "乔总",
+     "小池",
+     "小凯",
+     "一马",
+     "收徒"
+    ],
+    [
+     "我爱罗",
+     "外卡选手",
+     "外卡选手",
+     "外卡选手",
+     "外卡选手"
+    ]
+   ],
+   "mvp": "东东",
+   "records": [],
+   "bracket": {
+    "rounds": []
+   },
+   "revision": 2,
+   "createdAt": "2026-11-24T08:14:52.968Z"
+  },
+  {
+   "id": 5,
+   "name": "第一届13杯",
+   "date": "2026-11-20",
+   "status": "completed",
+   "podium": [
+    [
+     "小凯",
+     "雨落",
+     "小铭",
+     "牛子",
+     "大黑"
+    ],
+    [
+     "老戴",
+     "摘金",
+     "小池",
+     "骚九",
+     "白云"
+    ],
+    [
+     "淡然",
+     "轩少",
+     "阿sir",
+     "13",
+     "一马"
+    ],
+    [
+     "君安",
+     "西瓜",
+     "憶辰",
+     "蛋面",
+     "收徒"
+    ]
+   ],
+   "mvp": "小凯",
+   "records": [],
+   "bracket": {
+    "rounds": []
+   },
+   "revision": 3,
+   "createdAt": "2026-11-24T10:09:13.347Z"
+  },
+  {
+   "id": 8,
+   "name": "第一届阿sir杯",
+   "date": "2026-11-19",
+   "status": "completed",
+   "podium": [
+    [
+     "老戴",
+     "13",
+     "老胡",
+     "蛋面",
+     "梅西"
+    ],
+    [
+     "君安",
+     "泉英俊",
+     "骚九",
+     "星空",
+     "大黑"
+    ],
+    [
+     "小凯",
+     "范范",
+     "仙人掌",
+     "淡然",
+     "牛子"
+    ],
+    [
+     "底角",
+     "板王",
+     "小铭",
+     "雨落",
+     "白云"
+    ]
+   ],
+   "mvp": "老戴",
+   "records": [],
+   "bracket": {
+    "rounds": []
+   },
+   "revision": 1,
+   "createdAt": "2026-11-24T10:53:43.034Z"
+  },
+  {
+   "id": 7,
+   "name": "第一届梅西杯",
+   "date": "2026-11-18",
+   "status": "completed",
+   "podium": [
+    [
+     "底角",
+     "仙人掌",
+     "山王",
+     "摘金",
+     "星空"
+    ],
+    [
+     "老胡",
+     "轩少",
+     "淡然",
+     "收徒",
+     "王建国"
+    ],
+    [
+     "小凯",
+     "骚九",
+     "老戴",
+     "JB丶默",
+     "阿sir"
+    ],
+    [
+     "君安",
+     "梅西",
+     "雨落",
+     "牛子",
+     "恩比德"
+    ]
+   ],
+   "mvp": "底角",
+   "records": [],
+   "bracket": {
+    "rounds": []
+   },
+   "revision": 1,
+   "createdAt": "2026-11-24T10:53:42.551Z"
+  },
+  {
+   "id": 6,
+   "name": "第一届建国杯",
+   "date": "2026-11-16",
+   "status": "completed",
+   "podium": [
+    [
+     "君安",
+     "仙人掌",
+     "星空",
+     "雨落",
+     "骚九"
+    ],
+    [
+     "小凯",
+     "山王",
+     "超级奈斯",
+     "西瓜",
+     "得瑟"
+    ],
+    [
+     "Aie3x（全队）",
+     "外卡选手",
+     "外卡选手",
+     "外卡选手",
+     "外卡选手"
+    ],
+    [
+     "泉英俊",
+     "轩少",
+     "阿sir",
+     "王建国",
+     "一马"
+    ]
+   ],
+   "mvp": "君安",
+   "records": [],
+   "bracket": {
+    "rounds": []
+   },
+   "revision": 1,
+   "createdAt": "2026-11-24T10:53:42.040Z"
+  },
+  {
+   "id": 3,
+   "name": "第一届轩少杯",
+   "date": "2026-11-13",
+   "status": "completed",
+   "podium": [
+    [
+     "老戴",
+     "轩少",
+     "星空",
+     "收徒",
+     "大黑"
+    ],
+    [
+     "山王",
+     "雨落",
+     "战火",
+     "淡然",
+     "阿灿"
+    ],
+    [
+     "老胡",
+     "东东",
+     "泉英俊",
+     "板王",
+     "nash"
+    ],
+    [
+     "小凯",
+     "底角",
+     "君安",
+     "乔老板",
+     "王建国"
+    ]
+   ],
+   "mvp": "老戴",
+   "records": [
+    {
+     "ast": 3,
+     "blk": 1,
+     "pts": 11,
+     "reb": 5,
+     "stl": 2,
+     "result": "W",
+     "nickname": "轩少",
+     "roundNumber": 1
+    },
+    {
+     "ast": 4,
+     "blk": 0,
+     "pts": 14,
+     "reb": 1,
+     "stl": 0,
+     "result": "W",
+     "nickname": "老戴",
+     "roundNumber": 1
+    },
+    {
+     "ast": 1,
+     "blk": 0,
+     "pts": 4,
+     "reb": 1,
+     "stl": 0,
+     "result": "W",
+     "nickname": "收徒",
+     "roundNumber": 1
+    },
+    {
+     "ast": 1,
+     "blk": 0,
+     "pts": 4,
+     "reb": 1,
+     "stl": 1,
+     "result": "W",
+     "nickname": "星空",
+     "roundNumber": 1
+    },
+    {
+     "ast": 1,
+     "blk": 0,
+     "pts": 3,
+     "reb": 2,
+     "stl": 0,
+     "result": "W",
+     "nickname": "大黑",
+     "roundNumber": 1
+    },
+    {
+     "ast": 0,
+     "blk": 2,
+     "pts": 2,
+     "reb": 4,
+     "stl": 0,
+     "result": "L",
+     "nickname": "王建国",
+     "roundNumber": 1
+    },
+    {
+     "ast": 4,
+     "blk": 0,
+     "pts": 15,
+     "reb": 2,
+     "stl": 3,
+     "result": "L",
+     "nickname": "小凯",
+     "roundNumber": 1
+    },
+    {
+     "ast": 2,
+     "blk": 1,
+     "pts": 6,
+     "reb": 3,
+     "stl": 2,
+     "result": "L",
+     "nickname": "底角",
+     "roundNumber": 1
+    },
+    {
+     "ast": 1,
+     "blk": 0,
+     "pts": 4,
+     "reb": 0,
+     "stl": 0,
+     "result": "L",
+     "nickname": "灵犀哥哥",
+     "roundNumber": 1
+    },
+    {
+     "ast": 2,
+     "blk": 0,
+     "pts": 0,
+     "reb": 1,
+     "stl": 0,
+     "result": "L",
+     "nickname": "乔老板",
+     "roundNumber": 1
+    },
+    {
+     "ast": 2,
+     "blk": 1,
+     "pts": 16,
+     "reb": 8,
+     "stl": 1,
+     "result": "W",
+     "nickname": "轩少",
+     "roundNumber": 2
+    },
+    {
+     "ast": 11,
+     "blk": 0,
+     "pts": 12,
+     "reb": 4,
+     "stl": 1,
+     "result": "W",
+     "nickname": "老戴",
+     "roundNumber": 2
+    },
+    {
+     "ast": 1,
+     "blk": 0,
+     "pts": 8,
+     "reb": 0,
+     "stl": 0,
+     "result": "W",
+     "nickname": "收徒",
+     "roundNumber": 2
+    },
+    {
+     "ast": 0,
+     "blk": 0,
+     "pts": 9,
+     "reb": 0,
+     "stl": 2,
+     "result": "W",
+     "nickname": "星空",
+     "roundNumber": 2
+    },
+    {
+     "ast": 0,
+     "blk": 0,
+     "pts": 5,
+     "reb": 5,
+     "stl": 0,
+     "result": "W",
+     "nickname": "大黑",
+     "roundNumber": 2
+    },
+    {
+     "ast": 1,
+     "blk": 0,
+     "pts": 2,
+     "reb": 3,
+     "stl": 0,
+     "result": "L",
+     "nickname": "王建国",
+     "roundNumber": 2
+    },
+    {
+     "ast": 2,
+     "blk": 0,
+     "pts": 20,
+     "reb": 0,
+     "stl": 1,
+     "result": "L",
+     "nickname": "小凯",
+     "roundNumber": 2
+    },
+    {
+     "ast": 3,
+     "blk": 0,
+     "pts": 6,
+     "reb": 0,
+     "stl": 5,
+     "result": "L",
+     "nickname": "底角",
+     "roundNumber": 2
+    },
+    {
+     "ast": 1,
+     "blk": 0,
+     "pts": 6,
+     "reb": 1,
+     "stl": 0,
+     "result": "L",
+     "nickname": "灵犀哥哥",
+     "roundNumber": 2
+    },
+    {
+     "ast": 2,
+     "blk": 0,
+     "pts": 2,
+     "reb": 0,
+     "stl": 0,
+     "result": "L",
+     "nickname": "乔老板",
+     "roundNumber": 2
+    },
+    {
+     "ast": 1,
+     "blk": 2,
+     "pts": 6,
+     "reb": 4,
+     "stl": 2,
+     "result": "W",
+     "nickname": "轩少",
+     "roundNumber": 3
+    },
+    {
+     "ast": 5,
+     "blk": 0,
+     "pts": 23,
+     "reb": 0,
+     "stl": 1,
+     "result": "W",
+     "nickname": "老戴",
+     "roundNumber": 3
+    },
+    {
+     "ast": 0,
+     "blk": 0,
+     "pts": 5,
+     "reb": 1,
+     "stl": 1,
+     "result": "W",
+     "nickname": "收徒",
+     "roundNumber": 3
+    },
+    {
+     "ast": 1,
+     "blk": 0,
+     "pts": 0,
+     "reb": 1,
+     "stl": 0,
+     "result": "W",
+     "nickname": "星空",
+     "roundNumber": 3
+    },
+    {
+     "ast": 0,
+     "blk": 0,
+     "pts": 3,
+     "reb": 6,
+     "stl": 0,
+     "result": "W",
+     "nickname": "大黑",
+     "roundNumber": 3
+    },
+    {
+     "ast": 3,
+     "blk": 1,
+     "pts": 8,
+     "reb": 9,
+     "stl": 1,
+     "result": "L",
+     "nickname": "战火",
+     "roundNumber": 3
+    },
+    {
+     "ast": 4,
+     "blk": 0,
+     "pts": 12,
+     "reb": 0,
+     "stl": 1,
+     "result": "L",
+     "nickname": "山王",
+     "roundNumber": 3
+    },
+    {
+     "ast": 2,
+     "blk": 0,
+     "pts": 11,
+     "reb": 1,
+     "stl": 0,
+     "result": "L",
+     "nickname": "淡然",
+     "roundNumber": 3
+    },
+    {
+     "ast": 2,
+     "blk": 0,
+     "pts": 2,
+     "reb": 3,
+     "stl": 0,
+     "result": "L",
+     "nickname": "雨落",
+     "roundNumber": 3
+    },
+    {
+     "ast": 1,
+     "blk": 0,
+     "pts": 3,
+     "reb": 2,
+     "stl": 1,
+     "result": "L",
+     "nickname": "阿灿",
+     "roundNumber": 3
+    },
+    {
+     "ast": 1,
+     "blk": 1,
+     "pts": 11,
+     "reb": 4,
+     "stl": 1,
+     "result": "W",
+     "nickname": "轩少",
+     "roundNumber": 4
+    },
+    {
+     "ast": 3,
+     "blk": 0,
+     "pts": 22,
+     "reb": 0,
+     "stl": 2,
+     "result": "W",
+     "nickname": "老戴",
+     "roundNumber": 4
+    },
+    {
+     "ast": 1,
+     "blk": 0,
+     "pts": 3,
+     "reb": 0,
+     "stl": 0,
+     "result": "W",
+     "nickname": "收徒",
+     "roundNumber": 4
+    },
+    {
+     "ast": 1,
+     "blk": 0,
+     "pts": 2,
+     "reb": 1,
+     "stl": 0,
+     "result": "W",
+     "nickname": "星空",
+     "roundNumber": 4
+    },
+    {
+     "ast": 2,
+     "blk": 0,
+     "pts": 0,
+     "reb": 6,
+     "stl": 0,
+     "result": "W",
+     "nickname": "大黑",
+     "roundNumber": 4
+    },
+    {
+     "ast": 0,
+     "blk": 1,
+     "pts": 6,
+     "reb": 3,
+     "stl": 0,
+     "result": "L",
+     "nickname": "战火",
+     "roundNumber": 4
+    },
+    {
+     "ast": 6,
+     "blk": 0,
+     "pts": 8,
+     "reb": 1,
+     "stl": 1,
+     "result": "L",
+     "nickname": "山王",
+     "roundNumber": 4
+    },
+    {
+     "ast": 0,
+     "blk": 0,
+     "pts": 13,
+     "reb": 0,
+     "stl": 0,
+     "result": "L",
+     "nickname": "淡然",
+     "roundNumber": 4
+    },
+    {
+     "ast": 1,
+     "blk": 0,
+     "pts": 2,
+     "reb": 4,
+     "stl": 0,
+     "result": "L",
+     "nickname": "雨落",
+     "roundNumber": 4
+    },
+    {
+     "ast": 0,
+     "blk": 0,
+     "pts": 0,
+     "reb": 3,
+     "stl": 0,
+     "result": "L",
+     "nickname": "阿灿",
+     "roundNumber": 4
+    },
+    {
+     "ast": 0,
+     "blk": 0,
+     "pts": 5,
+     "reb": 6,
+     "stl": 0,
+     "result": "L",
+     "nickname": "底角",
+     "roundNumber": 5
+    },
+    {
+     "ast": 5,
+     "blk": 0,
+     "pts": 8,
+     "reb": 0,
+     "stl": 2,
+     "result": "L",
+     "nickname": "君安",
+     "roundNumber": 5
+    },
+    {
+     "ast": 0,
+     "blk": 0,
+     "pts": 2,
+     "reb": 0,
+     "stl": 0,
+     "result": "L",
+     "nickname": "乔老板",
+     "roundNumber": 5
+    },
+    {
+     "ast": 1,
+     "blk": 0,
+     "pts": 12,
+     "reb": 3,
+     "stl": 1,
+     "result": "L",
+     "nickname": "小凯",
+     "roundNumber": 5
+    },
+    {
+     "ast": 2,
+     "blk": 2,
+     "pts": 0,
+     "reb": 0,
+     "stl": 1,
+     "result": "L",
+     "nickname": "王建国",
+     "roundNumber": 5
+    },
+    {
+     "ast": 5,
+     "blk": 0,
+     "pts": 8,
+     "reb": 7,
+     "stl": 2,
+     "result": "W",
+     "nickname": "东东",
+     "roundNumber": 5
+    },
+    {
+     "ast": 3,
+     "blk": 0,
+     "pts": 5,
+     "reb": 1,
+     "stl": 0,
+     "result": "W",
+     "nickname": "SharkONeal34",
+     "roundNumber": 5
+    },
+    {
+     "ast": 2,
+     "blk": 1,
+     "pts": 3,
+     "reb": 3,
+     "stl": 2,
+     "result": "W",
+     "nickname": "nash",
+     "roundNumber": 5
+    },
+    {
+     "ast": 1,
+     "blk": 0,
+     "pts": 10,
+     "reb": 1,
+     "stl": 0,
+     "result": "W",
+     "nickname": "篮下怪鸽",
+     "roundNumber": 5
+    },
+    {
+     "ast": 1,
+     "blk": 0,
+     "pts": 12,
+     "reb": 8,
+     "stl": 1,
+     "result": "W",
+     "nickname": "我的生命像一首歌",
+     "roundNumber": 5
+    }
+   ],
+   "bracket": {
+    "rounds": []
+   },
+   "revision": 1,
+   "createdAt": "2026-11-24T03:48:31.445Z"
   },
   {
    "id": 1,
@@ -27630,6 +31807,120 @@
   {
    "date": "2026-11-21",
    "roundNumber": 2
+  }
+ ],
+ "tournamentImages": [
+  {
+   "tournamentId": 10,
+   "index": 1
+  },
+  {
+   "tournamentId": 10,
+   "index": 10
+  },
+  {
+   "tournamentId": 10,
+   "index": 11
+  },
+  {
+   "tournamentId": 10,
+   "index": 12
+  },
+  {
+   "tournamentId": 10,
+   "index": 13
+  },
+  {
+   "tournamentId": 10,
+   "index": 14
+  },
+  {
+   "tournamentId": 10,
+   "index": 15
+  },
+  {
+   "tournamentId": 10,
+   "index": 2
+  },
+  {
+   "tournamentId": 10,
+   "index": 3
+  },
+  {
+   "tournamentId": 10,
+   "index": 4
+  },
+  {
+   "tournamentId": 10,
+   "index": 5
+  },
+  {
+   "tournamentId": 10,
+   "index": 6
+  },
+  {
+   "tournamentId": 10,
+   "index": 7
+  },
+  {
+   "tournamentId": 10,
+   "index": 8
+  },
+  {
+   "tournamentId": 10,
+   "index": 9
+  },
+  {
+   "tournamentId": 9,
+   "index": 1
+  },
+  {
+   "tournamentId": 9,
+   "index": 10
+  },
+  {
+   "tournamentId": 9,
+   "index": 11
+  },
+  {
+   "tournamentId": 9,
+   "index": 12
+  },
+  {
+   "tournamentId": 9,
+   "index": 13
+  },
+  {
+   "tournamentId": 9,
+   "index": 2
+  },
+  {
+   "tournamentId": 9,
+   "index": 3
+  },
+  {
+   "tournamentId": 9,
+   "index": 4
+  },
+  {
+   "tournamentId": 9,
+   "index": 5
+  },
+  {
+   "tournamentId": 9,
+   "index": 6
+  },
+  {
+   "tournamentId": 9,
+   "index": 7
+  },
+  {
+   "tournamentId": 9,
+   "index": 8
+  },
+  {
+   "tournamentId": 9,
+   "index": 9
   }
  ]
 }
