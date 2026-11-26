@@ -62,3 +62,19 @@
 /* 赛况公告粘贴解析 */
 .podium-paste{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:end;margin:10px 0 4px}
 .podium-paste textarea{width:100%}
+
+/* 卡面头像库 */
+.avatar-toolbar{display:flex;gap:10px;align-items:center;margin:14px 0 6px}
+.avatar-toolbar .search{flex:1;max-width:320px}
+.avatar-sub{font-size:14px;margin:18px 0 8px;color:var(--ink)}
+.avatar-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:12px}
+.avatar-item{border:1px solid var(--line);border-radius:10px;overflow:hidden;background:#fff;margin:0}
+.avatar-item.pending{border-style:dashed;border-color:#d9a52b}
+.avatar-item img{width:100%;aspect-ratio:1/1.1;object-fit:cover;display:block;background:#1a1d24}
+.avatar-noimg{width:100%;aspect-ratio:1/1.1;display:flex;align-items:center;justify-content:center;color:#aaa;font-size:11px;background:#f3f3f1}
+.avatar-item figcaption{padding:8px}
+.avatar-item .avatar-name{width:100%;border:1px solid #dfdfdc;border-radius:6px;padding:6px 8px;font-size:12px;margin-bottom:6px}
+.avatar-item .avatar-ops{display:flex;gap:4px}
+.avatar-item .row-btn{margin-left:0;padding:4px 10px;border:1px solid var(--line);border-radius:6px}
+/* 比赛记录里的卡面标签 */
+.card-tag{display:inline-block;margin-left:6px;padding:1px 7px;border-radius:9px;background:rgba(217,43,43,.08);color:#D92B2B;font-size:10px;font-weight:600;vertical-align:1px}

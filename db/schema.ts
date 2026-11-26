@@ -23,10 +23,26 @@ export const games = pgTable('games', {
   stl: integer('stl').notNull(),
   blk: integer('blk').notNull(),
   result: text('result').notNull(),
+  // 该选手本场使用的游戏卡面（如"06姚明"），来自头像图库映射，未识别为空
+  card: text('card'),
 }, table => [
   index('games_date_idx').on(table.date),
   check('games_round_number_check', sql`${table.roundNumber} BETWEEN 1 AND 10000`),
+  check('games_card_check', sql`${table.card} IS NULL OR char_length(${table.card}) BETWEEN 1 AND 60`),
   uniqueIndex('games_date_round_nickname_idx').on(table.date, table.roundNumber, table.nickname),
+]);
+
+// 球员卡面头像图库：头像感知哈希 → 卡面名（如"06姚明"）
+// 同一卡面在不同设备截图里可能有多个条目（各自哈希），均指向同一 card_name
+export const avatars = pgTable('avatars', {
+  id: bigint('id', { mode: 'number' }).primaryKey().generatedByDefaultAsIdentity(),
+  cardName: text('card_name').notNull(),
+  phash: text('phash').notNull(),
+  blobKey: text('blob_key'),
+  createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+}, table => [
+  index('avatars_phash_idx').on(table.phash),
+  check('avatars_card_name_check', sql`char_length(btrim(${table.cardName})) BETWEEN 1 AND 60`),
 ]);
 
 export const playerComments = pgTable('player_comments', {

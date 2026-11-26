@@ -3,7 +3,7 @@ import { verifyRequestOrigin } from '@netlify/identity';
 import { createHmac, timingSafeEqual } from 'node:crypto';
 import { and, desc, eq, inArray, sql } from 'drizzle-orm';
 import { getDb } from '../../db/index.js';
-import { games, seasons, tournaments, nickAliases } from '../../db/schema.js';
+import { games, seasons, tournaments, nickAliases, avatars } from '../../db/schema.js';
 
 import { aggregate, chinaDate } from '../../lib/statistics.js';
 import { getStore } from '@netlify/blobs';
@@ -39,6 +39,29 @@ const verifyAdminToken = (header: string | null): boolean => {
 type Game = typeof games.$inferSelect;
 type GameInput = Omit<Game, 'id'>;
 
+// ===== 球员卡面头像库：感知哈希匹配 =====
+// 客户端裁切并计算 dHash（64 位十六进制 = 256bit），服务端只比较哈希、不做图像处理
+const AVATAR_MATCH_THRESHOLD = 45; // 256bit 中允许的差异位数（严格，宁缺毋滥，认不出的进待标注）
+const POPCOUNT = [0,1,1,2,1,2,2,3,1,2,2,3,2,3,3,4];
+const hammingHex = (a: string, b: string): number => {
+  if (a.length !== b.length) return 999;
+  let d = 0;
+  for (let i = 0; i < a.length; i++) {
+    const x = parseInt(a[i], 16) ^ parseInt(b[i], 16);
+    d += POPCOUNT[x & 15];
+  }
+  return d;
+};
+const validPhash = (v: unknown): v is string => typeof v === 'string' && /^[0-9a-f]{64}$/.test(v);
+const matchAvatar = (library: { cardName: string; phash: string }[], phash: string): string | null => {
+  let best: string | null = null, bestD = AVATAR_MATCH_THRESHOLD + 1;
+  for (const entry of library) {
+    const d = hammingHex(phash, entry.phash);
+    if (d < bestD) { bestD = d; best = entry.cardName; }
+  }
+  return best;
+};
+
 // 昵称映射表：游戏ID → 联盟昵称（nick_aliases 表，全部为管理员确认过的认领关系）
 // 匹配时忽略大小写与装饰字符（丿丶丨等），识别与导入两条路径都会自动套用
 const aliasNorm = (v: string) => v.normalize('NFKC').toLowerCase().replace(/[\s丿丶丨㇏亻彳·\-_]+/g, '');
@@ -55,7 +78,7 @@ function applyAlias(map: Map<string, string>, nickname: string): string {
 function parseGame(body: unknown): GameInput | null {
   if (!body || typeof body !== 'object' || Array.isArray(body)) return null;
   const input = body as Record<string, unknown>;
-  if (Object.keys(input).some(key => !['date', 'roundNumber', 'nickname', 'result', 'pts', 'reb', 'ast', 'stl', 'blk'].includes(key))) return null;
+  if (Object.keys(input).some(key => !['date', 'roundNumber', 'nickname', 'result', 'pts', 'reb', 'ast', 'stl', 'blk', 'card'].includes(key))) return null;
   if (typeof input.date !== 'string' || !/^\d{4}-\d{2}-\d{2}$/.test(input.date)) return null;
   const parsedDate = new Date(`${input.date}T00:00:00Z`);
   if (!Number.isFinite(parsedDate.getTime()) || parsedDate.toISOString().slice(0, 10) !== input.date) return null;
@@ -81,6 +104,7 @@ function parseGame(body: unknown): GameInput | null {
     date: input.date, roundNumber, nickname: input.nickname.trim(), result: input.result,
     pts: stats.pts, reb: stats.reb, ast: stats.ast,
     stl: stats.stl, blk: stats.blk,
+    card: typeof input.card === 'string' && input.card.trim() && input.card.trim().length <= 60 ? input.card.trim() : null,
   };
 }
 
@@ -229,10 +253,11 @@ export default async (request: Request) => {
   const tournamentCollection = path === '/api/admin/tournaments';
   const tournamentMatch = path.match(/^\/api\/admin\/tournaments\/(\d+)$/);
   const extra = ['/api/admin/upload', '/api/admin/recognize', '/api/admin/import', '/api/admin/seasons', '/api/admin/rename', '/api/admin/round-image', '/api/admin/tournament-image'].includes(path);
+  const avatarRoute = path === '/api/admin/avatars' || path === '/api/admin/avatar-label';
   const collection = path === '/api/admin/games';
   const match = path.match(/^\/api\/admin\/games\/(\d+)$/);
   const loginRoute = path === '/api/admin/login';
-  if (!publicRead && !loginRoute && !collection && !match && !extra && !tournamentCollection && !tournamentMatch) return json({ error: '接口不存在' }, 404);
+  if (!publicRead && !loginRoute && !avatarRoute && !collection && !match && !extra && !tournamentCollection && !tournamentMatch) return json({ error: '接口不存在' }, 404);
   try {
     if (!publicRead) {
       if (request.method !== 'GET') {
@@ -340,7 +365,7 @@ export default async (request: Request) => {
       let body: any;
       try { body = JSON.parse(raw); } catch { return json({ error: '提交格式不正确' }, 400); }
       if (!body || typeof body !== 'object' || Array.isArray(body)) return json({ error: '提交格式不正确' }, 400);
-      const fields = path.endsWith('/recognize') ? ['image', 'resolve'] : path.endsWith('/upload') ? ['image'] : path.endsWith('/seasons') ? ['name', 'confirm'] : path.endsWith('/rename') ? ['date', 'from', 'to', 'confirm', 'scope', 'tournamentId'] : path.endsWith('/round-image') ? ['date', 'roundNumber', 'image', 'thumb', 'remove'] : path.endsWith('/tournament-image') ? ['tournamentId', 'index', 'image', 'thumb', 'remove'] : ['rows', 'confirm'];
+      const fields = path.endsWith('/recognize') ? ['image', 'resolve'] : path.endsWith('/upload') ? ['image'] : path.endsWith('/seasons') ? ['name', 'confirm'] : path.endsWith('/rename') ? ['date', 'from', 'to', 'confirm', 'scope', 'tournamentId'] : path.endsWith('/round-image') ? ['date', 'roundNumber', 'image', 'thumb', 'remove'] : path.endsWith('/tournament-image') ? ['tournamentId', 'index', 'image', 'thumb', 'remove'] : ['rows', 'confirm', 'cards'];
       if (Object.keys(body).some(key => !fields.includes(key))) return json({ error: '提交包含不支持的字段' }, 400);
       if (path.endsWith('/seasons')) {
         const date = chinaDate();
@@ -456,6 +481,67 @@ export default async (request: Request) => {
         await uploads().set(thumbKey, body.thumb);
         return json({ ok: true, tournamentId: tid, index: idx });
       }
+      // ===== 球员卡面头像库维护：图库 CRUD + 待标注队列认领 =====
+      if (avatarRoute) {
+        const isLabel = path.endsWith('/avatar-label');
+        // GET：图库全量 + 待标注队列（头像为小图 dataURI，直接随响应下发）
+        if (request.method === 'GET' && !isLabel) {
+          const rows = await db.select().from(avatars).orderBy(desc(avatars.id));
+          const library = [];
+          for (const a of rows) library.push({ id: a.id, cardName: a.cardName, phash: a.phash, image: a.blobKey ? await uploads().get(a.blobKey).catch(() => null) : null });
+          const listed = await uploads().list({ prefix: 'avatar-pending:' }).catch(() => ({ blobs: [] as { key: string }[] }));
+          const pending = [];
+          for (const b of listed.blobs.slice(0, 80)) {
+            const got = await uploads().getWithMetadata(b.key).catch(() => null);
+            pending.push({ key: b.key, phash: String(got?.metadata?.phash || b.key.split(':')[1] || ''), image: typeof got === 'object' && got ? (got as any).data ?? null : got });
+          }
+          return json({ library, pending });
+        }
+        if (request.method === 'DELETE' && !isLabel) {
+          const id = Number(url.searchParams.get('id'));
+          if (!Number.isSafeInteger(id) || id < 1) return json({ error: '编号无效' }, 400);
+          const removed = await db.delete(avatars).where(eq(avatars.id, id)).returning();
+          if (!removed.length) return json({ error: '记录不存在' }, 404);
+          if (removed[0].blobKey) await uploads().delete(removed[0].blobKey).catch(() => null);
+          return json({ removed: id });
+        }
+        // POST /avatars：新增图库条目；同哈希已存在则改名（幂等）
+        // PUT  /avatars：修正某条的卡面名
+        // POST /avatar-label：把待标注头像认领进图库
+        if ((path.endsWith('/avatars') && !['POST', 'PUT'].includes(request.method)) || (isLabel && request.method !== 'POST')) return json({ error: '接口不存在' }, 404);
+        const raw = await request.text();
+        if (raw.length > 200000) return json({ error: '请求过大' }, 413);
+        let abody: any;
+        try { abody = JSON.parse(raw); } catch { return json({ error: '提交格式不正确' }, 400); }
+        const cardName = typeof abody?.cardName === 'string' ? abody.cardName.trim() : '';
+        if (request.method === 'PUT') {
+          const id = Number(abody?.id);
+          if (!Number.isSafeInteger(id) || id < 1) return json({ error: '编号无效' }, 400);
+          if (!cardName || cardName.length > 60) return json({ error: '请填写卡面名（1-60 字）' }, 400);
+          const updated = await db.update(avatars).set({ cardName }).where(eq(avatars.id, id)).returning();
+          if (!updated.length) return json({ error: '记录不存在' }, 404);
+          return json({ updated: { id, cardName } });
+        }
+        if (!cardName || cardName.length > 60) return json({ error: '请填写卡面名（1-60 字）' }, 400);
+        const phash = abody?.phash;
+        if (!validPhash(phash)) return json({ error: '头像指纹无效' }, 400);
+        const image = typeof abody?.image === 'string' && abody.image.length <= 40000 && /^data:image\/(jpeg|png|webp);base64,/.test(abody.image) ? abody.image : null;
+        if (isLabel) {
+          const key = typeof abody?.key === 'string' && /^avatar-pending:[0-9a-f]{1,64}$/.test(abody.key) ? abody.key : '';
+          if (!key) return json({ error: '待标注项无效' }, 400);
+        }
+        const blobKey = 'avatar-lib:' + phash.slice(0, 24) + ':' + Date.now();
+        if (image) await uploads().set(blobKey, image);
+        const dup = await db.select().from(avatars).where(eq(avatars.phash, phash));
+        let row;
+        if (dup.length) {
+          row = (await db.update(avatars).set({ cardName, blobKey: image ? blobKey : dup[0].blobKey }).where(eq(avatars.id, dup[0].id)).returning())[0];
+        } else {
+          row = (await db.insert(avatars).values({ cardName, phash, blobKey: image ? blobKey : null }).returning())[0];
+        }
+        if (isLabel) await uploads().delete(String(abody.key)).catch(() => null);
+        return json({ saved: { id: row.id, cardName: row.cardName, phash: row.phash } }, dup.length ? 200 : 201);
+      }
       if (path.endsWith('/upload')) {
         if (typeof body.image !== 'string' || !/^data:image\/(png|jpeg|webp);base64,[A-Za-z0-9+/=]+$/.test(body.image)) return json({ error: '图片格式无效' }, 400);
         const key = createHash('sha256').update(body.image).digest('hex');
@@ -570,7 +656,29 @@ export default async (request: Request) => {
       const values = body.rows.map(parseGame).map((v: GameInput | null) => v && typeof v.nickname === 'string' ? { ...v, nickname: applyAlias(aliasMap, v.nickname) } : v);
       if (values.some((v: GameInput | null)=> !v || v.roundNumber===null)) return json({ error: '存在无效行，请检查日期、场次、昵称、胜负和五项整数数据' }, 400);
       const changed = await db.insert(games).values(values as GameInput[]).onConflictDoNothing({ target: [games.date, games.roundNumber, games.nickname] }).returning({ id: games.id });
-      return json({ count: changed.length, skipped: values.length - changed.length },201);
+      // 头像卡面候选：图库命中则写入该场记录；未命中进待标注队列（按哈希去重）
+      let cardMatched = 0;
+      if (Array.isArray(body.cards) && body.cards.length && values.length) {
+        const { date, roundNumber } = values[0] as GameInput;
+        if (roundNumber != null) {
+          const library = await db.select({ cardName: avatars.cardName, phash: avatars.phash }).from(avatars);
+          for (const cand of (body.cards as unknown[]).slice(0, 12)) {
+            const c = cand as { nickname?: unknown; phash?: unknown; crop?: unknown };
+            if (!c || typeof c.nickname !== 'string' || !validPhash(c.phash)) continue;
+            const cardName = matchAvatar(library, c.phash);
+            const nick = applyAlias(aliasMap, c.nickname);
+            if (cardName) {
+              await db.update(games).set({ card: cardName }).where(and(eq(games.date, date), eq(games.roundNumber, roundNumber), eq(games.nickname, nick)));
+              cardMatched++;
+            } else if (typeof c.crop === 'string' && c.crop.length <= 30000 && /^data:image\/jpeg;base64,/.test(c.crop)) {
+              const pendKey = 'avatar-pending:' + (c.phash as string).slice(0, 24);
+              const existing = await uploads().get(pendKey).catch(() => null);
+              if (!existing) await uploads().set(pendKey, c.crop, { metadata: { phash: c.phash } }).catch(() => null);
+            }
+          }
+        }
+      }
+      return json({ count: changed.length, skipped: values.length - changed.length, cardMatched },201);
     }
     const id = match ? Number(match[1]) : null;
     if (match && (!Number.isSafeInteger(id) || id! < 1)) return json({ error: '记录编号无效' }, 400);

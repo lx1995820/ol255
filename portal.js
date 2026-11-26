@@ -1,6 +1,7 @@
 import { initializeScreenshotUpload } from './screenshot-upload.js';
 import { renderTournamentSection, initializeTournamentAdmin } from './tournaments.js';
 import { initializeTeamSplitter } from './team-splitter.js';
+import { initializeAvatarsAdmin } from './avatars-admin.js';
 import { aggregate, chinaDate, tagsFor, relationships, playerRelationships, rate, statKeys, statLabels, defenseScore, tagTips, aiRatings, aiDimKeys, aiWeights, marginalValue } from './lib/statistics.js';
 import { initializePlayerComments, stars } from './player-comments.js';
 
@@ -232,7 +233,7 @@ function pageSlice(prefix, records) {
 }
 
 function gameCells(game) {
-  return `<td>${escapeHtml(roundLabel(game))}</td><td><strong>${escapeHtml(game.nickname)}</strong>${tagMarkup(game.nickname)}${isAdmin ? '' : commentButton(game.nickname)}</td>
+  return `<td>${escapeHtml(roundLabel(game))}</td><td><strong>${escapeHtml(game.nickname)}</strong>${tagMarkup(game.nickname)}${game.card ? `<span class="card-tag">${escapeHtml(game.card)}</span>` : ''}${isAdmin ? '' : commentButton(game.nickname)}</td>
     ${metrics.map(key => `<td>${game[key]}</td>`).join('')}
     <td class="${game.result === 'W' ? 'win' : 'loss'}">${game.result === 'W' ? '<span aria-hidden="true">✓</span> 胜' : '负'}</td>`;
 }
@@ -510,6 +511,7 @@ async function initializeAdmin() {
   initializeBatch();
   loadTournaments = initializeTournamentAdmin(api, escapeHtml);
   initializeTeamSplitter(api, escapeHtml);
+  initializeAvatarsAdmin(api, escapeHtml);
   select('#loginForm').onsubmit = async event => {
     event.preventDefault();
     const button = select('#loginSubmit');

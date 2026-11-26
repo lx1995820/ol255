@@ -1,3 +1,4 @@
+import { extractAvatars } from './avatar-detect.js';
 const select = selector => document.querySelector(selector);
 const maxImageLength = 4000000;
 const fileType = file => file.type || (/\.png$/i.test(file.name) ? 'image/png' : /\.jpe?g$/i.test(file.name) ? 'image/jpeg' : /\.webp$/i.test(file.name) ? 'image/webp' : '');
@@ -234,14 +235,22 @@ export function initializeScreenshotUpload({ api, metrics, labels, escapeHtml, l
           item.state = 'success'; item.message = `提取 ${item.rows.length} 条记录，正在自动入库。`;
           // Save each screenshot independently so one failure cannot block the batch.
           const rows = item.rows.map(row => Object.fromEntries(['date', 'roundNumber', 'nickname', ...metrics, 'result'].map(key => [key, row[key]])));
-          const response = await api('admin/import', { method: 'POST', body: JSON.stringify({ rows, confirm: true }) });
+          // 头像卡面候选：10 行记录时按行序配对（左队 5 + 右队 5），提取失败静默跳过不影响入库
+          let cards = [];
+          if (rows.length === 10) {
+            try {
+              const faces = await extractAvatars(item.file);
+              if (faces.length === 10) cards = faces.map((f, i) => ({ nickname: rows[i].nickname, phash: f.phash, crop: f.crop }));
+            } catch { /* 头像提取失败不影响入库 */ }
+          }
+          const response = await api('admin/import', { method: 'POST', body: JSON.stringify({ rows, confirm: true, cards }) });
           // 入库成功后自动把当场截图挂到比赛记录（前台可预览）；挂图失败不阻塞入库结果，仅提示
           try {
             const pair = await prepareRoundImages(item.file);
             await api('admin/round-image', { method: 'POST', body: JSON.stringify({ date: item.date, roundNumber: item.roundNumber, image: pair.image, thumb: pair.thumb }) });
           } catch { item.warnings = [...(item.warnings || []), '当场截图未保存成功，可在比赛记录的编辑里补传。']; }
           item.state = 'saved';
-          item.message = `已入库 ${response.count} 条，跳过已有记录 ${response.skipped ?? 0} 条，当场截图已保存。${item.warnings.length ? '自动补全与匹配说明见下方，可在比赛列表修改。' : ''}`;
+          item.message = `已入库 ${response.count} 条，跳过已有记录 ${response.skipped ?? 0} 条，当场截图已保存。${response.cardMatched ? `识别出 ${response.cardMatched} 个卡面。` : ''}${item.warnings.length ? '自动补全与匹配说明见下方，可在比赛列表修改。' : ''}`;
           item.rows = [];
           reviewConfirmed = false;
         } catch (error) {
