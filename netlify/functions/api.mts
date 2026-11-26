@@ -357,6 +357,67 @@ export default async (request: Request) => {
       if (publicRead) return new Response(JSON.stringify(payload), { headers: { 'Content-Type': 'application/json; charset=utf-8', 'Cache-Control': 'public, max-age=120, stale-while-revalidate=600' } });
       return json(payload);
     }
+      // ===== 球员卡面头像库维护：图库 CRUD + 待标注队列认领 =====
+      if (avatarRoute) {
+        const isLabel = path.endsWith('/avatar-label');
+        // GET：图库全量 + 待标注队列（头像为小图 dataURI，直接随响应下发）
+        if (request.method === 'GET' && !isLabel) {
+          const rows = await db.select().from(avatars).orderBy(desc(avatars.id));
+          const library = [];
+          for (const a of rows) library.push({ id: a.id, cardName: a.cardName, phash: a.phash, image: a.blobKey ? await uploads().get(a.blobKey).catch(() => null) : null });
+          const listed = await uploads().list({ prefix: 'avatar-pending:' }).catch(() => ({ blobs: [] as { key: string }[] }));
+          const pending = [];
+          for (const b of listed.blobs.slice(0, 80)) {
+            const got = await uploads().getWithMetadata(b.key).catch(() => null);
+            pending.push({ key: b.key, phash: String(got?.metadata?.phash || b.key.split(':')[1] || ''), image: typeof got === 'object' && got ? (got as any).data ?? null : got });
+          }
+          return json({ library, pending });
+        }
+        if (request.method === 'DELETE' && !isLabel) {
+          const id = Number(url.searchParams.get('id'));
+          if (!Number.isSafeInteger(id) || id < 1) return json({ error: '编号无效' }, 400);
+          const removed = await db.delete(avatars).where(eq(avatars.id, id)).returning();
+          if (!removed.length) return json({ error: '记录不存在' }, 404);
+          if (removed[0].blobKey) await uploads().delete(removed[0].blobKey).catch(() => null);
+          return json({ removed: id });
+        }
+        // POST /avatars：新增图库条目；同哈希已存在则改名（幂等）
+        // PUT  /avatars：修正某条的卡面名
+        // POST /avatar-label：把待标注头像认领进图库
+        if ((path.endsWith('/avatars') && !['POST', 'PUT'].includes(request.method)) || (isLabel && request.method !== 'POST')) return json({ error: '接口不存在' }, 404);
+        const raw = await request.text();
+        if (raw.length > 200000) return json({ error: '请求过大' }, 413);
+        let abody: any;
+        try { abody = JSON.parse(raw); } catch { return json({ error: '提交格式不正确' }, 400); }
+        const cardName = typeof abody?.cardName === 'string' ? abody.cardName.trim() : '';
+        if (request.method === 'PUT') {
+          const id = Number(abody?.id);
+          if (!Number.isSafeInteger(id) || id < 1) return json({ error: '编号无效' }, 400);
+          if (!cardName || cardName.length > 60) return json({ error: '请填写卡面名（1-60 字）' }, 400);
+          const updated = await db.update(avatars).set({ cardName }).where(eq(avatars.id, id)).returning();
+          if (!updated.length) return json({ error: '记录不存在' }, 404);
+          return json({ updated: { id, cardName } });
+        }
+        if (!cardName || cardName.length > 60) return json({ error: '请填写卡面名（1-60 字）' }, 400);
+        const phash = abody?.phash;
+        if (!validPhash(phash)) return json({ error: '头像指纹无效' }, 400);
+        const image = typeof abody?.image === 'string' && abody.image.length <= 40000 && /^data:image\/(jpeg|png|webp);base64,/.test(abody.image) ? abody.image : null;
+        if (isLabel) {
+          const key = typeof abody?.key === 'string' && /^avatar-pending:[0-9a-f]{1,64}$/.test(abody.key) ? abody.key : '';
+          if (!key) return json({ error: '待标注项无效' }, 400);
+        }
+        const blobKey = 'avatar-lib:' + phash.slice(0, 24) + ':' + Date.now();
+        if (image) await uploads().set(blobKey, image);
+        const dup = await db.select().from(avatars).where(eq(avatars.phash, phash));
+        let row;
+        if (dup.length) {
+          row = (await db.update(avatars).set({ cardName, blobKey: image ? blobKey : dup[0].blobKey }).where(eq(avatars.id, dup[0].id)).returning())[0];
+        } else {
+          row = (await db.insert(avatars).values({ cardName, phash, blobKey: image ? blobKey : null }).returning())[0];
+        }
+        if (isLabel) await uploads().delete(String(abody.key)).catch(() => null);
+        return json({ saved: { id: row.id, cardName: row.cardName, phash: row.phash } }, dup.length ? 200 : 201);
+      }
     if (extra && request.method === 'POST') {
       const limit = (path.endsWith('recognize') || path.endsWith('upload')) ? 4500000 : (path.endsWith('/round-image') || path.endsWith('/tournament-image')) ? 2200000 : 150000;
       if (Number(request.headers.get('content-length') ?? 0) > limit) return json({ error: '请求过大' }, 413);
@@ -480,67 +541,6 @@ export default async (request: Request) => {
         await uploads().set(imgKey, body.image);
         await uploads().set(thumbKey, body.thumb);
         return json({ ok: true, tournamentId: tid, index: idx });
-      }
-      // ===== 球员卡面头像库维护：图库 CRUD + 待标注队列认领 =====
-      if (avatarRoute) {
-        const isLabel = path.endsWith('/avatar-label');
-        // GET：图库全量 + 待标注队列（头像为小图 dataURI，直接随响应下发）
-        if (request.method === 'GET' && !isLabel) {
-          const rows = await db.select().from(avatars).orderBy(desc(avatars.id));
-          const library = [];
-          for (const a of rows) library.push({ id: a.id, cardName: a.cardName, phash: a.phash, image: a.blobKey ? await uploads().get(a.blobKey).catch(() => null) : null });
-          const listed = await uploads().list({ prefix: 'avatar-pending:' }).catch(() => ({ blobs: [] as { key: string }[] }));
-          const pending = [];
-          for (const b of listed.blobs.slice(0, 80)) {
-            const got = await uploads().getWithMetadata(b.key).catch(() => null);
-            pending.push({ key: b.key, phash: String(got?.metadata?.phash || b.key.split(':')[1] || ''), image: typeof got === 'object' && got ? (got as any).data ?? null : got });
-          }
-          return json({ library, pending });
-        }
-        if (request.method === 'DELETE' && !isLabel) {
-          const id = Number(url.searchParams.get('id'));
-          if (!Number.isSafeInteger(id) || id < 1) return json({ error: '编号无效' }, 400);
-          const removed = await db.delete(avatars).where(eq(avatars.id, id)).returning();
-          if (!removed.length) return json({ error: '记录不存在' }, 404);
-          if (removed[0].blobKey) await uploads().delete(removed[0].blobKey).catch(() => null);
-          return json({ removed: id });
-        }
-        // POST /avatars：新增图库条目；同哈希已存在则改名（幂等）
-        // PUT  /avatars：修正某条的卡面名
-        // POST /avatar-label：把待标注头像认领进图库
-        if ((path.endsWith('/avatars') && !['POST', 'PUT'].includes(request.method)) || (isLabel && request.method !== 'POST')) return json({ error: '接口不存在' }, 404);
-        const raw = await request.text();
-        if (raw.length > 200000) return json({ error: '请求过大' }, 413);
-        let abody: any;
-        try { abody = JSON.parse(raw); } catch { return json({ error: '提交格式不正确' }, 400); }
-        const cardName = typeof abody?.cardName === 'string' ? abody.cardName.trim() : '';
-        if (request.method === 'PUT') {
-          const id = Number(abody?.id);
-          if (!Number.isSafeInteger(id) || id < 1) return json({ error: '编号无效' }, 400);
-          if (!cardName || cardName.length > 60) return json({ error: '请填写卡面名（1-60 字）' }, 400);
-          const updated = await db.update(avatars).set({ cardName }).where(eq(avatars.id, id)).returning();
-          if (!updated.length) return json({ error: '记录不存在' }, 404);
-          return json({ updated: { id, cardName } });
-        }
-        if (!cardName || cardName.length > 60) return json({ error: '请填写卡面名（1-60 字）' }, 400);
-        const phash = abody?.phash;
-        if (!validPhash(phash)) return json({ error: '头像指纹无效' }, 400);
-        const image = typeof abody?.image === 'string' && abody.image.length <= 40000 && /^data:image\/(jpeg|png|webp);base64,/.test(abody.image) ? abody.image : null;
-        if (isLabel) {
-          const key = typeof abody?.key === 'string' && /^avatar-pending:[0-9a-f]{1,64}$/.test(abody.key) ? abody.key : '';
-          if (!key) return json({ error: '待标注项无效' }, 400);
-        }
-        const blobKey = 'avatar-lib:' + phash.slice(0, 24) + ':' + Date.now();
-        if (image) await uploads().set(blobKey, image);
-        const dup = await db.select().from(avatars).where(eq(avatars.phash, phash));
-        let row;
-        if (dup.length) {
-          row = (await db.update(avatars).set({ cardName, blobKey: image ? blobKey : dup[0].blobKey }).where(eq(avatars.id, dup[0].id)).returning())[0];
-        } else {
-          row = (await db.insert(avatars).values({ cardName, phash, blobKey: image ? blobKey : null }).returning())[0];
-        }
-        if (isLabel) await uploads().delete(String(abody.key)).catch(() => null);
-        return json({ saved: { id: row.id, cardName: row.cardName, phash: row.phash } }, dup.length ? 200 : 201);
       }
       if (path.endsWith('/upload')) {
         if (typeof body.image !== 'string' || !/^data:image\/(png|jpeg|webp);base64,[A-Za-z0-9+/=]+$/.test(body.image)) return json({ error: '图片格式无效' }, 400);
