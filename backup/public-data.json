@@ -4,7 +4,7 @@
    "id": 1791527915457,
    "date": "2026-11-28",
    "roundNumber": 5,
-   "nickname": "猪哥就是nb",
+   "nickname": "猪咪",
    "pts": 7,
    "reb": 4,
    "ast": 1,
@@ -95,7 +95,7 @@
    "id": 1791527915446,
    "date": "2026-11-28",
    "roundNumber": 5,
-   "nickname": "MILTheGreakFreak",
+   "nickname": "西瓜",
    "pts": 5,
    "reb": 2,
    "ast": 3,
@@ -134,7 +134,7 @@
    "id": 1791527915456,
    "date": "2026-11-28",
    "roundNumber": 4,
-   "nickname": "猪哥就是nb",
+   "nickname": "猪咪",
    "pts": 2,
    "reb": 3,
    "ast": 2,
@@ -212,7 +212,7 @@
    "id": 1791527915437,
    "date": "2026-11-28",
    "roundNumber": 4,
-   "nickname": "MILTheGreakFreak",
+   "nickname": "西瓜",
    "pts": 6,
    "reb": 0,
    "ast": 0,
@@ -264,7 +264,7 @@
    "id": 1791527915455,
    "date": "2026-11-28",
    "roundNumber": 3,
-   "nickname": "猪哥就是nb",
+   "nickname": "猪咪",
    "pts": 2,
    "reb": 2,
    "ast": 3,
@@ -394,7 +394,7 @@
    "id": 1791527915454,
    "date": "2026-11-28",
    "roundNumber": 2,
-   "nickname": "猪哥就是nb",
+   "nickname": "猪咪",
    "pts": 2,
    "reb": 1,
    "ast": 1,
@@ -28915,19 +28915,19 @@
  ],
  "players": [
   {
-   "nickname": "猪哥就是nb",
-   "games": 4,
-   "wins": 4,
-   "pts": 3.25,
-   "reb": 2.5,
-   "ast": 1.75,
-   "stl": 1.25,
-   "blk": 1,
+   "nickname": "猪咪",
+   "games": 60,
+   "wins": 44,
+   "pts": 7.566666666666666,
+   "reb": 2.8,
+   "ast": 1.8666666666666667,
+   "stl": 1.3,
+   "blk": 0.31666666666666665,
    "records": {
-    "pts": 7,
-    "reb": 4,
-    "ast": 3,
-    "stl": 2,
+    "pts": 26,
+    "reb": 11,
+    "ast": 8,
+    "stl": 5,
     "blk": 2
    }
   },
@@ -29034,20 +29034,20 @@
    }
   },
   {
-   "nickname": "MILTheGreakFreak",
-   "games": 2,
+   "nickname": "西瓜",
+   "games": 5,
    "wins": 2,
-   "pts": 5.5,
-   "reb": 1,
-   "ast": 1.5,
-   "stl": 2,
-   "blk": 0,
+   "pts": 6.4,
+   "reb": 1.6,
+   "ast": 0.8,
+   "stl": 0.8,
+   "blk": 0.2,
    "records": {
-    "pts": 6,
-    "reb": 2,
+    "pts": 9,
+    "reb": 3,
     "ast": 3,
     "stl": 3,
-    "blk": 0
+    "blk": 1
    }
   },
   {
@@ -29085,23 +29085,6 @@
    }
   },
   {
-   "nickname": "西瓜",
-   "games": 3,
-   "wins": 0,
-   "pts": 7,
-   "reb": 2,
-   "ast": 0.3333333333333333,
-   "stl": 0,
-   "blk": 0.3333333333333333,
-   "records": {
-    "pts": 9,
-    "reb": 3,
-    "ast": 1,
-    "stl": 0,
-    "blk": 1
-   }
-  },
-  {
    "nickname": "泉英俊",
    "games": 83,
    "wins": 36,
@@ -29116,23 +29099,6 @@
     "ast": 11,
     "stl": 3,
     "blk": 3
-   }
-  },
-  {
-   "nickname": "猪咪",
-   "games": 56,
-   "wins": 40,
-   "pts": 7.875,
-   "reb": 2.8214285714285716,
-   "ast": 1.875,
-   "stl": 1.3035714285714286,
-   "blk": 0.26785714285714285,
-   "records": {
-    "pts": 26,
-    "reb": 11,
-    "ast": 8,
-    "stl": 5,
-    "blk": 2
    }
   },
   {
