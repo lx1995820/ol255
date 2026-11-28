@@ -114,7 +114,8 @@ function parseTournament(body: any): typeof tournaments.$inferInsert | null {
   if (typeof body.mvp !== 'string' || body.mvp.trim().length>80 || !Array.isArray(body.podium) || body.podium.length<3 || body.podium.length>4) return null;
   const podium: string[][]=[];
   for (const team of body.podium) {
-    if (!Array.isArray(team) || team.length>5 || team.some(n=>typeof n!=='string' || !n.trim() || n.trim().length>80)) return null;
+    // 每队常规 5 人，个别届允许报 6 人（如第一届底角杯亚军队有轮换替补）
+    if (!Array.isArray(team) || team.length>6 || team.some(n=>typeof n!=='string' || !n.trim() || n.trim().length>80)) return null;
     podium.push(team.map((n:string)=>n.trim()));
   }
   const names=podium.flat();
@@ -153,7 +154,7 @@ function parseTournament(body: any): typeof tournaments.$inferInsert | null {
   }
   // 只校验场次结构完整；records 允许是部分场次（如只有某队的比赛视角），领奖台成员不强求全部出场；
   // 每场双方各 1-5 人即可（允许赛后删减个别选手记录，不再强制 5v5 满员）
-  if (body.status==='completed' && (!records.length || podium.some(team=>team.length!==5) || [...rounds.values()].some(r=>r.W<1 || r.L<1))) return null;
+  if (body.status==='completed' && (!records.length || podium.some(team=>team.length<5 || team.length>6) || [...rounds.values()].some(r=>r.W<1 || r.L<1))) return null;
   return {name:body.name.trim(),date:body.date,status:body.status,podium,mvp:body.mvp.trim(),records,bracket};
 }
 
